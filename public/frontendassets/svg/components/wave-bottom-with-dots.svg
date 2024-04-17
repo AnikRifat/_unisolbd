@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 300 126.5" style="margin-bottom: -5px; enable-background:new 0 0 300 126.5;" xml:space="preserve">
+<style type="text/css">
+	.wave-bottom-with-dots-0{fill:#377DFF;}
+	.wave-bottom-with-dots-1{fill:#377DFF;}
+	.wave-bottom-with-dots-2{fill:#DE4437;}
+	.wave-bottom-with-dots-3{fill:#00C9A7;}
+	.wave-bottom-with-dots-4{fill:#DE4437;}
+</style>
+<path class="wave-bottom-with-dots-0 fill-primary" opacity=".6" d="M0,58.9c0-0.9,5.1-2,5.8-2.2c6-0.8,11.8,2.2,17.2,4.6c4.5,2.1,8.6,5.3,13.3,7.1C48.2,73.3,61,73.8,73,69
+	c43-16.9,40-7.9,84-2.2c44,5.7,83-31.5,143-10.1v69.8H0C0,126.5,0,59,0,58.9z"/>
+<path class="wave-bottom-with-dots-1 fill-primary" d="M300,68.5v58H0v-58c0,0,43-16.7,82,5.6c12.4,7.1,26.5,9.6,40.2,5.9c7.5-2.1,14.5-6.1,20.9-11
+	c6.2-4.7,12-10.4,18.8-13.8c7.3-3.8,15.6-5.2,23.6-5.2c16.1,0.1,30.7,8.2,45,16.1c13.4,7.4,28.1,12.2,43.3,11.2
+	C282.5,76.7,292.7,74.4,300,68.5z"/>
+<g>
+	<circle class="wave-bottom-with-dots-2 fill-danger" cx="259.5" cy="17" r="13"/>
+	<circle class="wave-bottom-with-dots-1 fill-primary" cx="290" cy="35.5" r="8.5"/>
+	<circle class="wave-bottom-with-dots-3 fill-success" cx="288" cy="5.5" r="5.5"/>
+	<circle class="wave-bottom-with-dots-4 fill-warning" cx="232.5" cy="34" r="2"/>
+</g>
+</svg> -->
+
+
+<!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#e7008a" fill-opacity="1" d="M0,160L18.5,154.7C36.9,149,74,139,111,117.3C147.7,96,185,64,222,90.7C258.5,117,295,203,332,213.3C369.2,224,406,160,443,154.7C480,149,517,203,554,208C590.8,213,628,171,665,144C701.5,117,738,107,775,117.3C812.3,128,849,160,886,192C923.1,224,960,256,997,256C1033.8,256,1071,224,1108,208C1144.6,192,1182,192,1218,208C1255.4,224,1292,256,1329,234.7C1366.2,213,1403,139,1422,101.3L1440,64L1440,320L1421.5,320C1403.1,320,1366,320,1329,320C1292.3,320,1255,320,1218,320C1181.5,320,1145,320,1108,320C1070.8,320,1034,320,997,320C960,320,923,320,886,320C849.2,320,812,320,775,320C738.5,320,702,320,665,320C627.7,320,591,320,554,320C516.9,320,480,320,443,320C406.2,320,369,320,332,320C295.4,320,258,320,222,320C184.6,320,148,320,111,320C73.8,320,37,320,18,320L0,320Z"></path></svg> -->
+<!-- <svg id="visual" viewBox="0 0 900 675" width="900" height="675" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><rect x="0" y="0" width="900" height="675" fill="#FFFFFF"></rect><path d="M0 396L25 415.2C50 434.3 100 472.7 150 478.3C200 484 250 457 300 438.7C350 420.3 400 410.7 450 420.5C500 430.3 550 459.7 600 479.2C650 498.7 700 508.3 750 493.2C800 478 850 438 875 418L900 398L900 676L875 676C850 676 800 676 750 676C700 676 650 676 600 676C550 676 500 676 450 676C400 676 350 676 300 676C250 676 200 676 150 676C100 676 50 676 25 676L0 676Z" fill="#ff005d" stroke-linecap="round" stroke-linejoin="miter"></path></svg> -->
+<!-- <svg id="visual" viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><rect x="0" y="0" width="300" height="300" fill="#FFFFFF"></rect><path d="M0 217L8.3 222.7C16.7 228.3 33.3 239.7 50 241.3C66.7 243 83.3 235 100 229.5C116.7 224 133.3 221 150 223.8C166.7 226.7 183.3 235.3 200 241.2C216.7 247 233.3 250 250 245.5C266.7 241 283.3 229 291.7 223L300 217L300 301L291.7 301C283.3 301 266.7 301 250 301C233.3 301 216.7 301 200 301C183.3 301 166.7 301 150 301C133.3 301 116.7 301 100 301C83.3 301 66.7 301 50 301C33.3 301 16.7 301 8.3 301L0 301Z" fill="#cb423a" stroke-linecap="round" stroke-linejoin="miter"></path></svg> -->
+<svg id="visual" viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><rect x="0" y="0" width="300" height="300" fill="#FFFFFF"></rect>
+
+
+<path d="M0 155L8.3 165C16.7 175 33.3 195 50 197.8C66.7 200.7 83.3 186.3 100 176.8C116.7 167.3 133.3 162.7 150 167.8C166.7 173 183.3 188 200 198C216.7 208 233.3 213 250 205.2C266.7 197.3 283.3 176.7 291.7 166.3L300 156L300 301L291.7 301C283.3 301 266.7 301 250 301C233.3 301 216.7 301 200 301C183.3 301 166.7 301 150 301C133.3 301 116.7 301 100 301C83.3 301 66.7 301 50 301C33.3 301 16.7 301 8.3 301L0 301Z" fill="#586AA4" stroke-linecap="round" stroke-linejoin="miter">
+
+
+
+</path>
+
+<style type="text/css">
+	.wave-bottom-with-dots-0{fill:#377DFF;}
+	.wave-bottom-with-dots-1{fill:#377DFF;}
+	.wave-bottom-with-dots-2{fill:#DE4437;}
+	.wave-bottom-with-dots-3{fill:#00C9A7;}
+	.wave-bottom-with-dots-4{fill:#DE4437;}
+</style>
+
+<path d="M0 155L8.3 165C16.7 175 33.3 195 50 197.8C66.7 200.7 83.3 186.3 100 176.8C116.7 167.3 133.3 162.7 150 167.8C166.7 173 183.3 188 200 198C216.7 208 233.3 213 250 205.2C266.7 197.3 283.3 176.7 291.7 166.3L300 156L300 301L291.7 301C283.3 301 266.7 301 250 301C233.3 301 216.7 301 200 301C183.3 301 166.7 301 150 301C133.3 301 116.7 301 100 301C83.3 301 66.7 301 50 301C33.3 301 16.7 301 8.3 301L0 301Z" fill="#586AA4" stroke-linecap="round" stroke-linejoin="miter">
+
+
+
+</path>
+
+
+<path d="M0 237L8.3 241.3C16.7 245.7 33.3 254.3 50 255.7C66.7 257 83.3 251 100 246.8C116.7 242.7 133.3 240.3 150 242.5C166.7 244.7 183.3 251.3 200 255.7C216.7 260 233.3 262 250 258.7C266.7 255.3 283.3 246.7 291.7 242.3L300 238L300 301L291.7 301C283.3 301 266.7 301 250 301C233.3 301 216.7 301 200 301C183.3 301 166.7 301 150 301C133.3 301 116.7 301 100 301C83.3 301 66.7 301 50 301C33.3 301 16.7 301 8.3 301L0 301Z" fill="#5771AB" stroke-linecap="round" stroke-linejoin="miter">
+
+
+</path>
+
+<g>
+	<circle class="wave-bottom-with-dots-2 fill-info" cx="230" cy="120" r="13"/>
+	<circle class="wave-bottom-with-dots-1 fill-secondary" cx="270" cy="110" r="8.5"/>
+	<circle class="wave-bottom-with-dots-3 fill-success" cx="180" cy="100" r="5.5"/>
+	<circle class="wave-bottom-with-dots-4 fill-dark" cx="232.5" cy="80" r="2"/>
+</g>
+
+</svg>
