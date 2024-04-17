@@ -49,10 +49,10 @@
                             $count=0;
                         @endphp
                         @foreach ($featured as $product)
-                        @if ($count % 3 == 0) 
+                        @if ($count % 3 == 0)
                         <div class="js-slide">
                             <ul class="list-unstyled products-group mb-0 overflow-visible">
-                        @endif      
+                        @endif
                         <li class="product-item product-item__list row no-gutters mb-6 remove-divider">
                             <div class="col-auto">
                                 <a href="{{ url('/product/details/' . $product->id . '/' . $product->product_slug) }}"
@@ -80,10 +80,10 @@
                             $count++
                         @endphp
 
-                        @if ($count % 3 == 0 || $count == count($featured)) 
+                        @if ($count % 3 == 0 || $count == count($featured))
                             </ul>
                         </div>
-                        @endif 
+                        @endif
                         @endforeach
                     </div>
                 </div>
@@ -109,10 +109,10 @@
                             $count=0;
                         @endphp
                         @foreach ($on_sale as $product)
-                        @if ($count % 3 == 0) 
+                        @if ($count % 3 == 0)
                         <div class="js-slide">
                             <ul class="list-unstyled products-group mb-0 overflow-visible">
-                        @endif      
+                        @endif
                         <li class="product-item product-item__list row no-gutters mb-6 remove-divider">
                             <div class="col-auto">
                                 <a href="{{ url('/product/details/' . $product->id . '/' . $product->product_slug) }}"
@@ -140,10 +140,10 @@
                             $count++
                         @endphp
 
-                        @if ($count % 3 == 0 || $count == count($on_sale)) 
+                        @if ($count % 3 == 0 || $count == count($on_sale))
                             </ul>
                         </div>
-                        @endif 
+                        @endif
                         @endforeach
                     </div>
                 </div>
@@ -168,10 +168,10 @@
                             $count=0;
                         @endphp
                         @foreach ($top_rated as $product)
-                        @if ($count % 3 == 0) 
+                        @if ($count % 3 == 0)
                         <div class="js-slide">
                             <ul class="list-unstyled products-group mb-0 overflow-visible">
-                        @endif      
+                        @endif
                         <li class="product-item product-item__list row no-gutters mb-6 remove-divider">
                             <div class="col-auto">
                                 <a href="{{ url('/product/details/' . $product->id . '/' . $product->product_slug) }}"
@@ -199,10 +199,10 @@
                             $count++
                         @endphp
 
-                        @if ($count % 3 == 0 || $count == count($top_rated)) 
+                        @if ($count % 3 == 0 || $count == count($top_rated))
                             </ul>
                         </div>
-                        @endif 
+                        @endif
                         @endforeach
                     </div>
                 </div>
@@ -330,10 +330,10 @@
     <div class="py-3" style="background:  rgba(88,104,162,1)">
         <div class="container">
             <div class="row justify-content-md-between">
-                <div class="col-md-3 mb-3 mb-md-0 text-center  text-white-70">Copyright © {{ now()->year }} -  <a href="http://thecodegiant.xyz/" target="_blank"
+                <div class="col-md-3 mb-3 mb-md-0 text-center  text-white-70">Copyright © {{ now()->year }} -  <a href="http://anikrifat.xyz/" target="_blank"
                     class="font-weight-bold text-white-70">{{ $setting->copyright }}</a>
                 </div>
-                <div class="col-md-3 mb-3 text-center mb-md-0 text-white-70 ">Developed By : <a href="http://thecodegiant.xyz/" target="_blank"
+                <div class="col-md-3 mb-3 text-center mb-md-0 text-white-70 ">Developed By : <a href="http://anikrifat.xyz/" target="_blank"
                     class="font-weight-bold text-white-70">theCodeGiant</a>
                 </div>
             </div>
