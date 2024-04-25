@@ -21,11 +21,11 @@ return new class extends Migration
             $table->string('qty');
             $table->string('price');
             $table->string('discount')->nullable();
-            $table->string('unit_cost')->nullable();;
+            $table->string('unit_cost')->nullable();
             $table->string('total');
             $table->string('vat')->nullable();
             $table->string('total_vat')->nullable();
-            $table->string('subtotal')->nullable();;
+            $table->string('subtotal')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->decimal('amount'); 
-            $table->date('date');     
-            $table->text('purpose'); 
+            $table->decimal('amount');
+            $table->date('date');
+            $table->text('purpose');
             $table->string('receipt')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

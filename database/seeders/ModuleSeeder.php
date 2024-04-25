@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Module;
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ModuleSeeder extends Seeder
@@ -45,7 +44,7 @@ class ModuleSeeder extends Seeder
                 'ordering' => 4,
                 'created_at' => Carbon::now(),
             ],
-           
+
         ];
 
         Module::insert($modules);

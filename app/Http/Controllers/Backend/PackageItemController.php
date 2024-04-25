@@ -35,7 +35,6 @@ class PackageItemController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -60,7 +59,7 @@ class PackageItemController extends Controller
             ]);
         }
 
-       return response()->json(notification('successfully insert package item','success'));
+        return response()->json(notification('successfully insert package item', 'success'));
     }
 
     /**
@@ -85,13 +84,13 @@ class PackageItemController extends Controller
         $package = Package::findOrFail($id);
         $packageItems = PackageItem::where('package_id', $id)->get();
         $categories = Category::with('subcategory', 'subsubcategory')->orderBy('id', 'asc')->get();
-        return view('backend.package.package_items',compact('package','packageItems','categories'));
+
+        return view('backend.package.package_items', compact('package', 'packageItems', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

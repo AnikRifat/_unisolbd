@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('sales_channel');
             $table->text('subject')->nullable();
             $table->text('to')->nullable();
-            $table->string('grand_total')->nullable();;
+            $table->string('grand_total')->nullable();
             $table->string('vat_on_invoice')->nullable();
             $table->string('total');
             $table->string('discount')->nullable();

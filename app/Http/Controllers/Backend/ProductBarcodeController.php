@@ -15,7 +15,7 @@ class ProductBarcodeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    { 
+    {
 
         //return $request;
         if ($request->has('length') && $request->length != null) {
@@ -23,25 +23,21 @@ class ProductBarcodeController extends Controller
             for ($i = 0; $i < $request->length; $i++) {
                 $barcodeValue .= mt_rand(0, 9);
             }
-        } 
-
-        else if($request->has('input') && $request->input != null){
+        } elseif ($request->has('input') && $request->input != null) {
             $barcodeValue = $request->input;
-        }
-        
-        else {
+        } else {
             $barcodeValue = mt_rand(10000000, 99999999); // Generate a random 8-digit number
         }
-        
+
         $generator = new BarcodeGeneratorPNG();
         $barcode = $generator->getBarcode($barcodeValue, $generator::TYPE_INTERLEAVED_2_5);
         $base64Barcode = base64_encode($barcode);
-        
+
         return response()->json([
             'randomNumber' => $barcodeValue,
-            'barcode' => $base64Barcode
+            'barcode' => $base64Barcode,
         ]);
-        
+
     }
 
     /**
@@ -52,18 +48,18 @@ class ProductBarcodeController extends Controller
     public function create()
     {
         $products = Product::get();
+
         return view('backend.barcode.product_barcode', compact('products'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-       
+
     }
 
     /**
@@ -91,7 +87,6 @@ class ProductBarcodeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -118,11 +113,12 @@ class ProductBarcodeController extends Controller
             'number' => 'required',
         ]);
         $product = Product::findOrFail($request->product_id);
-        $number =  $request->number;
+        $number = $request->number;
         $generator = new BarcodeGeneratorPNG();
         $barcode = $generator->getBarcode(123, $generator::TYPE_INTERLEAVED_2_5);
         $base64Barcode = base64_encode($barcode);
-        return view('backend.barcode.preview_product_barcode',compact('base64Barcode','number'));
-   
+
+        return view('backend.barcode.preview_product_barcode', compact('base64Barcode', 'number'));
+
     }
 }

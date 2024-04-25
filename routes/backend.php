@@ -44,48 +44,44 @@ route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/change/password', [AdminProfileController::class, 'AdminChangePassword'])->name('admin.change.password');
     Route::post('/update/change/password', [AdminProfileController::class, 'AdminUpdateChangePassword'])->name('update.change.password');
 
-
     //brand
     Route::resource('brand', BrandController::class);
     Route::post('/brand/active/{id}', [BrandController::class, 'ActiveBrand'])->name('active.brand');
     Route::post('/brand/inactive/{id}', [BrandController::class, 'InactiveBrand'])->name('inactive.brand');
-
 
     //slider
     Route::resource('slider', SliderController::class);
     Route::post('/slider/active/{id}', [SliderController::class, 'ActiveSlider'])->name('active.slider');
     Route::post('/slider/inactive/{id}', [SliderController::class, 'InactiveSlider'])->name('inactive.slider');
 
-
     //coupon
     Route::resource('coupon', CouponController::class);
     Route::post('/coupon/active/{id}', [CouponController::class, 'ActiveCoupon'])->name('active.coupon');
     Route::post('/coupon/inactive/{id}', [CouponController::class, 'InactiveCoupon'])->name('inactive.coupon');
 
-
     //currency
     Route::resource('currency', CurrencyController::class);
     Route::post('/currency/active/{id}', [CurrencyController::class, 'ActiveCurrency'])->name('active.currency');
 
-     //expense
-     Route::resource('expense', ExpenseController::class);
+    //expense
+    Route::resource('expense', ExpenseController::class);
 
-     //vendor
-     Route::resource('vendor', VendorController::class);
+    //vendor
+    Route::resource('vendor', VendorController::class);
 
-     //site setting
-     Route::resource('site-setting', SiteSettingController::class);
+    //site setting
+    Route::resource('site-setting', SiteSettingController::class);
 
-     //seo setting
-     Route::resource('seo-setting', SeoSettingController::class);
+    //seo setting
+    Route::resource('seo-setting', SeoSettingController::class);
 
-     //social media setting
-     Route::resource('social-media-setting', SocialMediaSettingController::class);
-     Route::post('/social-media-setting/active/{id}', [SocialMediaSettingController::class, 'ActiveSocialMedia'])->name('active.social-media');
-     Route::post('/social-media-setting/inactive/{id}', [SocialMediaSettingController::class, 'InactiveSocialMedia'])->name('inactive.social-media');
+    //social media setting
+    Route::resource('social-media-setting', SocialMediaSettingController::class);
+    Route::post('/social-media-setting/active/{id}', [SocialMediaSettingController::class, 'ActiveSocialMedia'])->name('active.social-media');
+    Route::post('/social-media-setting/inactive/{id}', [SocialMediaSettingController::class, 'InactiveSocialMedia'])->name('inactive.social-media');
 
-     //administrator
-     route::prefix('administration')->group(function () {
+    //administrator
+    route::prefix('administration')->group(function () {
         Route::resource('role', RoleController::class);
         Route::post('/role/active/{id}', [RoleController::class, 'ActiveRole'])->name('active.role');
         Route::post('/role/inactive/{id}', [RoleController::class, 'InactiveRole'])->name('inactive.role');
@@ -96,9 +92,7 @@ route::middleware(['auth:admin'])->group(function () {
         Route::post('/user/active/{id}', [UserManagementController::class, 'ActiveUser'])->name('active.user');
         Route::post('/user/inactive/{id}', [UserManagementController::class, 'InactiveUser'])->name('inactive.user');
 
-
     });
-
 
     //Shipping Area all route
     route::prefix('shipping')->group(function () {
@@ -122,7 +116,6 @@ route::middleware(['auth:admin'])->group(function () {
         route::get('/get-state-data', [ShippingAreaController::class, 'getState'])->name('get-state');
     });
 
-
     //categories
     route::prefix('productcatalog')->group(function () {
         Route::resource('category', CategoryController::class);
@@ -140,7 +133,6 @@ route::middleware(['auth:admin'])->group(function () {
         Route::post('/subsubcategory/inactive/{id}', [SubsubcategoryController::class, 'InactiveSubsubcategory'])->name('inactive.subsubcategory');
     });
 
-
     //quotation
     route::prefix('dealflow')->group(function () {
         //package
@@ -154,28 +146,27 @@ route::middleware(['auth:admin'])->group(function () {
         //quotation
         Route::resource('quotation', QuotationController::class);
         Route::get('/search-quotation-list', [QuotationController::class, 'SearchQuotation'])->name('search.quotation');
-        Route::get('/customer-latest-quotation/{id}',[QuotationController::class,'CustomerLatestQuotation'])->name('customer-latest-quotation');
-        Route::post('/update/quotation/product/{id}',[QuotationController::class,'UpdateQuotationProduct'])->name('update.quotation.product');
-        Route::post('/update/quotation/description/{id}',[QuotationController::class,'UpdateQuotationProductDescription'])->name('update.quotation.description');
-        Route::get('/quotation/{type}/{id}',[QuotationController::class,'quotationEditOrInvoice'])->name('quotation-edit-or-invoice');
-        Route::post('/store/quotation/invoice',[QuotationController::class,'storeQuotationInvoice'])->name('store.quotation.invoice');
-         //quotation
-         Route::resource('quotation-item', QuotationItemController::class);
+        Route::get('/customer-latest-quotation/{id}', [QuotationController::class, 'CustomerLatestQuotation'])->name('customer-latest-quotation');
+        Route::post('/update/quotation/product/{id}', [QuotationController::class, 'UpdateQuotationProduct'])->name('update.quotation.product');
+        Route::post('/update/quotation/description/{id}', [QuotationController::class, 'UpdateQuotationProductDescription'])->name('update.quotation.description');
+        Route::get('/quotation/{type}/{id}', [QuotationController::class, 'quotationEditOrInvoice'])->name('quotation-edit-or-invoice');
+        Route::post('/store/quotation/invoice', [QuotationController::class, 'storeQuotationInvoice'])->name('store.quotation.invoice');
+        //quotation
+        Route::resource('quotation-item', QuotationItemController::class);
     });
-
 
     //product
     route::prefix('product')->group(function () {
 
-         //specification item
-         Route::resource('specification', SpecificationController::class);
-         Route::post('/specification/active/{id}', [SpecificationController::class, 'ActiveSpecification'])->name('active.specification');
-         Route::post('/specification/inactive/{id}', [SpecificationController::class, 'InactiveSpecification'])->name('inactive.specification');
+        //specification item
+        Route::resource('specification', SpecificationController::class);
+        Route::post('/specification/active/{id}', [SpecificationController::class, 'ActiveSpecification'])->name('active.specification');
+        Route::post('/specification/inactive/{id}', [SpecificationController::class, 'InactiveSpecification'])->name('inactive.specification');
 
-         //specification item
-         Route::resource('specification-detail', SpecificationDetailController::class);
-         Route::post('/specification-detail/active/{id}', [SpecificationDetailController::class, 'ActiveSpecificationDetail'])->name('active.specification-detail');
-         Route::post('/specification-detail/inactive/{id}', [SpecificationDetailController::class, 'InactiveSpecificationDetail'])->name('inactive.specification-detail');
+        //specification item
+        Route::resource('specification-detail', SpecificationDetailController::class);
+        Route::post('/specification-detail/active/{id}', [SpecificationDetailController::class, 'ActiveSpecificationDetail'])->name('active.specification-detail');
+        Route::post('/specification-detail/inactive/{id}', [SpecificationDetailController::class, 'InactiveSpecificationDetail'])->name('inactive.specification-detail');
 
         //product
         Route::resource('product', ProductController::class);
@@ -191,16 +182,11 @@ route::middleware(['auth:admin'])->group(function () {
         // Route::get('/barcode-print', [ProductControllerRename::class, 'PrintBarcode'])->name('barcode.print');
         // route::post('/barcode-print-pdf', [ProductControllerRename::class, 'PrintBarcodePdf'])->name('barcode.pdf');
 
-
         //unit
         Route::resource('unit', UnitController::class);
         Route::post('/unit/active/{id}', [UnitController::class, 'ActiveUnit'])->name('active.unit');
         Route::post('/unit/inactive/{id}', [UnitController::class, 'InactiveUnit'])->name('inactive.unit');
     });
-
-
-
-
 
     //purchase route
     route::prefix('purchase')->group(function () {
@@ -230,7 +216,6 @@ route::middleware(['auth:admin'])->group(function () {
         route::get('/view/sales', [SaleController::class, 'ViewSale'])->name('view.sale');
         route::get('/datewise-sale-invoice', [SaleController::class, 'DateWiseSale'])->name('datewise-sale');
 
-
         route::get('/sale/due/payment', [SaleController::class, 'SaleDueCollection'])->name('sale-due-collection');
         route::get('/get/sale/payment/history', [SaleController::class, 'SalePaymentHistory'])->name('sale-payment-history');
         route::post('/sale/make/due/payment', [SaleController::class, 'SaleDuePayment'])->name('sale-due-payment');
@@ -247,15 +232,11 @@ route::middleware(['auth:admin'])->group(function () {
         Route::get('/create/inventory', [ReportController::class, 'CreateInventoryReport'])->name('create.inventory-report');
         Route::get('/preview/inventory', [ReportController::class, 'PreviewInventoryReport'])->name('preview.inventory-report');
 
-
         Route::get('/create/supplier', [ReportController::class, 'CreateSupplierReport'])->name('create.supplier-report');
         Route::get('/preview/suppliers', [ReportController::class, 'PreviewSupplierReport'])->name('preview.supplier-report');
 
-
         Route::get('/create/customer', [ReportController::class, 'CreateCustomerReport'])->name('create.customer-report');
         Route::get('/preview/customers', [ReportController::class, 'PreviewCustomerReport'])->name('preview.customer-report');
-
-
 
         Route::get('/create/expense', [ReportController::class, 'CreateExpenseReport'])->name('create.expense-report');
         Route::get('/preview/expense', [ReportController::class, 'PreviewExpenseReport'])->name('preview.expense-report');
@@ -264,9 +245,8 @@ route::middleware(['auth:admin'])->group(function () {
         Route::get('/{type}/{id}', [ReportController::class, 'QuotationAndSaleInvoiceReport'])->name('preview.quotation-or-invoice.report');
     });
 
-
-      //admin all order routes
-      route::prefix('orders')->group(function () {
+    //admin all order routes
+    route::prefix('orders')->group(function () {
         route::get('/pending/orders', [OrderController::class, 'PendingOrder'])->name('pending-orders');
         route::get('/pending/orders/details/{order_id}', [OrderController::class, 'PendingOrderDetails'])->name('pending.orders.details');
         route::get('/confirmed/orders', [OrderController::class, 'ConfirmedOrder'])->name('confirmed-orders');
@@ -285,26 +265,11 @@ route::middleware(['auth:admin'])->group(function () {
         route::get('/invoice/download/{order_id}', [OrderController::class, 'InvoiceDownload'])->name('invoice.download');
     });
 
-          //admin all user handle routes
-          route::prefix('user-management')->group(function () {
-            route::get('/index', [UserDetailsController::class, 'index'])->name('user-management.index');
+    //admin all user handle routes
+    route::prefix('user-management')->group(function () {
+        route::get('/index', [UserDetailsController::class, 'index'])->name('user-management.index');
 
-        });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    });
 
     //not use those route............
 

@@ -21,8 +21,8 @@ class CurrencyFactory extends Factory
             'currency' => 'taka',
             'code' => 'tk',
             'symbol' => '৳',
-            'status' => 1
-            
+            'status' => 1,
+
         ];
     }
 }

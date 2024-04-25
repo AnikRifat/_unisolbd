@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Actions\Fortify\CreateNewUser;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use Twilio\Rest\Client;
 
 class UserController extends Controller
@@ -70,7 +69,6 @@ class UserController extends Controller
 
     public function StoreUserRegister(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:255', 'unique:users'],
@@ -84,7 +82,7 @@ class UserController extends Controller
             'tin_num' => ['nullable', 'string', 'max:255'],
             'address' => ['nullable', 'string', 'max:255'],
             'city' => ['nullable', 'string', 'max:255'],
-            'post_code' => ['nullable', 'string', 'max:255'],
+            'postcode' => ['nullable', 'string', 'max:255'],
             'country' => ['nullable', 'string', 'max:255'],
         ]);
 
@@ -101,24 +99,29 @@ class UserController extends Controller
         ]);
 
         $data = $request->all();
-        if (isset($input['company_name'])) {
-            $user->userDetails()->create([
-                'company_name' => $data['company_name'],
-                'trade_license_number' => $data['trade_license_number'],
-                'nid_no' => $data['nid_no'],
-                'passport_number' => $data['passport_number'],
-                'bin_num' => $data['bin_num'],
-                'tin_num' => $data['tin_num'],
-                'address' => $data['address'],
-                'city' => $data['city'],
-                'post_code' => $data['post_code'],
-                'country' => $data['country'],
-            ]);
-        }
-        // Login the user after successful registration
-        Auth::login($user);
 
+        $create = $user->userDetails()->create([
+            'company_name' => $data['company_name'],
+            'trade_license_number' => $data['trade_license_number'],
+            'nid_no' => $data['nid_no'],
+            'passport_number' => $data['passport_number'],
+            'bin_num' => $data['bin_num'],
+            'tin_num' => $data['tin_num'],
+            'address' => $data['address'],
+            'city' => $data['city'],
+            'post_code' => $data['postcode'],
+            'country' => 'Bangladesh',
+        ]);
+        // Login the user after successful registration
+        if ($create) {
+            // code...
+            Auth::login($user);
+
+            return redirect()->route('dashboard');
+
+        }
+
+        return redirect()->back()->with(notification('some problem occurs', 'error'));
         // Redirect the user to the dashboard or another page after successful registration
-        return redirect()->route('dashboard');
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class UserDetails extends Model
 {
     use HasFactory,SoftDeletes;
+
     protected $fillable = [
         'user_id',
         'company_name',

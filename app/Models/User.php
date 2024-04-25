@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -30,7 +29,7 @@ class User extends Authenticatable
         'email',
         'password',
         'otp',
-        'profile_photo_path'
+        'profile_photo_path',
     ];
 
     /**
@@ -47,8 +46,9 @@ class User extends Authenticatable
 
     public function userDetails()
     {
-        return $this->hasOne(UserDetails::class);
+        return $this->hasOne(UserDetails::class, 'user_id');
     }
+
     protected $appends = [
         'profile_photo_url',
     ];

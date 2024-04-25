@@ -18,6 +18,7 @@ class SocialMediaSettingController extends Controller
     public function index()
     {
         $socialmedia = SocialMediaSetting::latest()->get();
+
         return view('backend.setting.social_media', compact('socialmedia'));
     }
 
@@ -34,23 +35,23 @@ class SocialMediaSettingController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $request->validate([
             'icon' => 'required',
-            'link' => 'required'
+            'link' => 'required',
         ]);
 
         SocialMediaSetting::insert([
-            'icon' => uploadAndResizeImage($request->file('icon'), "upload/icon/social-media",48,48),
+            'icon' => uploadAndResizeImage($request->file('icon'), 'upload/icon/social-media', 48, 48),
             'link' => $request->link,
-            "created_by" => Auth::guard('admin')->user()->id,
-            "created_at" => Carbon::now()
+            'created_by' => Auth::guard('admin')->user()->id,
+            'created_at' => Carbon::now(),
         ]);
-        return redirect()->back()->with(notification('Successfully Save','success'));
+
+        return redirect()->back()->with(notification('Successfully Save', 'success'));
 
     }
 
@@ -79,32 +80,31 @@ class SocialMediaSettingController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $request->validate([
-            'link' => 'required'
+            'link' => 'required',
         ]);
 
         $data = [
             'link' => $request->link,
-            "updated_by" => Auth::guard('admin')->user()->id,
-            "updated_at" => Carbon::now()
+            'updated_by' => Auth::guard('admin')->user()->id,
+            'updated_at' => Carbon::now(),
         ]; // Added a semicolon here to end the array definition
-
 
         $media = SocialMediaSetting::FindOrFail($id);
 
         if ($request->file('icon')) {
             @unlink(public_path($media->icon));
-            $data['icon'] = uploadAndResizeImage($request->file('icon'), "upload/icon/social-media",48,48); // Fixed the function parameters
+            $data['icon'] = uploadAndResizeImage($request->file('icon'), 'upload/icon/social-media', 48, 48); // Fixed the function parameters
         }
 
         SocialMediaSetting::findOrFail($id)->update($data);
-        return redirect()->back()->with(notification('Successfully Update','success'));
+
+        return redirect()->back()->with(notification('Successfully Update', 'success'));
     }
 
     /**
@@ -116,18 +116,21 @@ class SocialMediaSettingController extends Controller
     public function destroy($id)
     {
         SocialMediaSetting::findOrFail($id)->delete();
-        return redirect()->back()->with(notification('Delete Social Media Successfully','success'));
+
+        return redirect()->back()->with(notification('Delete Social Media Successfully', 'success'));
     }
 
     public function ActiveSocialMedia($id)
     {
-        SocialMediaSetting::where('id','=',$id)->update(['status' => 1]);
-        return redirect()->back()->with(notification('Social Media Active Successfully','success'));
+        SocialMediaSetting::where('id', '=', $id)->update(['status' => 1]);
+
+        return redirect()->back()->with(notification('Social Media Active Successfully', 'success'));
     }
 
     public function InactiveSocialMedia($id)
     {
-        SocialMediaSetting::where('id','=',$id)->update(['status' => 0]);
-        return redirect()->back()->with(notification('Social Media Inactive Successfully','success'));
+        SocialMediaSetting::where('id', '=', $id)->update(['status' => 0]);
+
+        return redirect()->back()->with(notification('Social Media Inactive Successfully', 'success'));
     }
 }

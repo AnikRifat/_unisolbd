@@ -17,8 +17,9 @@ class CouponController extends Controller
      */
     public function index()
     {
-        $coupons=Coupon::orderBy('id','DESC')->get();
-        return view('backend.coupon.coupon',compact('coupons'));
+        $coupons = Coupon::orderBy('id', 'DESC')->get();
+
+        return view('backend.coupon.coupon', compact('coupons'));
     }
 
     /**
@@ -34,7 +35,6 @@ class CouponController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -49,11 +49,11 @@ class CouponController extends Controller
             'coupon_name' => strtoupper($request->coupon_name),
             'coupon_discount' => $request->coupon_discount,
             'coupon_validity' => $request->coupon_validity,
-            "created_by" => Auth::guard('admin')->user()->id,
-            "created_at" => Carbon::now()
+            'created_by' => Auth::guard('admin')->user()->id,
+            'created_at' => Carbon::now(),
         ]);
 
-        return redirect()->back()->with(notification('Coupon Save Successfully','success'));
+        return redirect()->back()->with(notification('Coupon Save Successfully', 'success'));
     }
 
     /**
@@ -81,14 +81,13 @@ class CouponController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $request->validate([
-            'coupon_name' => 'required|unique:coupons,coupon_name,' . $id,
+            'coupon_name' => 'required|unique:coupons,coupon_name,'.$id,
             'coupon_discount' => 'required',
             'coupon_validity' => 'required',
         ]);
@@ -97,11 +96,11 @@ class CouponController extends Controller
             'coupon_name' => strtoupper($request->coupon_name),
             'coupon_discount' => $request->coupon_discount,
             'coupon_validity' => $request->coupon_validity,
-            "updated_by" => Auth::guard('admin')->user()->id,
-            "updated_at" => Carbon::now()
+            'updated_by' => Auth::guard('admin')->user()->id,
+            'updated_at' => Carbon::now(),
         ]);
 
-        return redirect()->back()->with(notification('Coupon Update Successfully','success'));
+        return redirect()->back()->with(notification('Coupon Update Successfully', 'success'));
     }
 
     /**
@@ -113,18 +112,21 @@ class CouponController extends Controller
     public function destroy($id)
     {
         Coupon::findOrFail($id)->delete();
-        return redirect()->back()->with(notification('Coupon Delete Successfully','success'));
+
+        return redirect()->back()->with(notification('Coupon Delete Successfully', 'success'));
     }
 
     public function ActiveCoupon($id)
     {
-        Coupon::where('id','=',$id)->update(['status' => 1]);
-        return redirect()->back()->with(notification('Coupon Active Successfully','success'));
+        Coupon::where('id', '=', $id)->update(['status' => 1]);
+
+        return redirect()->back()->with(notification('Coupon Active Successfully', 'success'));
     }
 
     public function InactiveCoupon($id)
     {
-        Coupon::where('id','=',$id)->update(['status' => 0]);
-        return redirect()->back()->with(notification('Coupon Inactive Successfully','success'));
+        Coupon::where('id', '=', $id)->update(['status' => 0]);
+
+        return redirect()->back()->with(notification('Coupon Inactive Successfully', 'success'));
     }
 }

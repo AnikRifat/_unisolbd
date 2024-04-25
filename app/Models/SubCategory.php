@@ -8,16 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class SubCategory extends Model
 {
     use HasFactory;
-    protected $guarded=[];
+
+    protected $guarded = [];
 
     // public function category(){
     //     return $this->hasMany(Category::class, 'category_id', 'id');
     // }
 
-
     public function category()
-     {
-         return $this->belongsTo(Category::class);
-     }
-
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

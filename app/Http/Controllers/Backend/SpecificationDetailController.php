@@ -20,6 +20,7 @@ class SpecificationDetailController extends Controller
     public function index()
     {
         $specificationDetails = SpecificationDetail::with('category', 'specification')->latest()->get();
+
         return response()->json($specificationDetails);
     }
 
@@ -30,16 +31,16 @@ class SpecificationDetailController extends Controller
      */
     public function create()
     {
-        $categories = Category::orderBy('category_name', "ASC")->get();
+        $categories = Category::orderBy('category_name', 'ASC')->get();
         $specificationDetails = SpecificationDetail::with('category', 'specification')->latest()->get();
         $specifications = Specification::latest()->get();
+
         return view('backend.product.specification_details', compact('specifications', 'specificationDetails', 'categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -47,7 +48,7 @@ class SpecificationDetailController extends Controller
         $request->validate([
             'specification_id' => 'required',
             'details' => 'required',
-            'name' => 'required'
+            'name' => 'required',
         ]);
 
         SpecificationDetail::insert([
@@ -59,7 +60,7 @@ class SpecificationDetailController extends Controller
             'created_by' => Auth::guard('admin')->user()->id,
         ]);
 
-        return response()->json(notification('Specificaiton Details Save Successfully','success'));
+        return response()->json(notification('Specificaiton Details Save Successfully', 'success'));
     }
 
     /**
@@ -87,7 +88,6 @@ class SpecificationDetailController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -96,7 +96,7 @@ class SpecificationDetailController extends Controller
         $request->validate([
             'specification_id' => 'required',
             'details' => 'required',
-            'name' => 'required'
+            'name' => 'required',
         ]);
 
         SpecificationDetail::findOrFail($id)->update([
@@ -108,7 +108,7 @@ class SpecificationDetailController extends Controller
             'updated_by' => Auth::guard('admin')->user()->id,
         ]);
 
-        return response()->json(notification('Specificaiton Details Update Successfully','success'));
+        return response()->json(notification('Specificaiton Details Update Successfully', 'success'));
     }
 
     /**
@@ -122,17 +122,17 @@ class SpecificationDetailController extends Controller
         //
     }
 
-
     public function ActiveSpecificationDetail($id)
     {
-        SpecificationDetail::where('id','=',$id)->update(['status' => 1]);
-        return response()->json(notification('Specification Detail Active Successfully','success'));
+        SpecificationDetail::where('id', '=', $id)->update(['status' => 1]);
+
+        return response()->json(notification('Specification Detail Active Successfully', 'success'));
     }
 
     public function InactiveSpecificationDetail($id)
     {
-        SpecificationDetail::where('id','=',$id)->update(['status' => 0]);
-        return response()->json(notification('Specification Detail Inactive Successfully','success'));
-    }
+        SpecificationDetail::where('id', '=', $id)->update(['status' => 0]);
 
+        return response()->json(notification('Specification Detail Inactive Successfully', 'success'));
+    }
 }

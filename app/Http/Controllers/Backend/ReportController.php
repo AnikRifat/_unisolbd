@@ -22,22 +22,28 @@ class ReportController extends Controller
     {
         return view('backend.report.create.sale_report');
     }
+
     public function CreatePurchaseReport()
     {
         return view('backend.report.create.purchase_report');
     }
+
     public function CreateInventoryReport()
     {
         return view('backend.report.create.inventory_report');
     }
+
     public function CreateSupplierReport()
     {
         $suppliers = Vendor::where('type', '1')->get();
+
         return view('backend.report.create.supplier_report', compact('suppliers'));
     }
+
     public function CreateCustomerReport()
     {
         $customers = Vendor::where('type', '2')->get();
+
         return view('backend.report.create.customer_report', compact('customers'));
     }
 
@@ -70,7 +76,6 @@ class ReportController extends Controller
     //     return view('backend.report.preview.purchase_report', compact('setting', 'invoice'));
     // }
 
-
     public function PreviewPurchaseReport(Request $request)
     {
         //return $request;
@@ -89,6 +94,7 @@ class ReportController extends Controller
             ->whereBetween('purchase_date', [$startDateFormatted, $endDateFormatted])
             ->get();
         $setting = SiteSetting::first();
+
         // Return a view and pass the data to it
         return view('backend.report.preview.purchase_report', compact('invoice', 'setting', 'startDate', 'endDate'));
     }
@@ -111,6 +117,7 @@ class ReportController extends Controller
             ->whereBetween('sale_date', [$startDateFormatted, $endDateFormatted])
             ->get();
         $setting = SiteSetting::first();
+
         // Return a view and pass the data to it
         return view('backend.report.preview.sale_report', compact('invoice', 'setting', 'startDate', 'endDate'));
     }
@@ -127,7 +134,6 @@ class ReportController extends Controller
         // Convert the 'MM/DD/YYYY' formatted dates to 'YYYY-MM-DD' format
         $startDateFormatted = date('Y-m-d', strtotime($startDate));
         $endDateFormatted = date('Y-m-d', strtotime($endDate));
-
 
         // Initialize the query
         $query = SaleInvoice::with('saleDetails.product', 'saleDetails.unit')
@@ -166,13 +172,10 @@ class ReportController extends Controller
         $query = PurchaseInvoice::with('purchaseDetails.product', 'purchaseDetails.unit', 'purchaseDetails.supplier')
             ->whereBetween('purchase_date', [$startDateFormatted, $endDateFormatted]);
 
-
-
         // Add the 'type' condition only if $type is not equal to 0
         if ($type != 0) {
             $query->where('type', $type);
         }
-
 
         // Add a condition to filter by supplier_id in purchaseDetails
         if ($supplierId != 0) {
@@ -194,8 +197,6 @@ class ReportController extends Controller
     public function PreviewInventoryReport(Request $request)
     {
 
-
-
         // Retrieve the start date, end date, and purchase type from the request
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
@@ -203,8 +204,6 @@ class ReportController extends Controller
         // Convert the 'MM/DD/YYYY' formatted dates to 'YYYY-MM-DD' format
         $startDateFormatted = date('Y-m-d', strtotime($startDate));
         $endDateFormatted = date('Y-m-d', strtotime($endDate));
-
-
 
         // return $results = DB::table('products as p')
         //     ->select(
@@ -298,7 +297,6 @@ class ReportController extends Controller
     //         'admin',
     //     ])->findOrFail($id);
 
-
     //     $currency = Currency::limit(1)->get()->first();
     //     $setting = SiteSetting::first();
 
@@ -315,7 +313,7 @@ class ReportController extends Controller
     {
         //return $type;
 
-        if ($type == "quotation") {
+        if ($type == 'quotation') {
             $invoice = CustomerPackage::with([
                 'customerPackageItems' => function ($query) {
                     // Add a condition to retrieve only items where delete is equal to 0
@@ -326,16 +324,15 @@ class ReportController extends Controller
                 'admin',
             ])->findOrFail($id);
 
-
             $currency = Currency::limit(1)->get()->first();
             $setting = SiteSetting::first();
             $customerPackage = CustomerPackage::with('customerPackageItems.product', 'package', 'vendor')->findOrFail($id);
-            if ($invoice->channel == "offline") {
-                return view('backend.quotation.quotation_report', compact('setting', 'currency', 'invoice','type'));
+            if ($invoice->channel == 'offline') {
+                return view('backend.quotation.quotation_report', compact('setting', 'currency', 'invoice', 'type'));
             } else {
                 return view('frontend.quotationbuilder.quotation_report', compact('setting', 'currency', 'customerPackage'));
             }
-        } elseif ($type == "quotation-invoice" || $type == "sale") {
+        } elseif ($type == 'quotation-invoice' || $type == 'sale') {
 
             //return $type;
             $invoice = SaleInvoice::with([
@@ -348,11 +345,10 @@ class ReportController extends Controller
                 'admin',
             ])->findOrFail($id);
 
-
             $currency = Currency::limit(1)->get()->first();
             $setting = SiteSetting::first();
 
-            return view('backend.quotation.quotation_report', compact('setting', 'currency', 'invoice','type'));
+            return view('backend.quotation.quotation_report', compact('setting', 'currency', 'invoice', 'type'));
         }
     }
 }

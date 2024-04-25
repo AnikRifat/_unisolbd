@@ -11,6 +11,7 @@ use App\Http\Controllers\User\CashController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\StripeController;
 use App\Http\Controllers\User\UserController;
+use App\Models\CustomerPackage;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -31,13 +32,10 @@ Route::middleware('admin:admin')->group(function () {
     Route::post('admin/login', [AdminController::class, 'store'])->name('admin.login');
 });
 
-
-
-
 Route::middleware([
     'auth:sanctum,admin',
     config('jetstream.auth_session'),
-    'verified'
+    'verified',
 ])->group(function () {
     Route::get('/admin/dashboard', function () {
 
@@ -60,7 +58,6 @@ Route::middleware([
         //         ->orderBy('menu_ordering') // Use the alias for ordering
         //         ->orderBy('submenu_ordering') // Use the alias for ordering
         //         ->get();
-
 
         //     $hierarchicalData = [];
         //     foreach ($rolePermissions as $item) {
@@ -115,8 +112,6 @@ Route::middleware([
         //     session(['hierarchicalData' => $hierarchicalData]);
         // }
 
-
-
         // if (!empty(session('hierarchicalData'))) {
         //     $firstModuleName = key(session('hierarchicalData'));
         //     $activeModuleData = session('hierarchicalData')[$firstModuleName];
@@ -126,7 +121,6 @@ Route::middleware([
         //     session(['activeModule' => $activeModuleData]);
         // }
 
-
         //    return $activeModule = session('activeModule');
 
         //return $hierarchicalData = session('hierarchicalData');
@@ -134,10 +128,6 @@ Route::middleware([
         return view('admin.index');
     })->name('admin.dashboard')->middleware('auth:admin');
 });
-
-
-
-
 
 //user route
 Route::post('/user/register/store', [UserController::class, 'StoreUserRegister'])->name('register.store');
@@ -150,15 +140,18 @@ Route::post('/user/profile/store', [IndexController::class, 'UserProfileStore'])
 Route::get('/user/change/password', [IndexController::class, 'UserChangePassword'])->name('user.change.password');
 Route::post('/user/update/password', [IndexController::class, 'UserUpdatePassword'])->name('user.update.password');
 
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
-    'verified'
+    'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
         $id = Auth::user()->id;
         $user = User::find($id);
+        $quotations = CustomerPackage::with('vendor')
+            ->where('user_id', auth()->user()->id)
+            ->orderBy('id', 'DESC')
+            ->get();
         return view('dashboard', compact('user'));
     })->name('dashboard');
 });
@@ -168,17 +161,9 @@ Route::middleware([
 // route::get('/language/english',[LanguageController::class,'English'])->name('english.language');
 // //product details route
 
-
-
 //product tags route
 route::get('/product/tag/{tag}', [IndexController::class, 'TagWiseProduct']);
 route::get('/product/view/modal/{id}', [IndexController::class, 'ProductViewAjax']);
-
-
-
-
-
-
 
 Route::group(['prefix' => 'user', 'middleware' => ['user', 'auth'], 'namespace' => 'user'], function () {
     // route::get('/wishlist', [WishlistController::class, 'ViewWishlist'])->name('wishlist');
@@ -197,8 +182,6 @@ Route::group(['prefix' => 'user', 'middleware' => ['user', 'auth'], 'namespace' 
     route::post('/order/tracking', [AllUserController::class, 'OrderTracking'])->name('order.tracking');
 });
 
-
-
 //not use//
 
 route::get('/cart_remove/{rowId}', [CartPageController::class, 'RemoveCart'])->name('user-remove-cart');
@@ -212,16 +195,14 @@ route::get('/coupon-calculation', [CartController::class, 'CouponCalculation']);
 
 //end not use//
 
-
 //all checkout route
 route::get('/district-get/ajax/{id}', [CheckoutController::class, 'LoadDistrict']);
 route::get('/state-get/ajax/{id}', [CheckoutController::class, 'LoadState']);
 route::post('/checkout/store', [CheckoutController::class, 'CheckoutStore'])->name('checkout.store');
 
 //all search product route....
-route::get('/search', [IndexController::class, 'ProductSearch'])->name('product.search');
-route::post('search-product', [IndexController::class, 'SearchProduct']);
-
+route::get('/search', [IndexController::class, 'ProductSearch'])->name('product.search')->middleware(['user', 'auth']);
+route::post('search-product', [IndexController::class, 'SearchProduct'])->middleware(['user', 'auth']);
 
 Route::get('/barcode', [ProductController::class, 'GenerateBarcode']);
 
@@ -229,12 +210,9 @@ Route::get('/test', function () {
     return view('backend.sale.sale_report'); // Replace 'your.view.name' with the actual path to your view file
 });
 
-
-
-
 route::get('/frontend/district/ajax/{id}', [ShippingAreaController::class, 'getDistrict'])->name('get-district-fronted');
 route::get('/frontend/state/ajax/{id}', [ShippingAreaController::class, 'getStateById'])->name('get-state-fronted');
 
-require __DIR__ . '/backend.php';
-require __DIR__ . '/frontend.php';
-require __DIR__ . '/landingPage.php';
+require __DIR__.'/backend.php';
+require __DIR__.'/frontend.php';
+require __DIR__.'/landingPage.php';

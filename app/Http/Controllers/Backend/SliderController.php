@@ -17,8 +17,9 @@ class SliderController extends Controller
      */
     public function index()
     {
-        $slider=Slider::latest()->where('type',1)->get();
-        return view('backend.slider.slider',compact('slider'));
+        $slider = Slider::latest()->where('type', 1)->get();
+
+        return view('backend.slider.slider', compact('slider'));
     }
 
     /**
@@ -34,30 +35,29 @@ class SliderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $request->validate([
-            'slider_img' => 'required'
+            'slider_img' => 'required',
         ]);
 
         $data = [
             'title' => $request->title,
-            'type' =>1,
+            'type' => 1,
             'description' => $request->description,
-            "created_by" => Auth::guard('admin')->user()->id,
-            "created_at" => Carbon::now()
+            'created_by' => Auth::guard('admin')->user()->id,
+            'created_at' => Carbon::now(),
         ]; // Added a semicolon here to end the array definition
 
-
         if ($request->file('slider_img')) {
-            $data['slider_img'] = uploadAndResizeImage($request->file('slider_img'), "upload/slider",400,400); // Fixed the function parameters
+            $data['slider_img'] = uploadAndResizeImage($request->file('slider_img'), 'upload/slider', 400, 400); // Fixed the function parameters
         }
 
         Slider::insert($data);
-        return redirect()->back()->with(notification('Slider Add Successfully','success'));
+
+        return redirect()->back()->with(notification('Slider Add Successfully', 'success'));
     }
 
     /**
@@ -85,7 +85,6 @@ class SliderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -96,20 +95,20 @@ class SliderController extends Controller
         $data = [
             'title' => $request->title,
             'description' => $request->description,
-            "updated_by" => Auth::guard('admin')->user()->id,
-            "updated_at" => Carbon::now()
+            'updated_by' => Auth::guard('admin')->user()->id,
+            'updated_at' => Carbon::now(),
         ]; // Added a semicolon here to end the array definition
-
 
         $slider = Slider::FindOrFail($id);
 
         if ($request->file('slider_img')) {
             @unlink($slider->slider_img);
-            $data['slider_img'] = uploadAndResizeImage($request->file('slider_img'), "upload/slider",1366,768); // Fixed the function parameters
+            $data['slider_img'] = uploadAndResizeImage($request->file('slider_img'), 'upload/slider', 1366, 768); // Fixed the function parameters
         }
 
         Slider::findOrFail($id)->update($data);
-        return redirect()->back()->with(notification('Slider Update Successfully','success'));
+
+        return redirect()->back()->with(notification('Slider Update Successfully', 'success'));
     }
 
     /**
@@ -123,17 +122,17 @@ class SliderController extends Controller
         //
     }
 
-
     public function ActiveSlider($id)
     {
-        Slider::where('id','=',$id)->update(['status' => 1]);
-        return redirect()->back()->with(notification('Slider Active Successfully','success'));
+        Slider::where('id', '=', $id)->update(['status' => 1]);
+
+        return redirect()->back()->with(notification('Slider Active Successfully', 'success'));
     }
 
     public function InactiveSlider($id)
     {
-        Slider::where('id','=',$id)->update(['status' => 0]);
-        return redirect()->back()->with(notification('Slider Inactive Successfully','success'));
-    }
+        Slider::where('id', '=', $id)->update(['status' => 0]);
 
+        return redirect()->back()->with(notification('Slider Inactive Successfully', 'success'));
+    }
 }

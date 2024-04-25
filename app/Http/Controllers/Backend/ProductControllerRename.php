@@ -6,32 +6,30 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\MultiImg;
-use App\Models\SubCategory;
-use App\Models\SubSubCategory;
 use App\Models\Product;
 use App\Models\ProductSpecification;
 use App\Models\Specification;
 use App\Models\SpecificationDetail;
+use App\Models\SubCategory;
+use App\Models\SubSubCategory;
 use App\Models\Unit;
-use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Picqer\Barcode\BarcodeGeneratorPNG;
-use Intervention\Image\Facades\Image;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Intervention\Image\Facades\Image;
+use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class ProductControllerRename extends Controller
 {
-
     public function ViewSpecification()
     {
         // $categories=Category::orderBy('category_name',"ASC")->get();
         $specification = Specification::latest()->get();
+
         return view('backend.product.view_specification', compact('specification'));
     }
-
 
     public function StoreSpecification(Request $request)
     {
@@ -43,22 +41,23 @@ class ProductControllerRename extends Controller
         Specification::insert([
             // 'category_id' => $request->category_id,
             'name' => $request->name,
-            'filter' => $request->filter
+            'filter' => $request->filter,
         ]);
 
-        $notification = array([
+        $notification = [[
             'message' => 'Product Specificaiton Save Successfully',
             'type' => 'success',
-        ]);
+        ]];
+
         return redirect()->back()->with($notification);
     }
 
     public function EditSpecification($id)
     {
         $specification = Specification::findOrFail($id);
+
         return view('backend.product.edit_specification', compact('specification'));
     }
-
 
     public function UpdateSpecification(Request $request, $id)
     {
@@ -67,18 +66,18 @@ class ProductControllerRename extends Controller
             // 'category_id' => 'required'
         ]);
 
-
         Specification::findOrFail($id)->update([
             // 'category_id' => $request->category_id,
             'name' => $request->name,
-            'filter' => $request->filter
+            'filter' => $request->filter,
         ]);
 
-        $notification = array([
+        $notification = [[
 
             'message' => 'Specification Update Successfully',
             'type' => 'success',
-        ]);
+        ]];
+
         return redirect()->route('view.specification')->with($notification);
     }
 
@@ -88,6 +87,7 @@ class ProductControllerRename extends Controller
         if ($status->status == 1) {
             Specification::findOrFail($id)->update(['status' => 0]);
         }
+
         return redirect()->back();
     }
 
@@ -97,19 +97,16 @@ class ProductControllerRename extends Controller
         if ($status->status == 0) {
             Specification::findOrFail($id)->update(['status' => 1]);
         }
+
         return redirect()->back();
     }
 
-
-
-
-
-
     public function ViewSpecificationDetails()
     {
-        $categories = Category::orderBy('category_name', "ASC")->get();
+        $categories = Category::orderBy('category_name', 'ASC')->get();
         $specification_details = SpecificationDetail::with('category', 'specification')->latest()->get();
         $specifications = Specification::latest()->get();
+
         // return $specification_details;
         return view('backend.product.view_specification_details', compact('specifications', 'specification_details', 'categories'));
     }
@@ -122,8 +119,9 @@ class ProductControllerRename extends Controller
             ->join('specifications', 'specification_details.specification_id', '=', 'specifications.id')
             ->get();
 
-        return  $specifications;
+        return $specifications;
     }
+
     public function StoreSpecificationDetails(Request $request)
     {
         // return $request->all();
@@ -132,7 +130,7 @@ class ProductControllerRename extends Controller
         $request->validate([
             'specification_id' => 'required',
             'details' => 'required',
-            'name' => 'required'
+            'name' => 'required',
         ]);
 
         SpecificationDetail::insert([
@@ -142,23 +140,23 @@ class ProductControllerRename extends Controller
             'details' => $request->details,
         ]);
 
-        $notification = array([
+        $notification = [[
             'message' => 'Product Specificaiton Save Successfully',
             'type' => 'success',
-        ]);
+        ]];
+
         return redirect()->back()->with($notification);
     }
 
     public function EditSpecificationDetails($id)
     {
-        $categories = Category::orderBy('category_name', "ASC")->get();
+        $categories = Category::orderBy('category_name', 'ASC')->get();
         $specifications = Specification::latest()->get();
         $specification_details = SpecificationDetail::findOrFail($id);
 
         // return $specification_details->specification;
         return view('backend.product.edit_specification_details', compact('specification_details', 'specifications', 'categories'));
     }
-
 
     public function UpdateSpecificationDetails(Request $request, $id)
     {
@@ -169,7 +167,7 @@ class ProductControllerRename extends Controller
         $request->validate([
             'specification_id' => 'required',
             'details' => 'required',
-            'name' => 'required'
+            'name' => 'required',
         ]);
 
         SpecificationDetail::findOrFail($id)->update([
@@ -179,10 +177,11 @@ class ProductControllerRename extends Controller
             'details' => $request->details,
         ]);
 
-        $notification = array([
+        $notification = [[
             'message' => 'SpecificationDetails Update Successfully',
             'type' => 'success',
-        ]);
+        ]];
+
         return redirect()->route('view.specificationdetails')->with($notification);
     }
 
@@ -192,6 +191,7 @@ class ProductControllerRename extends Controller
         if ($status->status == 1) {
             SpecificationDetail::findOrFail($id)->update(['status' => 0]);
         }
+
         return redirect()->back();
     }
 
@@ -201,17 +201,17 @@ class ProductControllerRename extends Controller
         if ($status->status == 0) {
             SpecificationDetail::findOrFail($id)->update(['status' => 1]);
         }
+
         return redirect()->back();
     }
-
 
     public function AddQuantity()
     {
         $specifications = Specification::where('status', 1)->get();
         $products = Product::get();
+
         return view('backend.product.add_specificaiton_wise_qty', compact('products', 'specifications'));
     }
-
 
     public function GetSpecificaitonDetails(Request $request)
     {
@@ -236,12 +236,12 @@ class ProductControllerRename extends Controller
         $subsubcategories = SubSubCategory::latest()->get();
         $brands = Brand::latest()->get();
         $units = Unit::latest()->get();
+
         return view('backend.product.add_product', compact('categories', 'subcategories', 'subsubcategories', 'units', 'brands', 'specifications'));
     }
 
     public function StoreProduct(Request $request)
     {
-
 
         $request->validate([
             'category_id' => 'required',
@@ -279,15 +279,13 @@ class ProductControllerRename extends Controller
                 'special_offer' => $request->special_offer,
                 'top_rated' => $request->top_rated,
                 'is_expireable' => $request->is_expireable,
-                "created_by" => Auth::guard('admin')->user()->id,
-                "created_at" => Carbon::now()
+                'created_by' => Auth::guard('admin')->user()->id,
+                'created_at' => Carbon::now(),
             ];
 
-
             if ($request->file('product_thambnail')) {
-                $data['product_thambnail'] = uploadAndResizeImage($request->file('product_thambnail'), "upload/products/thambnails", 720, 660); // Fixed the function parameters
+                $data['product_thambnail'] = uploadAndResizeImage($request->file('product_thambnail'), 'upload/products/thambnails', 720, 660); // Fixed the function parameters
             }
-
 
             $product_id = Product::insertGetId($data);
 
@@ -303,21 +301,19 @@ class ProductControllerRename extends Controller
                         'specification_id' => $specification_id[$i],
                         'specification_details_id' => $specification_details_id[$i],
                         'product_id' => $product_id,
-                        "created_by" => Auth::guard('admin')->user()->id,
+                        'created_by' => Auth::guard('admin')->user()->id,
                         'created_at' => Carbon::now(),
                     ]);
                 }
             }
-
-
 
             $images = $request->file('multi_img');
             if ($images != null) {
                 foreach ($images as $img) {
                     MultiImg::insert([
                         'product_id' => $product_id,
-                        'photo_name' => uploadAndResizeImage($img, "upload/products/multi-image", 720, 660),
-                        "created_by" => Auth::guard('admin')->user()->id,
+                        'photo_name' => uploadAndResizeImage($img, 'upload/products/multi-image', 720, 660),
+                        'created_by' => Auth::guard('admin')->user()->id,
                         'created_at' => Carbon::now(),
                     ]);
                 }
@@ -331,15 +327,17 @@ class ProductControllerRename extends Controller
             DB::rollback();
 
             // Handle the exception or return an error response
-            return redirect()->back()->withInput()->with(notification('Error: ' . $e->getMessage(), 'error'));
+            return redirect()->back()->withInput()->with(notification('Error: '.$e->getMessage(), 'error'));
         }
     }
 
     public function ManageProduct()
     {
         $Products = Product::latest()->get();
+
         return view('backend.product.product_view', compact('Products'));
     }
+
     public function EditProduct($id)
     {
         $units = Unit::latest()->get();
@@ -350,14 +348,14 @@ class ProductControllerRename extends Controller
         $subcategories = SubCategory::latest()->get();
         $subsubcategories = SubSubCategory::latest()->get();
         $product = Product::with('category.subcategory', 'category.subsubcategory')->findOrFail($id);
-        return view('backend.product.product_edit', compact('brands', 'units', 'categories','subcategories','subsubcategories','product', 'multiImgs', 'specifications'));
+
+        return view('backend.product.product_edit', compact('brands', 'units', 'categories', 'subcategories', 'subsubcategories', 'product', 'multiImgs', 'specifications'));
     }
 
     public function ProductDataUpdate(Request $request, $id)
     {
 
-
-         //return $request->all();
+        //return $request->all();
 
         $request->validate([
             'category_id' => 'required',
@@ -387,14 +385,14 @@ class ProductControllerRename extends Controller
             'special_offer' => $request->special_offer,
             'top_rated' => $request->top_rated,
             'is_expireable' => $request->is_expireable,
-            "updated_by" => Auth::guard('admin')->user()->id,
-            "updated_at" => Carbon::now()
+            'updated_by' => Auth::guard('admin')->user()->id,
+            'updated_at' => Carbon::now(),
         ];
 
         if ($request->file('product_thambnail')) {
             $product = Product::findOrFail($id);
             @unlink($product->product_thambnail);
-            $data['product_thambnail'] = uploadAndResizeImage($request->file('product_thambnail'), "upload/products/thambnails", 720, 660); // Fixed the function parameters
+            $data['product_thambnail'] = uploadAndResizeImage($request->file('product_thambnail'), 'upload/products/thambnails', 720, 660); // Fixed the function parameters
         }
 
         $product_id = Product::findOrFail($id)->update($data);
@@ -421,13 +419,11 @@ class ProductControllerRename extends Controller
 
     }
 
-
     // public function ViewMultiImg($product_id)
     // {
     //     $MultiImage=MultiImg::where("product_id",$product_id)->get();
     //     return response()->json($MultiImage);
     // }
-
 
     // public function StoreMultiImg(Request $request,$product_id)
     // {
@@ -451,23 +447,19 @@ class ProductControllerRename extends Controller
 
     //}
 
-
-
-
-
     public function MultiImageUpdate(Request $request)
     {
 
         if ($request->file('multi_img')) {
-            $images  = $request->file('multi_img');
+            $images = $request->file('multi_img');
             foreach ($images as $id => $image) {
                 $old_image = MultiImg::findOrFail($id);
                 if (file_exists($old_image->photo_name)) {
                     unlink($old_image->photo_name);
                 }
-                $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-                Image::make($image)->resize(917, 1000)->save(public_path('upload/products/multi-image/' . $name_gen));
-                $save_url = 'upload/products/multi-image/' . $name_gen;
+                $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+                Image::make($image)->resize(917, 1000)->save(public_path('upload/products/multi-image/'.$name_gen));
+                $save_url = 'upload/products/multi-image/'.$name_gen;
 
                 MultiImg::where('id', $id)->update([
                     'photo_name' => $save_url,
@@ -476,11 +468,11 @@ class ProductControllerRename extends Controller
             }
         }
 
-        $notification = array([
+        $notification = [[
 
             'message' => 'Product Multi Image Update Successfully',
             'type' => 'success',
-        ]);
+        ]];
 
         return redirect()->route('manage-product')->with($notification);
     }
@@ -491,9 +483,9 @@ class ProductControllerRename extends Controller
         $old_image = Product::findOrFail($id);
         if ($request->file('product_thambnail')) {
             unlink($old_image->product_thambnail);
-            $gen_name = hexdec(uniqid()) . '.' . $new_image->getClientOriginalExtension();
-            Image::make($new_image)->resize(917, 1000)->save(public_path('upload/products/thambnails/' . $gen_name));
-            $save_url = 'upload/products/thambnails/' . $gen_name;
+            $gen_name = hexdec(uniqid()).'.'.$new_image->getClientOriginalExtension();
+            Image::make($new_image)->resize(917, 1000)->save(public_path('upload/products/thambnails/'.$gen_name));
+            $save_url = 'upload/products/thambnails/'.$gen_name;
             Product::findOrFail($id)->update([
 
                 'product_thambnail' => $save_url,
@@ -501,12 +493,12 @@ class ProductControllerRename extends Controller
             ]);
         }
 
-
-        $notification = array([
+        $notification = [[
 
             'message' => 'Product Thaminail Update Successfully',
             'type' => 'success',
-        ]);
+        ]];
+
         return redirect()->route('manage-product')->with($notification);
     }
 
@@ -515,23 +507,22 @@ class ProductControllerRename extends Controller
         $multiimg = MultiImg::findOrFail($request->id);
         unlink($multiimg->photo_name);
         MultiImg::findOrFail($request->id)->delete();
+
         return redirect()->back();
     }
 
     public function ProductInactive($id)
     {
         Product::findOrFail($id)->update([
-            'status' => 0
+            'status' => 0,
         ]);
 
-        $notification = array([
+        $notification = [[
 
             'message' => 'Product Inactive Successfully',
             'type' => 'success',
 
-
-        ]);
-
+        ]];
 
         return redirect()->back()->with($notification);
     }
@@ -539,14 +530,15 @@ class ProductControllerRename extends Controller
     public function ProductActive($id)
     {
         Product::findOrFail($id)->update([
-            'status' => 1
+            'status' => 1,
         ]);
 
-        $notification = array([
+        $notification = [[
 
             'message' => 'Product Active Successfully',
             'type' => 'success',
-        ]);
+        ]];
+
         return redirect()->back()->with($notification);
     }
 
@@ -568,10 +560,9 @@ class ProductControllerRename extends Controller
     public function ProductStock()
     {
         $Products = Product::latest()->get();
+
         return view('backend.product.product_stock', compact('Products'));
     }
-
-
 
     public function generateBarcode(Request $request)
     {
@@ -589,14 +580,15 @@ class ProductControllerRename extends Controller
 
             return response()->json([
                 'randomNumber' => $barcodeValue,
-                'barcode' => $base64Barcode
+                'barcode' => $base64Barcode,
             ]);
         } else {
             $generator = new BarcodeGeneratorPNG();
             $barcode = $generator->getBarcode($request->barcode_value, $generator::TYPE_INTERLEAVED_2_5);
             $base64Barcode = base64_encode($barcode);
+
             return response()->json([
-                'barcode' => $base64Barcode
+                'barcode' => $base64Barcode,
             ]);
         }
     }
@@ -604,6 +596,7 @@ class ProductControllerRename extends Controller
     public function PrintBarcode()
     {
         $products = Product::get();
+
         return view('backend.barcode.view_barcode', compact('products'));
     }
 
@@ -626,6 +619,7 @@ class ProductControllerRename extends Controller
         $amount = $request->amount;
 
         $pdf = PDF::loadView('backend.barcode.product_barcode_pdf', compact('barcodeImg', 'amount'))->setPaper('a4')->setOption('enable-local-file-access', true);
+
         //     $pdf = Pdf::loadView('backend.barcode.product_barcode_pdf', compact('barcodeImg','amount'))->setPaper('a4')->setOptions([
         //         'tempDir' => public_path(),
         //         'chroot' => public_path(),

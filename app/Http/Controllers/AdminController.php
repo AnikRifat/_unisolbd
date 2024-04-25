@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Actions\Fortify\AttemptToAuthenticate;
+use App\Actions\Fortify\RedirectIfTwoFactorAuthenticatable;
+use App\Http\Responses\LoginResponse;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\Pipeline;
@@ -13,12 +16,6 @@ use Laravel\Fortify\Contracts\LogoutResponse;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Http\Requests\LoginRequest;
-
-
-use Illuminate\Contracts\Auth\StatefulGuard;
-use App\Actions\Fortify\AttemptToAuthenticate;
-use App\Actions\Fortify\RedirectIfTwoFactorAuthenticatable;
-use App\Http\Responses\LoginResponse;
 
 class AdminController extends Controller
 {
@@ -32,7 +29,6 @@ class AdminController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param  \Illuminate\Contracts\Auth\StatefulGuard  $guard
      * @return void
      */
     public function __construct(StatefulGuard $guard)
@@ -40,15 +36,13 @@ class AdminController extends Controller
         $this->guard = $guard;
     }
 
-
-    public function loginForm(){
-        return view('auth.admin_login',[ 'guard' => 'admin']);
+    public function loginForm()
+    {
+        return view('auth.admin_login', ['guard' => 'admin']);
     }
+
     /**
      * Show the login view.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Laravel\Fortify\Contracts\LoginViewResponse
      */
     public function create(Request $request): LoginViewResponse
     {
@@ -58,7 +52,6 @@ class AdminController extends Controller
     /**
      * Attempt to authenticate a new session.
      *
-     * @param  \Laravel\Fortify\Http\Requests\LoginRequest  $request
      * @return mixed
      */
     public function store(LoginRequest $request)
@@ -71,7 +64,6 @@ class AdminController extends Controller
     /**
      * Get the authentication pipeline instance.
      *
-     * @param  \Laravel\Fortify\Http\Requests\LoginRequest  $request
      * @return \Illuminate\Pipeline\Pipeline
      */
     protected function loginPipeline(LoginRequest $request)
@@ -98,9 +90,6 @@ class AdminController extends Controller
 
     /**
      * Destroy an authenticated session.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Laravel\Fortify\Contracts\LogoutResponse
      */
     public function destroy(Request $request): LogoutResponse
     {

@@ -9,7 +9,7 @@ class PurchaseInvoice extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $guarded = [];
 
     public function purchaseDetails()
     {
@@ -20,5 +20,4 @@ class PurchaseInvoice extends Model
     {
         return $this->belongsTo(Vendor::class);
     }
-    
 }

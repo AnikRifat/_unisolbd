@@ -20,8 +20,9 @@ class SubsubcategoryController extends Controller
      */
     public function index()
     {
-      
-        $Subsubcategories=SubSubCategory::with('category','subcategory')->latest()->get();
+
+        $Subsubcategories = SubSubCategory::with('category', 'subcategory')->latest()->get();
+
         return response()->json($Subsubcategories);
     }
 
@@ -32,16 +33,16 @@ class SubsubcategoryController extends Controller
      */
     public function create()
     {
-        $categories=Category::where('status',1)->orderBy('category_name',"ASC")->get();
-        $subcategories = SubCategory::where('status',1)->latest()->get();
-        $Subsubcategories=SubSubCategory::with('category','subcategory')->latest()->get();
-        return view('backend.categories.subsubcategory',compact('Subsubcategories','categories','subcategories'));
+        $categories = Category::where('status', 1)->orderBy('category_name', 'ASC')->get();
+        $subcategories = SubCategory::where('status', 1)->latest()->get();
+        $Subsubcategories = SubSubCategory::with('category', 'subcategory')->latest()->get();
+
+        return view('backend.categories.subsubcategory', compact('Subsubcategories', 'categories', 'subcategories'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -55,20 +56,20 @@ class SubsubcategoryController extends Controller
                     ->where(function ($query) use ($request) {
                         return $query->where('category_id', $request->category_id)
                             ->where('subcategory_id', $request->subcategory_id);
-                    })
-            ]
+                    }),
+            ],
         ]);
 
         SubSubCategory::insert([
             'category_id' => $request->category_id,
             'subcategory_id' => $request->subcategory_id,
             'subsubcategory_name' => $request->subsubcategory_name,
-            'subsubcategory_slug' =>strtolower(str_replace(' ','-',$request->subsubcategory_name)),
-            "created_by" => Auth::guard('admin')->user()->id,
-            "created_at" => Carbon::now()
-         ]);
+            'subsubcategory_slug' => strtolower(str_replace(' ', '-', $request->subsubcategory_name)),
+            'created_by' => Auth::guard('admin')->user()->id,
+            'created_at' => Carbon::now(),
+        ]);
 
-         return response()->json(notification('Sub-subcategory Save Successfully', 'success'));
+        return response()->json(notification('Sub-subcategory Save Successfully', 'success'));
     }
 
     /**
@@ -96,7 +97,6 @@ class SubsubcategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -111,20 +111,20 @@ class SubsubcategoryController extends Controller
                     ->where(function ($query) use ($request) {
                         return $query->where('category_id', $request->category_id)
                             ->where('subcategory_id', $request->subcategory_id);
-                    })->ignore($id, 'id')
-            ]
+                    })->ignore($id, 'id'),
+            ],
         ]);
 
         SubSubCategory::findOrFail($id)->update([
             'category_id' => $request->category_id,
             'subcategory_id' => $request->subcategory_id,
             'subsubcategory_name' => $request->subsubcategory_name,
-            'subsubcategory_slug' =>strtolower(str_replace(' ','-',$request->subsubcategory_name)),
-            "updated_by" => Auth::guard('admin')->user()->id,
-            "updated_at" => Carbon::now()
-         ]);
+            'subsubcategory_slug' => strtolower(str_replace(' ', '-', $request->subsubcategory_name)),
+            'updated_by' => Auth::guard('admin')->user()->id,
+            'updated_at' => Carbon::now(),
+        ]);
 
-         return response()->json(notification('Sub-subcategory Update Successfully', 'success'));
+        return response()->json(notification('Sub-subcategory Update Successfully', 'success'));
     }
 
     /**
@@ -137,15 +137,18 @@ class SubsubcategoryController extends Controller
     {
         //
     }
+
     public function ActiveSubsubcategory($id)
     {
         SubSubCategory::where('id', '=', $id)->update(['status' => 1]);
+
         return response()->json(notification('Sub-subcategory Active Successfully', 'success'));
     }
 
     public function InactiveSubsubcategory($id)
     {
         SubSubCategory::where('id', '=', $id)->update(['status' => 0]);
+
         return response()->json(notification('Sub-subcategory Inactive Successfully', 'success'));
     }
 }

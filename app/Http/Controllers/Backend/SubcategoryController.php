@@ -19,6 +19,7 @@ class SubcategoryController extends Controller
     public function index()
     {
         $subcategory = SubCategory::with('category')->latest()->get();
+
         return response()->json($subcategory);
     }
 
@@ -29,30 +30,31 @@ class SubcategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::where('status',1)->latest()->get();
+        $categories = Category::where('status', 1)->latest()->get();
         $subcategory = SubCategory::with('category')->latest()->get();
+
         return view('backend.categories.subcategory', compact('subcategory', 'categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $request->validate([
             'category_id' => 'required',
-            'subcategory_name' => 'required|unique:sub_categories,subcategory_name,NULL,id,category_id,' . $request->category_id
+            'subcategory_name' => 'required|unique:sub_categories,subcategory_name,NULL,id,category_id,'.$request->category_id,
         ]);
         SubCategory::insert([
             'category_id' => $request->category_id,
             'subcategory_name' => $request->subcategory_name,
             'subcategory_slug' => strtolower(str_replace(' ', '-', $request->subcategory_name)),
-            "created_by" => Auth::guard('admin')->user()->id,
-            "created_at" => Carbon::now()
+            'created_by' => Auth::guard('admin')->user()->id,
+            'created_at' => Carbon::now(),
         ]);
+
         return response()->json(notification('Subcategory Save Successfully', 'success'));
     }
 
@@ -81,7 +83,6 @@ class SubcategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -89,16 +90,17 @@ class SubcategoryController extends Controller
     {
         $request->validate([
             'category_id' => 'required',
-            'subcategory_name' => 'required|unique:sub_categories,subcategory_name,' . $id . ',id,category_id,' . $request->category_id,
+            'subcategory_name' => 'required|unique:sub_categories,subcategory_name,'.$id.',id,category_id,'.$request->category_id,
         ]);
 
         SubCategory::findOrFail($id)->update([
             'category_id' => $request->category_id,
             'subcategory_name' => $request->subcategory_name,
             'subcategory_slug' => strtolower(str_replace(' ', '-', $request->subcategory_name)),
-            "updated_by" => Auth::guard('admin')->user()->id,
-            "updated_at" => Carbon::now()
+            'updated_by' => Auth::guard('admin')->user()->id,
+            'updated_at' => Carbon::now(),
         ]);
+
         return response()->json(notification('Subcategory Update Successfully', 'success'));
     }
 
@@ -111,18 +113,21 @@ class SubcategoryController extends Controller
     public function destroy($id)
     {
         SubCategory::findOrFail($id)->delete();
+
         return redirect()->back();
     }
 
     public function ActiveSubcategory($id)
     {
         SubCategory::where('id', '=', $id)->update(['status' => 1]);
+
         return response()->json(notification('Subcategory Active Successfully', 'success'));
     }
 
     public function InactiveSubcategory($id)
     {
         SubCategory::where('id', '=', $id)->update(['status' => 0]);
+
         return response()->json(notification('Subcategory Inactive Successfully', 'success'));
     }
 }

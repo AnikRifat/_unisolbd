@@ -16,6 +16,7 @@ class SeoSettingController extends Controller
     public function index()
     {
         $seo = Seo::find(1);
+
         return view('backend.setting.seo', compact('seo'));
     }
 
@@ -32,7 +33,6 @@ class SeoSettingController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -65,7 +65,6 @@ class SeoSettingController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -79,7 +78,8 @@ class SeoSettingController extends Controller
             'google_analytics' => $request->google_analytics,
 
         ]);
-        return redirect()->back()->with(notification('Seo Updated Successfully','success'));
+
+        return redirect()->back()->with(notification('Seo Updated Successfully', 'success'));
     }
 
     /**

@@ -8,16 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class RolePermission extends Model
 {
     use HasFactory;
-    protected $guarded=[];
+
+    protected $guarded = [];
 
     public function module()
     {
         return $this->belongsTo(Module::class);
     }
+
     public function menu()
     {
         return $this->belongsTo(Menu::class);
     }
+
     public function submenu()
     {
         return $this->belongsTo(Submenu::class);
@@ -27,5 +30,4 @@ class RolePermission extends Model
     {
         return $this->belongsTo(Permission::class);
     }
-    
 }

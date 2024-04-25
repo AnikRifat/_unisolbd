@@ -8,16 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Module extends Model
 {
     use HasFactory;
-    protected $guarded=[];
+
+    protected $guarded = [];
 
     public function menus()
-     {
-         return $this->hasMany(Menu::class);
-     }
+    {
+        return $this->hasMany(Menu::class);
+    }
 
-
-     public function submenus()
-     {
-         return $this->hasMany(Submenu::class);
-     }
+    public function submenus()
+    {
+        return $this->hasMany(Submenu::class);
+    }
 }

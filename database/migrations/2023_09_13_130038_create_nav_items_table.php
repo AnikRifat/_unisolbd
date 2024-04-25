@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('parent_id')->references('id')->on('nav_items')->onDelete('cascade');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
-            
+
             $table->string('name');
             $table->text('link');
             $table->unsignedBigInteger('parent_id')->nullable();
@@ -28,9 +28,6 @@ return new class extends Migration
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
-
-
-          
 
         });
     }

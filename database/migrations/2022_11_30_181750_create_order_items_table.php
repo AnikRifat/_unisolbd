@@ -19,8 +19,8 @@ return new class extends Migration
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->unsignedBigInteger('product_id');
             $table->string('qty');
-            $table->float('price',8,2);
-            $table->string('subtotal',8,2);
+            $table->float('price', 8, 2);
+            $table->string('subtotal', 8, 2);
             $table->timestamps();
         });
     }

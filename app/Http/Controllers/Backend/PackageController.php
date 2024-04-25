@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\CustomerPackage;
 use App\Models\Package;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,7 +17,8 @@ class PackageController extends Controller
      */
     public function index()
     {
-        $packages = Package::orderBy('id', "DESC")->get();
+        $packages = Package::orderBy('id', 'DESC')->get();
+
         return view('backend.package.package', compact('packages'));
     }
 
@@ -29,13 +29,12 @@ class PackageController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -44,11 +43,12 @@ class PackageController extends Controller
             'name' => 'required|unique:packages,name,except,id',
         ]);
         Package::insert([
-            'name' =>$request->name,
+            'name' => $request->name,
             'created_at' => Carbon::now(),
             'created_by' => Auth::guard('admin')->user()->id,
         ]);
-        return redirect()->back()->with(notification('Package Save Successfully','success'));
+
+        return redirect()->back()->with(notification('Package Save Successfully', 'success'));
     }
 
     /**
@@ -76,22 +76,22 @@ class PackageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|unique:packages,name,' . $id
+            'name' => 'required|unique:packages,name,'.$id,
         ]);
 
         Package::findOrFail($id)->update([
-            'name' =>$request->name,
+            'name' => $request->name,
             'created_at' => Carbon::now(),
             'created_by' => Auth::guard('admin')->user()->id,
         ]);
-        return redirect()->back()->with(notification('Package Save Successfully','success'));
+
+        return redirect()->back()->with(notification('Package Save Successfully', 'success'));
     }
 
     /**
@@ -107,15 +107,15 @@ class PackageController extends Controller
 
     public function ActivePackage($id)
     {
-        Package::where('id','=',$id)->update(['status' => 1]);
-        return redirect()->back()->with(notification('Package Active Successfully','success'));
+        Package::where('id', '=', $id)->update(['status' => 1]);
+
+        return redirect()->back()->with(notification('Package Active Successfully', 'success'));
     }
 
     public function InactivePackage($id)
     {
-        Package::where('id','=',$id)->update(['status' => 0]);
-        return redirect()->back()->with(notification('Package InActive Successfully','success'));
-    }
+        Package::where('id', '=', $id)->update(['status' => 0]);
 
-   
+        return redirect()->back()->with(notification('Package InActive Successfully', 'success'));
+    }
 }

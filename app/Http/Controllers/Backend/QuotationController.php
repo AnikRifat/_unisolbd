@@ -4,14 +4,11 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
-use App\Models\Currency;
 use App\Models\CustomerPackage;
 use App\Models\CustomerPackageItem;
 use App\Models\Product;
-use App\Models\PurchaseDetails;
 use App\Models\SaleDetails;
 use App\Models\SaleInvoice;
-use App\Models\SiteSetting;
 use App\Models\Transaction;
 use App\Models\Unit;
 use App\Models\Vendor;
@@ -20,8 +17,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Stripe\Customer;
 use Illuminate\Support\Str;
+use Stripe\Customer;
 
 use function PHPSTORM_META\type;
 
@@ -53,10 +50,10 @@ class QuotationController extends Controller
      */
     public function create()
     {
-        $vendors = Vendor::where('type', 2)->orderBy("id", "DESC")->get();
-        $products = Product::orderBy("id", "DESC")->where('status', 1)->get();
-        $admin = Admin::orderBy("id", "DESC")->get();
-        $units = Unit::orderBy("id", "DESC")->where('status', 1)->get();
+        $vendors = Vendor::where('type', 2)->orderBy('id', 'DESC')->get();
+        $products = Product::orderBy('id', 'DESC')->where('status', 1)->get();
+        $admin = Admin::orderBy('id', 'DESC')->get();
+        $units = Unit::orderBy('id', 'DESC')->where('status', 1)->get();
         $type = 'quotation';
 
         $route = 'quotation.store';
@@ -67,10 +64,8 @@ class QuotationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
     public function store(Request $request)
     {
 
@@ -86,16 +81,16 @@ class QuotationController extends Controller
                 'date' => $request->date,
                 'to' => $request->to,
                 'subject' => $request->subject,
-                'channel' => "offline",
+                'channel' => 'offline',
                 'total' => $request->grand_total,
                 'discount' => $request->total_discount,
                 'net_payable' => $request->net_payable,
-                "status" => "quotation",
+                'status' => 'quotation',
 
             ];
 
             // Check if customerPackageId is set
-            if ($request->customerPackageId != "undefined") {
+            if ($request->customerPackageId != 'undefined') {
                 // Update existing customer package
                 $invoiceNo = $this->generateInvoiceNumber($request->vendor_id, $request->customerPackageId);
 
@@ -156,34 +151,32 @@ class QuotationController extends Controller
                 }
             }
 
-
             $customer_package = CustomerPackage::findOrFail($customerPackage->id);
             $customer_package_items = CustomerPackageItem::with('product', 'product.latestPurchase', 'unit')
                 ->where('customer_package_id', $customer_package->id)
-                ->where("delete", 0)
+                ->where('delete', 0)
                 ->get();
 
             DB::commit();
 
             return response()->json([
-                "notification" => notification('Quotation Save Successfully', 'success'),
+                'notification' => notification('Quotation Save Successfully', 'success'),
                 'customerPackage' => $customer_package,
                 'customerPackageItems' => $customer_package_items,
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
 
-            Log::error('Error Occurred: ' . $e->getMessage());
+            Log::error('Error Occurred: '.$e->getMessage());
 
             $notification = [
-                'message' => 'Error Occurred: ' . $e->getMessage(),
+                'message' => 'Error Occurred: '.$e->getMessage(),
                 'type' => 'error',
             ];
+
             return response()->json($notification, 500);
         }
     }
-
-
 
     /**
      * Display the specified resource.
@@ -215,10 +208,11 @@ class QuotationController extends Controller
             'vendor',
             'admin',
         ])->findOrFail($id);
-        $customers = Vendor::where('type', 2)->orderBy("id", "DESC")->get();
-        $products = Product::orderBy("id", "DESC")->where('status', 1)->get();
-        $admin = Admin::orderBy("id", "DESC")->where('status', 1)->get();
-        $units = Unit::orderBy("id", "DESC")->where('status', 1)->get();
+        $customers = Vendor::where('type', 2)->orderBy('id', 'DESC')->get();
+        $products = Product::orderBy('id', 'DESC')->where('status', 1)->get();
+        $admin = Admin::orderBy('id', 'DESC')->where('status', 1)->get();
+        $units = Unit::orderBy('id', 'DESC')->where('status', 1)->get();
+
         return view('backend.quotation.edit_or_sale_quotation', compact('customers', 'products', 'admin', 'customerPackage', 'units'));
     }
 
@@ -234,22 +228,21 @@ class QuotationController extends Controller
             'vendor',
             'admin',
         ])->findOrFail($id);
-        $vendors = Vendor::where('type', 2)->orderBy("id", "DESC")->get();
-        $products = Product::orderBy("id", "DESC")->where('status', 1)->get();
-        $admin = Admin::orderBy("id", "DESC")->get();
-        $units = Unit::orderBy("id", "DESC")->where('status', 1)->get();
+        $vendors = Vendor::where('type', 2)->orderBy('id', 'DESC')->get();
+        $products = Product::orderBy('id', 'DESC')->where('status', 1)->get();
+        $admin = Admin::orderBy('id', 'DESC')->get();
+        $units = Unit::orderBy('id', 'DESC')->where('status', 1)->get();
         $type = $type;
 
         // Dynamically generate the route based on the type
         $route = ($type === 'edit') ? 'quotation.store' : 'store.quotation.invoice';
-
 
         return view('backend.quotation.create_quotation', compact('vendors', 'products', 'admin', 'customerPackage', 'type', 'route', 'units'));
     }
 
     public function storeQuotationInvoice(Request $request)
     {
-            // return $request;
+        // return $request;
 
         try {
             DB::beginTransaction();
@@ -258,16 +251,16 @@ class QuotationController extends Controller
                 'sale_person_id' => $request->sale_person,
                 'invoice_no' => $request->invoiceNo ? $request->invoiceNo : generateInvoiceNumber(),
                 'sale_date' => $request->date,
-                'to' => $request->to ?  $request->to : null ,
-                'subject' => $request->subject ? $request->subject :null ,
-                "type" => $request->type ? $request->type : 3,
-                "sales_channel" => "offline",
+                'to' => $request->to ? $request->to : null,
+                'subject' => $request->subject ? $request->subject : null,
+                'type' => $request->type ? $request->type : 3,
+                'sales_channel' => 'offline',
                 'grand_total' => $request->grand_total,
-                "total" => $request->grand_total,
+                'total' => $request->grand_total,
                 'discount' => $request->total_discount,
                 'net_payable' => $request->net_payable,
-                "total_paid" => $request->total_paid,
-                "total_due" => $request->total_due,
+                'total_paid' => $request->total_paid,
+                'total_due' => $request->total_due,
                 'created_by' => Auth::guard('admin')->user()->id,
                 'created_at' => now(),
             ]);
@@ -298,22 +291,20 @@ class QuotationController extends Controller
                 ]);
             }
 
-
             if ($request->total_paid != null) {
                 Transaction::insert([
-                    "invoice_id" => $saleInvoice->id,
-                    "last_paid" => $request->total_paid,
-                    "type" => $request->type ? $request->type : 3,
-                    "created_by" => Auth::guard('admin')->user()->id,
-                    "created_at" => Carbon::now()
+                    'invoice_id' => $saleInvoice->id,
+                    'last_paid' => $request->total_paid,
+                    'type' => $request->type ? $request->type : 3,
+                    'created_by' => Auth::guard('admin')->user()->id,
+                    'created_at' => Carbon::now(),
                 ]);
             }
 
-
             if ($request->saleType === 'invoice') {
-                $customerPackage = CustomerPackage::where("invoice_no", $request->invoiceNo)->first();
+                $customerPackage = CustomerPackage::where('invoice_no', $request->invoiceNo)->first();
                 $customerPackage->update([
-                    "status" => "invoice",
+                    'status' => 'invoice',
                     'updated_by' => Auth::guard('admin')->user()->id,
                     'updated_at' => now(),
                 ]);
@@ -322,18 +313,19 @@ class QuotationController extends Controller
             DB::commit();
 
             return response()->json([
-                "notification" => notification('Sale Invoice Save Successfully', 'success'),
+                'notification' => notification('Sale Invoice Save Successfully', 'success'),
                 'saleInvoice' => $saleInvoice->id,
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
 
-            Log::error('Error Occurred: ' . $e->getMessage());
+            Log::error('Error Occurred: '.$e->getMessage());
 
             $notification = [
-                'message' => 'Error Occurred: ' . $e->getMessage(),
+                'message' => 'Error Occurred: '.$e->getMessage(),
                 'type' => 'error',
             ];
+
             return response()->json($notification, 500);
         }
     }
@@ -341,7 +333,6 @@ class QuotationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -387,7 +378,6 @@ class QuotationController extends Controller
         return response()->json($quotations);
     }
 
-
     public function generateInvoiceNumber($customerId, $customerPackageId = null)
     {
         // Retrieve customer name
@@ -403,7 +393,7 @@ class QuotationController extends Controller
         $currentYear = Carbon::now()->format('Y');
 
         // Initialize the invoice number
-        $invoiceNumber = $prefix . '-' . $currentYear . '00100';
+        $invoiceNumber = $prefix.'-'.$currentYear.'00100';
 
         // Check if there are existing invoices for the customer
         $lastInvoice = CustomerPackage::orderByDesc('created_at')->first();
@@ -411,11 +401,11 @@ class QuotationController extends Controller
         if ($lastInvoice) {
             if ($customerPackageId != null) {
                 $lastPart = Str::after($lastInvoice->invoice_no, '-');
-                $invoiceNumber = $prefix . '-' . $lastPart;
+                $invoiceNumber = $prefix.'-'.$lastPart;
             } else {
-                $lastPart = Str::after($lastInvoice->invoice_no, '-' . $currentYear . '00');
-                $nextSequence = (int)$lastPart + 1;
-                $invoiceNumber = $prefix . '-' . $currentYear . '00' . $nextSequence;
+                $lastPart = Str::after($lastInvoice->invoice_no, '-'.$currentYear.'00');
+                $nextSequence = (int) $lastPart + 1;
+                $invoiceNumber = $prefix.'-'.$currentYear.'00'.$nextSequence;
             }
         }
 
@@ -430,7 +420,7 @@ class QuotationController extends Controller
             ->orderBy('created_at', 'desc')
             ->first();
 
-        return response()->json(["customerPackage" => $customerQuotation]);
+        return response()->json(['customerPackage' => $customerQuotation]);
     }
 
     public function UpdateQuotationProduct(Request $request, $id)
@@ -447,17 +437,17 @@ class QuotationController extends Controller
             'updated_by' => Auth::guard('admin')->user()->id,
         ]);
 
-        return response()->json(["notification" => notification("Successfully changed $propertyName", "success")]);
+        return response()->json(['notification' => notification("Successfully changed $propertyName", 'success')]);
     }
 
     public function UpdateQuotationProductDescription(Request $request, $id)
     {
         Product::findOrFail($id)->update([
-            "quotation_short_descp" => $request->quotation_short_descp,
-            "updated_at" => now(),
+            'quotation_short_descp' => $request->quotation_short_descp,
+            'updated_at' => now(),
             'updated_by' => Auth::guard('admin')->user()->id,
         ]);
 
-        return response()->json(["notification" => notification('successfully changed quotation product description', 'success')]);
+        return response()->json(['notification' => notification('successfully changed quotation product description', 'success')]);
     }
 }

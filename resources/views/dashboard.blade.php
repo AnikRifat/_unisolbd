@@ -66,11 +66,11 @@
         //     ->join('order_items', 'orders.id', '=', 'order_items.order_id')
         //     ->where('orders.user_id', Auth::user()->id)
         //     ->get();
-        
+
         $orderDetails = App\Models\Order::with('orderItems')
             ->where('user_id', Auth::user()->id)
             ->get();
-        
+
     @endphp
     <section class="py-5">
         <div class="container">
@@ -92,6 +92,11 @@
                                     <i class="fa fa-home text-center mr-1"></i>
                                     Account
                                 </a>
+                                <a class="nav-link" id="invoices-tab" data-toggle="pill" href="#invoicesTab" role="tab"
+                                aria-controls="security" aria-selected="false">
+                                <i class="fa fa-file-invoice text-center mr-1"></i>
+                                My Invoices
+                            </a>
                                 <a class="nav-link" id="password-tab" data-toggle="pill" href="#passwordTabPane"
                                     role="tab" aria-controls="passwordTabPane" aria-selected="false">
                                     <i class="fa fa-key text-center mr-1"></i>
@@ -176,65 +181,79 @@
                             </div>
 
 
-
-                            <div class="tab-pane fade" id="passwordTabPane" role="tabpanel" aria-labelledby="password-tab">
-
-
-                                <h3 class="mb-4">Password Settings</h3>
-                                <form id="password-update-form" action="{{ route('user-password.update') }}"
-                                    method="POST">
-                                    @csrf
-                                    @method('PUT')
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Old password<span class="text-danger">*</span></label>
-                                                <input type="password" name="current_password" class="form-control"
-                                                    placeholder="old password" id="current_password">
-                                                <span class="text-danger error-message"
-                                                    id="current_password_error"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>New password<span class="text-danger">*</span></label>
-                                                <div class="input-icon">
-                                                    <input type="password" name="password" class="form-control mb-1"
-                                                        placeholder="new password" id="password">
-                                                    <i class="fa fa-eye input-icon" id="toggle-password"></i>
-                                                </div>
-                                                <span class="text-danger error-message" id="password_error"></span>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="tab-pane fade" id="invoicesTab" role="tabpanel" aria-labelledby="invoicesTab">
 
 
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Confirm password<span class="text-danger">*</span></label>
-                                                <div class="input-icon">
-                                                    <input type="password" name="password_confirmation"
-                                                        class="form-control mb-1" placeholder="confirm password"
-                                                        id="password_confirmation">
-                                                    <i class="fa fa-eye input-icon" id="toggle-password-confirmation"></i>
-                                                </div>
-                                                <span class="text-danger error-message"
-                                                    id="password_confirmation_error"></span>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <div>
-                                        <button type="submit" id="update-password-button"
-                                            class="btn btn-primary">Update</button>
-                                        <button class="btn btn-light">Cancel</button>
-                                    </div>
-                                </form>
+                                <div class="table-responsive">
+                                    <table id="example" class="table table-striped table-bordered"
+                                        style="min-width: 1000px">
+                                        <thead>
+                                            <tr>
+                                                <th>#SL</th>
+                                                <th>Date</th>
+                                                <th>Channel</th>
+                                                <th>Name</th>
+                                                <th>Phone</th>
+                                                <th class="text-center">Status</th>
+                                                <th class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($quotations as $index => $item)
+                                                <tr>
+                                                    <td>{{ $index + 1 }}</td>
+                                                    <td>{{ $item->created_at->format('j F Y') }}</td>
+                                                    <td>{{ $item->channel }}</td>
+                                                    <td>{{ $item->vendor->name }}</td>
+                                                    <td>{{ $item->vendor->phone }}</td>
+                                                    <td class="text-center">
+                                                        @if ($item->status == 'quotation')
+                                                            <span
+                                                                class="badge badge-pill badge-success rounded-0">{{ $item->status }}</span>
+                                                        @else
+                                                            <span
+                                                                class="badge badge-pill badge-danger rounded-0">{{ $item->status }}</span>
+                                                        @endif
+
+                                                    </td>
+                                                    <td class="d-flex" style="width:80px">
+                                                        <a data-print="{{ $item->id }}"
+                                                            class="btn btn-sm btn-primary btnPrint mr-10" data-toggle="tooltip" data-placement="top" title="Print Quotation"
+                                                            href="javascript:void(0)"><i class="fa fa-print"></i></a>
+
+
+
+
+                                                        @if ($item->status == 'quotation')
+                                                        <a data-edit="{{ $item->id }}"
+                                                            class="btn btn-sm btn-success btnEdit mr-10" data-toggle="tooltip" data-placement="top" title="Edit Quotation"
+                                                            href="{{ route('quotation-edit-or-invoice', ['id' => $item->id, 'type' => 'edit']) }}"><i
+                                                                class="fa fa-edit"></i></a>
+
+                                                            <a data-edit="{{ $item->id }}"
+                                                                class="btn btn-sm btn-info btnSale mr-10" data-toggle="tooltip" data-placement="top" title="Make Invoice"
+                                                                href="{{ route('quotation-edit-or-invoice', ['id' => $item->id, 'type' => 'invoice']) }}"><i
+                                                                    class="si-basket-loaded si"></i></a>
+                                                        @endif
+
+
+
+
+
+
+                                                    </td>
+
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+
+                                    </table>
+                                </div>
+
+
+
+
 
                             </div>
 
@@ -278,7 +297,7 @@
                                             @php $itemCounter = 1; @endphp
 
                                             @foreach ($orderDetails as $order)
-                                                
+
                                                 @foreach ($order->orderItems as $item)
                                                     <tr>
                                                         <td><span
@@ -316,7 +335,7 @@
                                                         <td>
                                                             <span class="badge {{ $statusBadges[$order->status] }} p-2">{{ ucfirst($order->status) }}</span>
                                                         </td>
-                                                        
+
                                                         <td><a href="javascript:void(0)"><i
                                                                     class="fa fa-eye text-dark"></i></a></td>
                                                     </tr>

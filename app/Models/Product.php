@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Scout\Searchable;
+
 class Product extends Model
 {
-    use Searchable;
     use HasFactory;
-    protected $guarded=[];
+    use Searchable;
 
-  
+    protected $guarded = [];
 
     public function toSearchableArray()
     {
@@ -42,21 +42,20 @@ class Product extends Model
             'special_offer' => $this->special_offer,
             'top_rated' => $this->top_rated,
             'is_expireable' => $this->is_expireable,
-            "updated_by" => Auth::guard('admin')->user()->id,
-            "updated_at" => Carbon::now()
-           
+            'updated_by' => Auth::guard('admin')->user()->id,
+            'updated_at' => Carbon::now(),
+
         ];
     }
 
-   
     public function subcategory()
     {
-        return $this->belongsTo(SubCategory::class,'subcategory_id', 'id');
+        return $this->belongsTo(SubCategory::class, 'subcategory_id', 'id');
     }
 
     public function subsubcategory()
     {
-        return $this->belongsTo(SubSubCategory::class,'subsubcategory_id', 'id');
+        return $this->belongsTo(SubSubCategory::class, 'subsubcategory_id', 'id');
     }
 
     public function category()
@@ -66,24 +65,24 @@ class Product extends Model
 
     public function brand()
     {
-        
-        return $this->belongsTo(Brand::class,'brand_id', 'id');
+
+        return $this->belongsTo(Brand::class, 'brand_id', 'id');
     }
 
     public function unit()
     {
-        
-        return $this->belongsTo(Unit::class,'unit_id', 'id');
+
+        return $this->belongsTo(Unit::class, 'unit_id', 'id');
     }
 
     public function Multiimg()
     {
-        return $this->hasMany(MultiImg::class,'product_id', 'id');
+        return $this->hasMany(MultiImg::class, 'product_id', 'id');
     }
 
     public function productspecification()
     {
-        return $this->hasMany(ProductSpecification::class,'product_id', 'id');
+        return $this->hasMany(ProductSpecification::class, 'product_id', 'id');
     }
 
     // public function package()
@@ -101,7 +100,4 @@ class Product extends Model
     {
         return $this->hasOne(PurchaseDetails::class, 'product_id', 'id')->latest('created_at');
     }
-
-
-
 }

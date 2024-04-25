@@ -17,11 +17,11 @@ class SubsubmenuController extends Controller
      */
     public function index()
     {
-       return $subsubmenus = NavItem::select('nav_items.*', 'submenus.name as submenu_name', 'menus.name as menu_name')
-        ->where('nav_items.type', 2) // Filter for subsubmenus
-        ->leftJoin('nav_items as submenus', 'nav_items.parent_id', '=', 'submenus.id')
-        ->leftJoin('nav_items as menus', 'submenus.parent_id', '=', 'menus.id')
-        ->get();
+        return $subsubmenus = NavItem::select('nav_items.*', 'submenus.name as submenu_name', 'menus.name as menu_name')
+            ->where('nav_items.type', 2) // Filter for subsubmenus
+            ->leftJoin('nav_items as submenus', 'nav_items.parent_id', '=', 'submenus.id')
+            ->leftJoin('nav_items as menus', 'submenus.parent_id', '=', 'menus.id')
+            ->get();
     }
 
     /**
@@ -31,20 +31,20 @@ class SubsubmenuController extends Controller
      */
     public function create()
     {
-       $subsubmenus = NavItem::select('nav_items.*', 'submenus.name as submenu_name', 'menus.name as menu_name')
-        ->where('nav_items.type', 2) // Filter for subsubmenus
-        ->leftJoin('nav_items as submenus', 'nav_items.parent_id', '=', 'submenus.id')
-        ->leftJoin('nav_items as menus', 'submenus.parent_id', '=', 'menus.id')
-        ->get();
+        $subsubmenus = NavItem::select('nav_items.*', 'submenus.name as submenu_name', 'menus.name as menu_name')
+            ->where('nav_items.type', 2) // Filter for subsubmenus
+            ->leftJoin('nav_items as submenus', 'nav_items.parent_id', '=', 'submenus.id')
+            ->leftJoin('nav_items as menus', 'submenus.parent_id', '=', 'menus.id')
+            ->get();
 
         $menus = NavItem::where('type', 0)->get();
-        return view('backend.landingPage.subsubmenu.subsubmenu', compact('menus','subsubmenus'));
+
+        return view('backend.landingPage.subsubmenu.subsubmenu', compact('menus', 'subsubmenus'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -64,7 +64,7 @@ class SubsubmenuController extends Controller
         ];
 
         // Check if $request->link is present and not empty
-        if ($request->has('link') && !empty($request->link)) {
+        if ($request->has('link') && ! empty($request->link)) {
             $insertData['link'] = $request->link;
         }
 
@@ -94,16 +94,15 @@ class SubsubmenuController extends Controller
     public function edit($id)
     {
         return $subsubmenu = NavItem::select('nav_items.*', 'submenus.id as submenu_id', 'menus.id as menu_id')
-        ->where('nav_items.id', $id) // Specify the table for the 'id' column
-        ->leftJoin('nav_items as submenus', 'nav_items.parent_id', '=', 'submenus.id')
-        ->leftJoin('nav_items as menus', 'submenus.parent_id', '=', 'menus.id')
-        ->first();
+            ->where('nav_items.id', $id) // Specify the table for the 'id' column
+            ->leftJoin('nav_items as submenus', 'nav_items.parent_id', '=', 'submenus.id')
+            ->leftJoin('nav_items as menus', 'submenus.parent_id', '=', 'menus.id')
+            ->first();
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -124,7 +123,7 @@ class SubsubmenuController extends Controller
         ];
 
         // Check if $request->link is present and not empty
-        if ($request->has('link') && !empty($request->link)) {
+        if ($request->has('link') && ! empty($request->link)) {
             $insertData['link'] = $request->link;
         }
 
@@ -152,13 +151,15 @@ class SubsubmenuController extends Controller
 
     public function ActiveSubsubmenu($id)
     {
-        NavItem::where('id','=',$id)->update(['status' => 1]);
-        return notification('Menu Active Successfully','success');
+        NavItem::where('id', '=', $id)->update(['status' => 1]);
+
+        return notification('Menu Active Successfully', 'success');
     }
 
     public function InactivesubSubmenu($id)
     {
-        NavItem::where('id','=',$id)->update(['status' => 0]);
-       return notification('Menu Inactive Successfully','success');
+        NavItem::where('id', '=', $id)->update(['status' => 0]);
+
+        return notification('Menu Inactive Successfully', 'success');
     }
 }

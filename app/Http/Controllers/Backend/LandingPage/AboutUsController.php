@@ -18,7 +18,8 @@ class AboutUsController extends Controller
     public function index()
     {
         $about = AboutUs::first();
-        return view('backend.landingPage.about_us.about_us',compact('about'));
+
+        return view('backend.landingPage.about_us.about_us', compact('about'));
     }
 
     /**
@@ -34,38 +35,37 @@ class AboutUsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-         //return $request;
+        //return $request;
 
-         $request->validate([
+        $request->validate([
             // 'image' => 'required',
-            'description' => 'required'
+            'description' => 'required',
         ]);
 
         $data = [
             'description' => $request->description,
-            "created_by" => Auth::guard('admin')->user()->id,
-            "created_at" => Carbon::now()
+            'created_by' => Auth::guard('admin')->user()->id,
+            'created_at' => Carbon::now(),
         ]; // Added a semicolon here to end the array definition
 
-
         if ($request->file('image')) {
-            $data['image'] = uploadAndResizeImage($request->file('image'), "upload/aboutus",600,500); // Fixed the function parameters
+            $data['image'] = uploadAndResizeImage($request->file('image'), 'upload/aboutus', 600, 500); // Fixed the function parameters
         }
 
         AboutUs::updateOrInsert(
             ['created_by' => $data['created_by']], // Condition to find the record
             $data // Data to insert or update
         );
-    
-        $notification=array([
+
+        $notification = [[
             'message' => 'About Us Save Successfully',
             'type' => 'success',
-        ]);
+        ]];
+
         return redirect()->back()->with($notification);
     }
 
@@ -94,7 +94,6 @@ class AboutUsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Role;
 use App\Models\UserRole;
+use Faker\Factory as Faker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Faker\Factory as Faker;
 
 class UserManagementController extends Controller
 {
@@ -21,9 +21,9 @@ class UserManagementController extends Controller
     {
         $admins = Admin::with('userRoles.role')->latest()->get();
         $roles = Role::latest()->get();
-        return view('backend.administration.user_management', compact('admins', "roles"));
-    }
 
+        return view('backend.administration.user_management', compact('admins', 'roles'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -38,7 +38,6 @@ class UserManagementController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -47,7 +46,7 @@ class UserManagementController extends Controller
         // return $request;
         // Validate the input
         $request->validate([
-            "name" => "required|unique:admins,name,except,id",
+            'name' => 'required|unique:admins,name,except,id',
             // "email" => "required|unique:admins,email,except,id",
             // "phone" => "required",
             // "password" => "required",
@@ -57,12 +56,12 @@ class UserManagementController extends Controller
 
         // Create the admin user
         $admin = Admin::create([
-            "name" => $request->input('name'),
-            "email" => $request->filled('email') ? $request->input("email") : $faker->email(),
-            "phone" => $request->filled('phone') ? $request->input("phone") : $faker->phoneNumber(),
-            "type" => $request->filled('type') ? $request->input('type') : "Normal User", // Provide a default value if 'type' is not filled
-            "password" =>  $request->filled('password') ? bcrypt($request->input('password')) : bcrypt("password@987654321"),
-            "created_at" => now(),
+            'name' => $request->input('name'),
+            'email' => $request->filled('email') ? $request->input('email') : $faker->email(),
+            'phone' => $request->filled('phone') ? $request->input('phone') : $faker->phoneNumber(),
+            'type' => $request->filled('type') ? $request->input('type') : 'Normal User', // Provide a default value if 'type' is not filled
+            'password' => $request->filled('password') ? bcrypt($request->input('password')) : bcrypt('password@987654321'),
+            'created_at' => now(),
             'created_by' => Auth::guard('admin')->user()->id,
         ]);
 
@@ -70,25 +69,21 @@ class UserManagementController extends Controller
         if ($request->has('roles')) {
             foreach ($request->input('roles') as $role) {
                 UserRole::create([
-                    "user_id" => $admin->id, // Assuming the user ID is in the 'id' field
-                    "role_id" => $role,
+                    'user_id' => $admin->id, // Assuming the user ID is in the 'id' field
+                    'role_id' => $role,
                     'created_by' => Auth::guard('admin')->user()->id,
                     'created_at' => now(),
                 ]);
             }
         }
 
-
         if ($request->ajax()) {
-            return response()->json(["salePerson"=>$admin,"notification"=>notification('User Created Successfully', 'success')]);
+            return response()->json(['salePerson' => $admin, 'notification' => notification('User Created Successfully', 'success')]);
         } else {
             return redirect()->back()->with(notification('User Created Successfully', 'success'));
         }
 
-
     }
-
-
 
     /**
      * Display the specified resource.
@@ -115,7 +110,6 @@ class UserManagementController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -138,12 +132,14 @@ class UserManagementController extends Controller
     public function ActiveUser($id)
     {
         Admin::where('id', '=', $id)->update(['status' => 1]);
+
         return redirect()->back()->with(notification('User Active Successfully', 'success'));
     }
 
     public function InactiveUser($id)
     {
         Admin::where('id', '=', $id)->update(['status' => 0]);
+
         return redirect()->back()->with(notification('User Inactive Successfully', 'success'));
     }
 }

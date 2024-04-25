@@ -18,7 +18,8 @@ class NoticeController extends Controller
     public function index()
     {
         $notices = Notice::get();
-        return view('backend.landingPage.notice.view_notice',compact('notices'));
+
+        return view('backend.landingPage.notice.view_notice', compact('notices'));
     }
 
     /**
@@ -34,7 +35,6 @@ class NoticeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -81,13 +81,13 @@ class NoticeController extends Controller
     public function edit($id)
     {
         $notice = Notice::findOrFail($id);
-        return view('backend.landingPage.notice.edit_notice',compact('notice'));
+
+        return view('backend.landingPage.notice.edit_notice', compact('notice'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -128,13 +128,15 @@ class NoticeController extends Controller
 
     public function ActiveNotice($id)
     {
-        Notice::where('id','=',$id)->update(['status' => 1]);
-        return redirect()->back()->with(notification('Notice Active Successfully','success'));
+        Notice::where('id', '=', $id)->update(['status' => 1]);
+
+        return redirect()->back()->with(notification('Notice Active Successfully', 'success'));
     }
 
     public function InactiveNotice($id)
     {
-        Notice::where('id','=',$id)->update(['status' => 0]);
-        return redirect()->back()->with(notification('Notice Inactive Successfully','success'));
+        Notice::where('id', '=', $id)->update(['status' => 0]);
+
+        return redirect()->back()->with(notification('Notice Inactive Successfully', 'success'));
     }
 }

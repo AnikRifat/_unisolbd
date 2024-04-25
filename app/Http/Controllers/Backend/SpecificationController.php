@@ -18,6 +18,7 @@ class SpecificationController extends Controller
     public function index()
     {
         $specification = Specification::latest()->get();
+
         return view('backend.product.specification', compact('specification'));
     }
 
@@ -34,12 +35,11 @@ class SpecificationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-       
+
         $request->validate([
             'name' => 'required|unique:specifications,name,except,id',
         ]);
@@ -50,7 +50,8 @@ class SpecificationController extends Controller
             'created_at' => Carbon::now(),
             'created_by' => Auth::guard('admin')->user()->id,
         ]);
-        return redirect()->back()->with(notification('Product Specificaiton Save Successfully','success'));
+
+        return redirect()->back()->with(notification('Product Specificaiton Save Successfully', 'success'));
     }
 
     /**
@@ -78,23 +79,23 @@ class SpecificationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-       $request->validate([
-            'name' => 'required|unique:specifications,name,' . $id
+        $request->validate([
+            'name' => 'required|unique:specifications,name,'.$id,
         ]);
-        
+
         Specification::findOrFail($id)->update([
             'name' => $request->name,
             'filter' => $request->filter,
             'updated_at' => Carbon::now(),
             'updated_by' => Auth::guard('admin')->user()->id,
         ]);
-        return redirect()->back()->with(notification('Product Specificaiton Update Successfully','success'));
+
+        return redirect()->back()->with(notification('Product Specificaiton Update Successfully', 'success'));
     }
 
     /**
@@ -110,14 +111,15 @@ class SpecificationController extends Controller
 
     public function ActiveSpecification($id)
     {
-        Specification::where('id','=',$id)->update(['status' => 1]);
-        return redirect()->back()->with(notification('Specification Active Successfully','success'));
+        Specification::where('id', '=', $id)->update(['status' => 1]);
+
+        return redirect()->back()->with(notification('Specification Active Successfully', 'success'));
     }
 
     public function InactiveSpecification($id)
     {
-        Specification::where('id','=',$id)->update(['status' => 0]);
-        return redirect()->back()->with(notification('Specification Inactive Successfully','success'));
-    }
+        Specification::where('id', '=', $id)->update(['status' => 0]);
 
+        return redirect()->back()->with(notification('Specification Inactive Successfully', 'success'));
+    }
 }

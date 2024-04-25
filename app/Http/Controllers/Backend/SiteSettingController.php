@@ -16,6 +16,7 @@ class SiteSettingController extends Controller
     public function index()
     {
         $setting = SiteSetting::find(1);
+
         return view('backend.setting.site', compact('setting'));
     }
 
@@ -32,7 +33,6 @@ class SiteSettingController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -65,7 +65,6 @@ class SiteSettingController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -89,11 +88,12 @@ class SiteSettingController extends Controller
 
         if ($request->file('logo')) {
             @unlink($setting->logo);
-            $settingData['logo'] = uploadAndResizeImage($request->file('logo'), "upload/logo",100,100); // Fixed the function parameters
+            $settingData['logo'] = uploadAndResizeImage($request->file('logo'), 'upload/logo', 100, 100); // Fixed the function parameters
         }
 
         SiteSetting::findOrFail($id)->update($settingData);
-        return redirect()->back()->with(notification('Setting Updated Successfully','success'));
+
+        return redirect()->back()->with(notification('Setting Updated Successfully', 'success'));
     }
 
     /**

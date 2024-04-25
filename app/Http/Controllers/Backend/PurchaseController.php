@@ -25,29 +25,25 @@ class PurchaseController extends Controller
         $vendors = Vendor::where('type', 1)->get();
         $products = Product::get();
         $units = Unit::get();
-        $admin = Admin::orderBy('id','DESC')->get();
+        $admin = Admin::orderBy('id', 'DESC')->get();
         $type = 'purchase';
         $route = 'store.purchase';
-        return view('backend.quotation.create_quotation', compact('vendors','type','route','products', 'units','admin'));
+
+        return view('backend.quotation.create_quotation', compact('vendors', 'type', 'route', 'products', 'units', 'admin'));
     }
-
-
-
 
     public function getProductDetails(Request $request)
     {
         $latestPurchase = PurchaseDetails::where('product_id', $request->id)
-        ->latest('created_at')
-        ->first(); // Use first() instead of firstOrFail()
+            ->latest('created_at')
+            ->first(); // Use first() instead of firstOrFail()
 
-        
-  
-      // Get the product details along with the unit information
-      $product = Product::with('unit')->findOrFail($request->id);
-      return ['product' => $product, 'latestPurchase' => $latestPurchase];
-    
+        // Get the product details along with the unit information
+        $product = Product::with('unit')->findOrFail($request->id);
+
+        return ['product' => $product, 'latestPurchase' => $latestPurchase];
+
     }
-
 
     public function PurchaseDataSession(Request $request)
     {
@@ -57,13 +53,11 @@ class PurchaseController extends Controller
         $data = session()->get('purchase_data') ?? [];
         $userId = Auth::guard('admin')->user()->id;
 
-
         // Assuming you want to remove data for a specific user ID
         if (isset($data[$userId])) {
             // Data exists, so remove it
             unset($data[$userId]);
         }
-
 
         // Add the data for the specific user ID and counter
         $data[$userId] = [
@@ -95,18 +89,14 @@ class PurchaseController extends Controller
             'total_due' => $request->input('total_due'),
         ];
 
-
-
-        if($request->input('product_name')!=null){
+        if ($request->input('product_name') != null) {
             session()->put('purchase_data', $data);
-        }
-        else{
+        } else {
             session()->forget('purchase_data');
         }
-      
+
         return response()->json(['message' => 'Data stored in session successfully']);
     }
-
 
     public function getPurchaseDataSession(Request $request)
     {
@@ -116,34 +106,34 @@ class PurchaseController extends Controller
 
         if (isset($purchaseData[$userId])) {
             $Data = $purchaseData[$userId];
+
             // Return the data or perform any other logic you need
             return $Data;
         }
+
         // If the data doesn't exist, return null or any other default value
         return 0;
     }
-
 
     public function StorePurchase(Request $request)
     {
         // return $request;
         try {
             DB::beginTransaction();
-                // Create a new customer package
-                $purchaseInvoice = PurchaseInvoice::create([
-                    'supplier_id' => $request->vendor_id,
-                    'sale_person_id' => $request->sale_person,
-                    'invoice_no' => generateInvoiceNumber(),
-                    'purchase_date' => $request->date,
-                    "type" => $request->type,
-                    'grand_total' => $request->grand_total,
-                    "total" => $request->grand_total,
-                    'discount' => $request->total_discount,
-                    'net_payable' => $request->net_payable,
-                    "total_paid" => $request->total_paid,
-                    "total_due" => $request->total_due,
-                ]);
-            
+            // Create a new customer package
+            $purchaseInvoice = PurchaseInvoice::create([
+                'supplier_id' => $request->vendor_id,
+                'sale_person_id' => $request->sale_person,
+                'invoice_no' => generateInvoiceNumber(),
+                'purchase_date' => $request->date,
+                'type' => $request->type,
+                'grand_total' => $request->grand_total,
+                'total' => $request->grand_total,
+                'discount' => $request->total_discount,
+                'net_payable' => $request->net_payable,
+                'total_paid' => $request->total_paid,
+                'total_due' => $request->total_due,
+            ]);
 
             // Validation rules for the request
             $rules = [
@@ -159,47 +149,47 @@ class PurchaseController extends Controller
 
             // Update or insert CustomerPackageItems
             foreach ($request->product_id as $key => $productId) {
-                    // Insert a new CustomerPackageItem
-                    PurchaseDetails::create([
-                        'purchase_invoice_id' => $purchaseInvoice->id,
-                        'product_id' => $productId,
-                        'unit_id' => $request->unit_id[$key],
-                        'qty' => $request->qty[$key],
-                        'price' => $request->price[$key],
-                        'total' => $request->total[$key],
-                        'discount' => $request->discount_price[$key],
-                        'updated_at' => now(),
-                    ]);
-                
+                // Insert a new CustomerPackageItem
+                PurchaseDetails::create([
+                    'purchase_invoice_id' => $purchaseInvoice->id,
+                    'product_id' => $productId,
+                    'unit_id' => $request->unit_id[$key],
+                    'qty' => $request->qty[$key],
+                    'price' => $request->price[$key],
+                    'total' => $request->total[$key],
+                    'discount' => $request->discount_price[$key],
+                    'updated_at' => now(),
+                ]);
+
             }
 
             if ($request->total_paid != null) {
                 Transaction::insert([
-                    "invoice_id" => $purchaseInvoice->id,
-                    "last_paid" => $request->total_paid,
-                    "type" => $request->type,
-                    "payment_status" => "Paid",
-                    "payment_type" => "New Collection",
-                    "created_by" => Auth::guard('admin')->user()->id,
-                    "created_at" => Carbon::now()
+                    'invoice_id' => $purchaseInvoice->id,
+                    'last_paid' => $request->total_paid,
+                    'type' => $request->type,
+                    'payment_status' => 'Paid',
+                    'payment_type' => 'New Collection',
+                    'created_by' => Auth::guard('admin')->user()->id,
+                    'created_at' => Carbon::now(),
                 ]);
             }
-
 
             DB::commit();
 
             return response()->json([
-                "notification" => notification('Purchase Complete Successfully', 'success')
+                'notification' => notification('Purchase Complete Successfully', 'success'),
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
 
-            Log::error('Error Occurred: ' . $e->getMessage());
+            Log::error('Error Occurred: '.$e->getMessage());
 
             $notification = [
-                'message' => 'Error Occurred: ' . $e->getMessage(),
+                'message' => 'Error Occurred: '.$e->getMessage(),
                 'type' => 'error',
             ];
+
             return response()->json($notification, 500);
         }
     }
@@ -222,7 +212,6 @@ class PurchaseController extends Controller
     //                 "total_paid" => $request->total_paid,
     //                 "total_due" => $request->total_due,
     //             ]);
-            
 
     //         // Validation rules for the request
     //         $rules = [
@@ -249,7 +238,7 @@ class PurchaseController extends Controller
     //                     'discount' => $request->discount_price[$key],
     //                     'updated_at' => now(),
     //                 ]);
-                
+
     //         }
 
     //         if ($request->total_paid != null) {
@@ -263,7 +252,6 @@ class PurchaseController extends Controller
     //                 "created_at" => Carbon::now()
     //             ]);
     //         }
-
 
     //         DB::commit();
 
@@ -283,66 +271,62 @@ class PurchaseController extends Controller
     //     }
     // }
 
-
     public function PurchaseReport(Request $request)
     {
         $purchaseInvoiceId = $request->query('purchase_invoice_id');
         $invoice = PurchaseInvoice::with('purchaseDetails.product', 'purchaseDetails.unit')->find($purchaseInvoiceId); // Using find() instead of where()
         // $supplier = Vendor::find($invoice->supplier_id);
         $setting = SiteSetting::first(); // Using first() instead of get()->first()
+
         return view('backend.purchase.purchase_report', compact('setting', 'invoice'));
     }
 
-   public function ViewPurchase()
-   {
-    $purchases = PurchaseInvoice::get();
-    return view('backend.purchase.view_purcahse',compact('purchases'));
-   }
+    public function ViewPurchase()
+    {
+        $purchases = PurchaseInvoice::get();
 
-
-   public function DateWisePurchase(Request $request)
-  {
-    //return $request;
-
-    $startDate = $request->input('start_date');
-    $endDate = $request->input('end_date');
-    $type = $request->input('type');
-
-    // Convert the 'MM/DD/YYYY' formatted dates to 'YYYY-MM-DD' format
-    $startDateFormatted = date('Y-m-d', strtotime($startDate));
-    $endDateFormatted = date('Y-m-d', strtotime($endDate));
-
-
-    // Initialize the query
-    $query = PurchaseInvoice::whereBetween('purchase_date', [$startDateFormatted, $endDateFormatted]);
-
-    // Add the 'type' condition only if $type is not equal to 0
-    if ($type != 0) {
-        $query->where('type', $type)->orderBy('id', 'DESC');
+        return view('backend.purchase.view_purcahse', compact('purchases'));
     }
 
-    // Execute the query
-    $invoice = $query->get();
+    public function DateWisePurchase(Request $request)
+    {
+        //return $request;
 
-    return response()->json($invoice);
-  }
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $type = $request->input('type');
 
+        // Convert the 'MM/DD/YYYY' formatted dates to 'YYYY-MM-DD' format
+        $startDateFormatted = date('Y-m-d', strtotime($startDate));
+        $endDateFormatted = date('Y-m-d', strtotime($endDate));
 
+        // Initialize the query
+        $query = PurchaseInvoice::whereBetween('purchase_date', [$startDateFormatted, $endDateFormatted]);
 
+        // Add the 'type' condition only if $type is not equal to 0
+        if ($type != 0) {
+            $query->where('type', $type)->orderBy('id', 'DESC');
+        }
 
-    function generateInvoiceNumber()
+        // Execute the query
+        $invoice = $query->get();
+
+        return response()->json($invoice);
+    }
+
+    public function generateInvoiceNumber()
     {
         $prefix = 'INV';
         $timestamp = now()->format('YmdHis');
         $randomDigits = mt_rand(1000, 9999);
 
-        return $prefix . $timestamp . $randomDigits;
+        return $prefix.$timestamp.$randomDigits;
     }
-
 
     public function PurchaseDueCollection()
     {
         $invoice = PurchaseInvoice::select('invoice_no')->get();
+
         return view('backend.purchase.due_collection', compact('invoice'));
     }
 
@@ -360,7 +344,6 @@ class PurchaseController extends Controller
         //     ->select('purchase_invoices.*', 'transactions.*')
         //     ->get();
 
-
         // $paymentHistory = PurchaseInvoice::where('invoice_no', $request->invoice_no)
         //                 ->rightjoin('transactions', 'purchase_invoices.id', '=', 'transactions.invoice_id')
         //                 ->whereColumn('purchase_invoices.type', '=', 'transactions.type')
@@ -374,9 +357,6 @@ class PurchaseController extends Controller
             })
             ->select('purchase_invoices.*', 'transactions.*')
             ->get();
-
-
-
 
         //$paymentHistory = PurchaseInvoice::with('purchaseTransactions')->where('invoice_no', $request->invoice_no)->get();
 
@@ -395,22 +375,22 @@ class PurchaseController extends Controller
 
             // Update the PurchaseInvoice
             $updatedInvoice = PurchaseInvoice::findOrFail($invoice->id)->update([
-                "total_paid" => $invoice->total_paid + $request->paid,
-                "total_due" => $invoice->total_due - $request->paid,
-                "updated_by" => Auth::guard('admin')->user()->id,
-                "updated_at" => now()
+                'total_paid' => $invoice->total_paid + $request->paid,
+                'total_due' => $invoice->total_due - $request->paid,
+                'updated_by' => Auth::guard('admin')->user()->id,
+                'updated_at' => now(),
             ]);
 
             if ($updatedInvoice) {
                 // Insert a new Transaction
                 Transaction::create([
-                    "invoice_id" => $invoice->id,
-                    "last_paid" => $request->paid,
-                    "type" => $invoice->type,
-                    "payment_status" => "Paid",
-                    "payment_type" => "Due Collection",
-                    "created_by" => Auth::guard('admin')->user()->id,
-                    "created_at" => now()
+                    'invoice_id' => $invoice->id,
+                    'last_paid' => $request->paid,
+                    'type' => $invoice->type,
+                    'payment_status' => 'Paid',
+                    'payment_type' => 'Due Collection',
+                    'created_by' => Auth::guard('admin')->user()->id,
+                    'created_at' => now(),
                 ]);
 
                 DB::commit(); // Commit the transaction if everything is successful

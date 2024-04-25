@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
-    protected $guarded=[];
+
+    protected $guarded = [];
 
     public function subcategory()
     {
@@ -19,5 +20,4 @@ class Category extends Model
     {
         return $this->hasMany(SubSubCategory::class);
     }
-
 }

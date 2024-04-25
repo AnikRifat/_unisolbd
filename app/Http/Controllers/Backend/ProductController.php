@@ -29,6 +29,7 @@ class ProductController extends Controller
     {
         // $Products = Product::latest()->paginate(10); // You can change 10 to the number of items per page you want
         $Products = Product::latest()->get();
+
         // return $Products->items();
         // return response()->json([
         //     'data' => $products->items(),
@@ -64,19 +65,17 @@ class ProductController extends Controller
         $subsubcategories = SubSubCategory::where('status', 1)->latest()->get();
         $brands = Brand::where('status', 1)->latest()->get();
         $units = Unit::where('status', 1)->latest()->get();
+
         return view('backend.product.add_product', compact('categories', 'specificationDetails', 'subcategories', 'subsubcategories', 'units', 'brands', 'specifications'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-
-
 
         //return $request;
         $commonRules = [
@@ -85,19 +84,17 @@ class ProductController extends Controller
             'purchase_price' => 'required',
         ];
 
-        if (!$request->ajax()) {
+        if (! $request->ajax()) {
             $commonRules['category_id'] = 'required';
             $commonRules['product_thambnail'] = 'required';
         }
 
         $request->validate($commonRules);
 
-
         $shortDescp = $request->short_descp;
         $pattern = '/<li>(.*?)<\/li>/i';
         preg_match_all($pattern, $shortDescp, $matches);
         $quotation_short_descp = implode(',', $matches[1]);
-
 
         // Start a database transaction
         DB::beginTransaction();
@@ -133,13 +130,11 @@ class ProductController extends Controller
                 'created_at' => Carbon::now(),
             ];
 
-
             if ($request->file('product_thambnail')) {
-                $data['product_thambnail'] = uploadAndResizeImage($request->file('product_thambnail'), "upload/products/thambnails", 720, 660); // Fixed the function parameters
+                $data['product_thambnail'] = uploadAndResizeImage($request->file('product_thambnail'), 'upload/products/thambnails', 720, 660); // Fixed the function parameters
             } else {
-                $data['product_thambnail'] = "upload/no_product.png";
+                $data['product_thambnail'] = 'upload/no_product.png';
             }
-
 
             $product = Product::create($data);
 
@@ -155,21 +150,19 @@ class ProductController extends Controller
                         'specification_id' => $specification_id[$i],
                         'specification_details_id' => $specification_details_id[$i],
                         'product_id' => $product->id,
-                        "created_by" => Auth::guard('admin')->user()->id,
+                        'created_by' => Auth::guard('admin')->user()->id,
                         'created_at' => Carbon::now(),
                     ]);
                 }
             }
-
-
 
             $images = $request->file('multi_img');
             if ($images != null) {
                 foreach ($images as $img) {
                     MultiImg::insert([
                         'product_id' => $product->id,
-                        'photo_name' => uploadAndResizeImage($img, "upload/products/multi-image", 720, 660),
-                        "created_by" => Auth::guard('admin')->user()->id,
+                        'photo_name' => uploadAndResizeImage($img, 'upload/products/multi-image', 720, 660),
+                        'created_by' => Auth::guard('admin')->user()->id,
                         'created_at' => Carbon::now(),
                     ]);
                 }
@@ -178,7 +171,7 @@ class ProductController extends Controller
             DB::commit();
 
             if ($request->ajax()) {
-                return response()->json(["product"=>$product,"notification"=>notification('Product Information Save Successfully', 'success')]);
+                return response()->json(['product' => $product, 'notification' => notification('Product Information Save Successfully', 'success')]);
             } else {
                 return redirect()->route('product.index')->with(notification('Product Information Save Successfully', 'success'));
             }
@@ -187,10 +180,10 @@ class ProductController extends Controller
             DB::rollback();
 
             if ($request->ajax()) {
-                return response()->json(notification('Error: ' . $e->getMessage(), 'error'));
+                return response()->json(notification('Error: '.$e->getMessage(), 'error'));
             } else {
                 // Handle the exception or return an error response
-                return redirect()->back()->withInput()->with(notification('Error: ' . $e->getMessage(), 'error'));
+                return redirect()->back()->withInput()->with(notification('Error: '.$e->getMessage(), 'error'));
             }
         }
     }
@@ -224,13 +217,13 @@ class ProductController extends Controller
         $multiImgs = MultiImg::where('product_id', $id)->get();
         $productSpecification = ProductSpecification::with('specification', 'specification.specificationdetails')->where('product_id', $id)->get();
         $product = Product::with('category.subcategory', 'category.subsubcategory')->findOrFail($id);
+
         return view('backend.product.product_edit', compact('categories', 'specifications', 'specificationDetails', 'productSpecification', 'subcategories', 'subsubcategories', 'units', 'brands', 'multiImgs', 'product'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -308,7 +301,6 @@ class ProductController extends Controller
     //     }
     // }
 
-
     public function update(Request $request, $id)
     {
 
@@ -346,8 +338,8 @@ class ProductController extends Controller
                 'top_rated' => $request->top_rated,
                 'is_expireable' => $request->is_expireable,
                 'type' => $request->type,
-                "updated_by" => Auth::guard('admin')->user()->id,
-                "updated_at" => Carbon::now()
+                'updated_by' => Auth::guard('admin')->user()->id,
+                'updated_at' => Carbon::now(),
             ];
 
             //return $data;
@@ -355,7 +347,7 @@ class ProductController extends Controller
             $product = Product::findOrFail($id);
             if ($request->file('product_thambnail')) {
                 @unlink($product->product_thambnail);
-                $data['product_thambnail'] = uploadAndResizeImage($request->file('product_thambnail'), "upload/products/thambnails", 720, 660);
+                $data['product_thambnail'] = uploadAndResizeImage($request->file('product_thambnail'), 'upload/products/thambnails', 720, 660);
             }
 
             $product->update($data);
@@ -387,6 +379,7 @@ class ProductController extends Controller
 
             // Something went wrong, so rollback the transaction
             DB::rollback();
+
             return redirect()->back()->with('error An error occurred while updating the product.', $e->getMessage());
         }
     }
@@ -405,12 +398,14 @@ class ProductController extends Controller
     public function ActiveProduct($id)
     {
         Product::where('id', '=', $id)->update(['status' => 1]);
+
         return redirect()->back()->with(notification('Product Active Successfully', 'success'));
     }
 
     public function InactiveProduct($id)
     {
         Product::where('id', '=', $id)->update(['status' => 0]);
+
         return redirect()->back()->with(notification('Product InActive Successfully', 'success'));
     }
 }

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text('product_name');
             $table->text('quotation_product_name');
             $table->string('product_slug');
-            $table->string('product_code')->nullable();;
+            $table->string('product_code')->nullable();
             $table->string('purchase_price');
             $table->string('selling_price');
             $table->string('discount_price')->nullable();

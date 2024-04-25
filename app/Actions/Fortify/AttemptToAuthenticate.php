@@ -27,8 +27,6 @@ class AttemptToAuthenticate
     /**
      * Create a new controller instance.
      *
-     * @param  \Illuminate\Contracts\Auth\StatefulGuard  $guard
-     * @param  \Laravel\Fortify\LoginRateLimiter  $limiter
      * @return void
      */
     public function __construct(StatefulGuard $guard, LoginRateLimiter $limiter)
@@ -51,7 +49,7 @@ class AttemptToAuthenticate
         }
 
         if ($this->guard->attempt(
-             $request->only(Fortify::username(), 'password'),
+            $request->only(Fortify::username(), 'password'),
             //$request->only('email', 'password'),
             $request->boolean('remember'))
         ) {

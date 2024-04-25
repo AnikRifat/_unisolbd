@@ -21,8 +21,8 @@ class SeoFactory extends Factory
             'meta_author' => 'minhaz',
             'meta_keyword' => 'vapes',
             'meta_description' => 'eCommerce Product Description SEO. The meta description is a quick description that appears in search engine results beneath your product page title',
-            'google_analytics' => 'lets you measure your advertising ROI'
-            
+            'google_analytics' => 'lets you measure your advertising ROI',
+
         ];
     }
 }

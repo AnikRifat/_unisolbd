@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Permission;
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PermissionSeeder extends Seeder
@@ -41,7 +40,7 @@ class PermissionSeeder extends Seeder
                 'menu_id' => 0,
                 'name' => 'Print',
                 'created_at' => Carbon::now(),
-            ]
+            ],
         ];
 
         Permission::insert($permission);

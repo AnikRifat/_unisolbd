@@ -82,6 +82,10 @@
         <a href="javascript:void(0)" onclick="addToCart(this)" data-product-id="{{ base64_encode($product->id) }}"   class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
     </div>
 </div>
+@else
+<div class="prodcut-add-cart">
+    <a href="javascript:void(0)"    class="btn btn-primary transition-3d-hover btn-block"><i class="ec ec-login"></i>Login to see price</a>
+</div>
 @endauth
 
 

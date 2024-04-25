@@ -17,8 +17,9 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus = NavItem::where('type',0)->get();
-        return view('backend.landingPage.menu.menu',compact('menus'));
+        $menus = NavItem::where('type', 0)->get();
+
+        return view('backend.landingPage.menu.menu', compact('menus'));
     }
 
     /**
@@ -34,7 +35,6 @@ class MenuController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -53,7 +53,7 @@ class MenuController extends Controller
         ];
 
         // Check if $request->link is present and not empty
-        if ($request->has('link') && !empty($request->link)) {
+        if ($request->has('link') && ! empty($request->link)) {
             $insertData['link'] = $request->link;
         }
 
@@ -69,7 +69,6 @@ class MenuController extends Controller
         // Redirect back with the notification message
         return redirect()->back()->with($notification);
     }
-
 
     /**
      * Display the specified resource.
@@ -96,7 +95,6 @@ class MenuController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -116,7 +114,7 @@ class MenuController extends Controller
         ];
 
         // Check if $request->link is present and not empty
-        if ($request->has('link') && !empty($request->link)) {
+        if ($request->has('link') && ! empty($request->link)) {
             $insertData['link'] = $request->link;
         }
 
@@ -144,37 +142,33 @@ class MenuController extends Controller
         //
     }
 
-
     public function ActiveMenu($id)
     {
 
-        NavItem::where('id','=',$id)->update(['status' => 1]);
-       
-       $notification=array([
+        NavItem::where('id', '=', $id)->update(['status' => 1]);
 
-           'message' => 'Menu Active Successfully',
-           'type' => 'success',
-       ]);
+        $notification = [[
 
-       return redirect()->back()->with($notification);
+            'message' => 'Menu Active Successfully',
+            'type' => 'success',
+        ]];
+
+        return redirect()->back()->with($notification);
 
     }
 
     public function InactiveMenu($id)
     {
 
-        NavItem::where('id','=',$id)->update(['status' => 0]);
-       
-       $notification=array([
+        NavItem::where('id', '=', $id)->update(['status' => 0]);
 
-           'message' => 'Menu Inactive Successfully',
-           'type' => 'success',
-       ]);
+        $notification = [[
 
-       return redirect()->back()->with($notification);
+            'message' => 'Menu Inactive Successfully',
+            'type' => 'success',
+        ]];
+
+        return redirect()->back()->with($notification);
 
     }
-
-   
-
 }

@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class SaleInvoice extends Model
 {
     use HasFactory;
-    protected $guarded=[];
+
+    protected $guarded = [];
 
     public function saleDetails()
     {
@@ -17,19 +18,16 @@ class SaleInvoice extends Model
 
     public function package()
     {
-        return $this->belongsTo(Package::class); 
+        return $this->belongsTo(Package::class);
     }
+
     public function vendor()
     {
-        return $this->belongsTo(Vendor::class,"customer_id","id");
+        return $this->belongsTo(Vendor::class, 'customer_id', 'id');
     }
 
     public function admin()
     {
-        return $this->belongsTo(Admin::class,"sale_person_id","id");
+        return $this->belongsTo(Admin::class, 'sale_person_id', 'id');
     }
-
-
-
-
 }

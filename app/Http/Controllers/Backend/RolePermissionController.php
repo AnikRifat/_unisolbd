@@ -24,11 +24,12 @@ class RolePermissionController extends Controller
         $permissionItems = RolePermission::where('role_id', $request->role_id)->get();
         $modules = Module::with('menus', 'submenus')->orderBy('id', 'asc')->get();
         $permissions = Permission::get();
+
         return response()->json([
             'role' => $role,
-            "modules" => $modules,
-            "permissions" => $permissions,
-            "rolePermissions" => $permissionItems,
+            'modules' => $modules,
+            'permissions' => $permissions,
+            'rolePermissions' => $permissionItems,
         ]);
     }
 
@@ -39,18 +40,18 @@ class RolePermissionController extends Controller
      */
     public function create(Request $request)
     {
-        $newActiveModule = $request->input('newActiveModule'); 
+        $newActiveModule = $request->input('newActiveModule');
         $activeModuleData = session('hierarchicalData')[$newActiveModule];
         Session::forget('activeModule');
         session(['activeModule' => $activeModuleData]);
-        $activeModule =   Session::get('activeModule');
+        $activeModule = Session::get('activeModule');
+
         return response()->json($activeModule);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -76,7 +77,7 @@ class RolePermissionController extends Controller
             ]);
         }
 
-       return response()->json(notification('successfully assign role permission','success'));
+        return response()->json(notification('successfully assign role permission', 'success'));
     }
 
     /**
@@ -104,14 +105,14 @@ class RolePermissionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-       $role = Role::findOrFail($id);
-       return view('backend.administration.role_permission',compact('role'));
+        $role = Role::findOrFail($id);
+
+        return view('backend.administration.role_permission', compact('role'));
     }
 
     /**
@@ -124,5 +125,4 @@ class RolePermissionController extends Controller
     {
         //
     }
-
 }

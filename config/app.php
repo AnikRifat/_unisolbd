@@ -83,7 +83,6 @@ return [
     */
 
     'locale' => 'bn-BD',
-    
 
     /*
     |--------------------------------------------------------------------------
@@ -183,8 +182,6 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
-
-        
         /*
          * Package Service Providers...
          */
@@ -194,9 +191,7 @@ return [
          * Application Service Providers...
          */
 
-
-        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class, 
-
+        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
 
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,

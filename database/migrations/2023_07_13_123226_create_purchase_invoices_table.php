@@ -21,11 +21,11 @@ return new class extends Migration
             $table->string('invoice_no');
             $table->string('purchase_date');
             $table->string('grand_total');
-            $table->string('vat_on_invoice')->nullable();;
+            $table->string('vat_on_invoice')->nullable();
             $table->string('total');
-            $table->string('discount')->nullable();;
+            $table->string('discount')->nullable();
             $table->string('net_payable');
-            $table->string('total_paid')->nullable();;
+            $table->string('total_paid')->nullable();
             $table->string('total_due');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

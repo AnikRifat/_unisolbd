@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('ship_divisions', function (Blueprint $table) {
             $table->id();
-            $table->string("name")->unique();
+            $table->string('name')->unique();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

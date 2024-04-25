@@ -5,14 +5,11 @@ namespace App\Http\Controllers\Backend\LandingPage;
 use App\Http\Controllers\Controller;
 use App\Models\NavItem;
 use Carbon\Carbon;
-use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class SubmenuController extends Controller
 {
-
-
     /**
      * Show the form for creating a new resource.
      *
@@ -27,9 +24,9 @@ class SubmenuController extends Controller
             ->get();
 
         $menus = NavItem::where('type', 0)->get();
-        return view('backend.landingPage.submenu.submenu', compact('menus','submenus'));
-    }
 
+        return view('backend.landingPage.submenu.submenu', compact('menus', 'submenus'));
+    }
 
     /**
      * Display a listing of the resource.
@@ -47,7 +44,6 @@ class SubmenuController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -68,7 +64,7 @@ class SubmenuController extends Controller
         ];
 
         // Check if $request->link is present and not empty
-        if ($request->has('link') && !empty($request->link)) {
+        if ($request->has('link') && ! empty($request->link)) {
             $insertData['link'] = $request->link;
         }
 
@@ -97,13 +93,12 @@ class SubmenuController extends Controller
      */
     public function edit($id)
     {
-       return NavItem::findOrFail($id);
+        return NavItem::findOrFail($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -111,29 +106,29 @@ class SubmenuController extends Controller
     {
 
         //return $id;
-       // Validate the request data
-       $request->validate([
-        'parent_id' => 'required',
-        'name' => 'required',
-    ]);
+        // Validate the request data
+        $request->validate([
+            'parent_id' => 'required',
+            'name' => 'required',
+        ]);
 
-    // Create an array to hold the values to be inserted
-    $insertData = [
-        'name' => $request->name,
-        'parent_id' => $request->parent_id,
-        'updated_at' => Carbon::now(),
-        'updated_by' => Auth::user()->id,
-    ];
+        // Create an array to hold the values to be inserted
+        $insertData = [
+            'name' => $request->name,
+            'parent_id' => $request->parent_id,
+            'updated_at' => Carbon::now(),
+            'updated_by' => Auth::user()->id,
+        ];
 
-    // Check if $request->link is present and not empty
-    if ($request->has('link') && !empty($request->link)) {
-        $insertData['link'] = $request->link;
-    }
+        // Check if $request->link is present and not empty
+        if ($request->has('link') && ! empty($request->link)) {
+            $insertData['link'] = $request->link;
+        }
 
-    // update the data into the database
-    NavItem::findOrFail($id)->update($insertData);
+        // update the data into the database
+        NavItem::findOrFail($id)->update($insertData);
 
-    return notification('submenu update successfully', 'success');
+        return notification('submenu update successfully', 'success');
     }
 
     /**
@@ -147,16 +142,17 @@ class SubmenuController extends Controller
         //
     }
 
-
     public function ActiveSubmenu($id)
     {
-        NavItem::where('id','=',$id)->update(['status' => 1]);
-        return notification('Menu Active Successfully','success');
+        NavItem::where('id', '=', $id)->update(['status' => 1]);
+
+        return notification('Menu Active Successfully', 'success');
     }
 
     public function InactiveSubmenu($id)
     {
-        NavItem::where('id','=',$id)->update(['status' => 0]);
-       return notification('Menu Inactive Successfully','success');
+        NavItem::where('id', '=', $id)->update(['status' => 0]);
+
+        return notification('Menu Inactive Successfully', 'success');
     }
 }

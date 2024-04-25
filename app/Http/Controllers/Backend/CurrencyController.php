@@ -18,6 +18,7 @@ class CurrencyController extends Controller
     public function index()
     {
         $currencies = Currency::latest()->orderBy('id', 'DESC')->get();
+
         return view('backend.currency.currency', compact('currencies'));
     }
 
@@ -34,7 +35,6 @@ class CurrencyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -51,9 +51,10 @@ class CurrencyController extends Controller
             'currency' => $request->currency,
             'code' => $request->code,
             'symbol' => $request->symbol,
-            "created_by" => Auth::guard('admin')->user()->id,
-            "created_at" => Carbon::now()
+            'created_by' => Auth::guard('admin')->user()->id,
+            'created_at' => Carbon::now(),
         ]);
+
         return redirect()->back()->with(notification('Currency Add Successfully', 'success'));
     }
 
@@ -82,7 +83,6 @@ class CurrencyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -91,7 +91,7 @@ class CurrencyController extends Controller
 
         $request->validate([
             'country' => 'required',
-            'country' => 'required|unique:currencies,country,' . $id,
+            'country' => 'required|unique:currencies,country,'.$id,
             'currency' => 'required',
             'code' => 'required',
             'symbol' => 'required',
@@ -101,9 +101,10 @@ class CurrencyController extends Controller
             'currency' => $request->currency,
             'code' => $request->code,
             'symbol' => $request->symbol,
-            "updated_by" => Auth::guard('admin')->user()->id,
-            "updated_at" => Carbon::now()
+            'updated_by' => Auth::guard('admin')->user()->id,
+            'updated_at' => Carbon::now(),
         ]);
+
         return redirect()->back()->with(notification('Currency Update Successfully', 'success'));
     }
 
@@ -116,13 +117,15 @@ class CurrencyController extends Controller
     public function destroy($id)
     {
         Currency::findOrFail($id)->delete();
-        return redirect()->back()->with(notification("Currency Active Successfully", "success"));
+
+        return redirect()->back()->with(notification('Currency Active Successfully', 'success'));
     }
 
     public function ActiveCurrency($id)
     {
         Currency::where('id', '=', $id)->update(['status' => 1]);
         Currency::where('id', '!=', $id)->update(['status' => null]);
+
         return redirect()->back()->with(notification('Currency Active Successfully', 'success'));
     }
 }

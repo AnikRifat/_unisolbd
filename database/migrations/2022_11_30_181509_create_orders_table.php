@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('discount_amount')->nullable();
             $table->string('coupon_code')->nullable();
             $table->string('payable_amount');
-            $table->string('paid_amount')->nullable(); 
+            $table->string('paid_amount')->nullable();
             $table->string('order_number')->nullable();
             $table->string('invoice_no');
             $table->string('order_date');
@@ -43,7 +43,7 @@ return new class extends Migration
             $table->string('tracking_number')->nullable();
             $table->date('estimated_delivery_date')->nullable();
             $table->decimal('tax_amount', 8, 2)->default(0.00);
-            
+
             $table->string('confirmed_date')->nullable();
             $table->string('processing_date')->nullable();
             $table->string('picked_date')->nullable();
@@ -57,7 +57,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-  
+
     /**
      * Reverse the migrations.
      *

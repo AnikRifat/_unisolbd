@@ -8,31 +8,30 @@ use Illuminate\Database\Eloquent\Model;
 class PackageDetails extends Model
 {
     use HasFactory;
-    protected $guarded=[];
+
+    protected $guarded = [];
+
     public function category()
     {
-        
-        return $this->belongsTo(Category::class,'category_id', 'id');
+
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
     public function subcategory()
     {
-        
-        return $this->belongsTo(SubCategory::class,'subcategory_id', 'id');
+
+        return $this->belongsTo(SubCategory::class, 'subcategory_id', 'id');
     }
 
     public function subsubcategory()
     {
-        
-        return $this->belongsTo(SubSubCategory::class,'subsubcategory_id', 'id');
+
+        return $this->belongsTo(SubSubCategory::class, 'subsubcategory_id', 'id');
     }
 
     public function package()
     {
-        
-        return $this->belongsTo(Package::class,'package_id', 'id');
+
+        return $this->belongsTo(Package::class, 'package_id', 'id');
     }
-
-
-
 }

@@ -18,7 +18,8 @@ class ExpenseController extends Controller
     public function index()
     {
         $expenses = Expense::get();
-        return view('backend.expense.expense',compact('expenses'));
+
+        return view('backend.expense.expense', compact('expenses'));
     }
 
     /**
@@ -34,31 +35,31 @@ class ExpenseController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-          //return $request;
-          $request->validate([
-            "date" => 'required',
-            "purpose" => 'required',
-            "amount" => 'required',
+        //return $request;
+        $request->validate([
+            'date' => 'required',
+            'purpose' => 'required',
+            'amount' => 'required',
         ]);
         $expenseData = [
-            "date" => $request->date,
-            "purpose" => $request->purpose,
-            "amount" => $request->amount,
-            "created_by" => Auth::guard('admin')->user()->id,
-            "created_at" => Carbon::now()
+            'date' => $request->date,
+            'purpose' => $request->purpose,
+            'amount' => $request->amount,
+            'created_by' => Auth::guard('admin')->user()->id,
+            'created_at' => Carbon::now(),
         ]; // Added a semicolon here to end the array definition
-    
+
         if ($request->file('receipt')) {
-            $expenseData['receipt'] = uploadAndResizeImage($request->file('receipt'), "upload/expense",300,300); // Fixed the function parameters
+            $expenseData['receipt'] = uploadAndResizeImage($request->file('receipt'), 'upload/expense', 300, 300); // Fixed the function parameters
         }
 
-         Expense::insert($expenseData);
-         return redirect()->back()->with(notification('Expense Added Successfully','success'));
+        Expense::insert($expenseData);
+
+        return redirect()->back()->with(notification('Expense Added Successfully', 'success'));
     }
 
     /**
@@ -86,35 +87,33 @@ class ExpenseController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $request->validate([
-            "date" => 'required',
-            "purpose" => 'required',
-            "amount" => 'required',
+            'date' => 'required',
+            'purpose' => 'required',
+            'amount' => 'required',
         ]);
         $expenseData = [
-            "date" => $request->date,
-            "purpose" => $request->purpose,
-            "amount" => $request->amount,
-            "updated_by" => Auth::guard('admin')->user()->id,
-            "updated_at" => Carbon::now()
+            'date' => $request->date,
+            'purpose' => $request->purpose,
+            'amount' => $request->amount,
+            'updated_by' => Auth::guard('admin')->user()->id,
+            'updated_at' => Carbon::now(),
         ]; // Added a semicolon here to end the array definition
-    
 
         $expense = Expense::findOrFail($id);
         if ($request->file('receipt')) {
             @unlink(public_path($expense->receipt));
-            $expenseData['receipt'] = uploadAndResizeImage($request->file('receipt'), "upload/expense",400,400); // Fixed the function parameters
+            $expenseData['receipt'] = uploadAndResizeImage($request->file('receipt'), 'upload/expense', 400, 400); // Fixed the function parameters
         }
-         Expense::findOrFail($id)->update($expenseData);
+        Expense::findOrFail($id)->update($expenseData);
 
-         return redirect()->back()->with(notification('Expense Updated Successfully','success'));
-    
+        return redirect()->back()->with(notification('Expense Updated Successfully', 'success'));
+
     }
 
     /**

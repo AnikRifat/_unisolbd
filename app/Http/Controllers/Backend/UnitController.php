@@ -18,7 +18,8 @@ class UnitController extends Controller
     public function index()
     {
         $units = Unit::latest()->get();
-        return view('backend.unit.unit',compact('units'));
+
+        return view('backend.unit.unit', compact('units'));
     }
 
     /**
@@ -28,25 +29,24 @@ class UnitController extends Controller
      */
     public function create()
     {
-       
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:units,name,except,id'
+            'name' => 'required|unique:units,name,except,id',
         ]);
 
         Unit::create([
             'name' => $request->name,
-            "created_by" => Auth::guard('admin')->user()->id,
-            "created_at" => Carbon::now()
+            'created_by' => Auth::guard('admin')->user()->id,
+            'created_at' => Carbon::now(),
         ]);
 
         return redirect()->back()->with(notification('Unit Save Successfully', 'success'));
@@ -77,20 +77,19 @@ class UnitController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|unique:units,name,' . $id
+            'name' => 'required|unique:units,name,'.$id,
         ]);
 
         Unit::findOrFail($id)->update([
             'name' => $request->name,
-            "updated_by" => Auth::guard('admin')->user()->id,
-            "updated_at" => Carbon::now()
+            'updated_by' => Auth::guard('admin')->user()->id,
+            'updated_at' => Carbon::now(),
         ]);
 
         return redirect()->back()->with(notification('Unit Update Successfully', 'success'));
@@ -110,12 +109,14 @@ class UnitController extends Controller
     public function ActiveUnit($id)
     {
         Unit::where('id', '=', $id)->update(['status' => 1]);
+
         return redirect()->back()->with(notification('Unit Active Successfully', 'success'));
     }
 
     public function InactiveUnit($id)
     {
         Unit::where('id', '=', $id)->update(['status' => 0]);
+
         return redirect()->back()->with(notification('Unit Inactive Successfully', 'success'));
     }
 }

@@ -17,7 +17,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::orderBy('id', "DESC")->get();
+        $categories = Category::orderBy('id', 'DESC')->get();
+
         return view('backend.categories.category', compact('categories'));
     }
 
@@ -28,31 +29,30 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $request->validate([
             'category_name' => 'required|unique:categories,category_name,except,id',
-            'category_icon' => 'required'
+            'category_icon' => 'required',
         ]);
 
         $categoryData = [
             'category_name' => $request->category_name,
-            'category_slug' => strtolower(str_replace(' ', '-', $request->category_name,)),
-            "created_by" => Auth::guard('admin')->user()->id,
-            "created_at" => Carbon::now()
+            'category_slug' => strtolower(str_replace(' ', '-', $request->category_name)),
+            'created_by' => Auth::guard('admin')->user()->id,
+            'created_at' => Carbon::now(),
         ];
 
         if ($request->file('category_icon')) {
-            $categoryData['category_icon'] = uploadAndResizeImage($request->file('category_icon'), "upload/icon/category", 40, 40);
+            $categoryData['category_icon'] = uploadAndResizeImage($request->file('category_icon'), 'upload/icon/category', 40, 40);
         }
 
         Category::create($categoryData);
@@ -85,7 +85,6 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -93,29 +92,26 @@ class CategoryController extends Controller
     {
 
         $request->validate([
-            'category_name' => 'required|unique:categories,category_name,' . $id
+            'category_name' => 'required|unique:categories,category_name,'.$id,
         ]);
 
         $categoryData = [
             'category_name' => $request->category_name,
-            'category_slug' => strtolower(str_replace(' ', '-', $request->category_name,)),
-            "updated_by" => Auth::guard('admin')->user()->id,
-            "updated_at" => Carbon::now()
+            'category_slug' => strtolower(str_replace(' ', '-', $request->category_name)),
+            'updated_by' => Auth::guard('admin')->user()->id,
+            'updated_at' => Carbon::now(),
         ];
 
         $category = Category::findOrFail($id);
         if ($request->file('category_icon')) {
             @unlink(public_path($category->category_icon));
-            $categoryData['category_icon'] = uploadAndResizeImage($request->file('category_icon'), "upload/icon/category", 40, 40);
+            $categoryData['category_icon'] = uploadAndResizeImage($request->file('category_icon'), 'upload/icon/category', 40, 40);
         }
 
         Category::findOrFail($id)->update($categoryData);
 
         return redirect()->back()->with(notification('Category Update Successfully', 'success'));
     }
-
-
-
 
     /**
      * Remove the specified resource from storage.
@@ -131,12 +127,14 @@ class CategoryController extends Controller
     public function ActiveCategory($id)
     {
         Category::where('id', '=', $id)->update(['status' => 1]);
+
         return redirect()->back()->with(notification('Category Active Successfully', 'success'));
     }
 
     public function InactiveCategory($id)
     {
         Category::where('id', '=', $id)->update(['status' => 0]);
+
         return redirect()->back()->with(notification('Category Inactive Successfully', 'success'));
     }
 }

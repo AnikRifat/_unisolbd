@@ -18,8 +18,9 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::get();
-        return view('backend.administration.role',compact('roles'));
-     
+
+        return view('backend.administration.role', compact('roles'));
+
     }
 
     /**
@@ -35,17 +36,14 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-         // Validate the request data
-         $request->validate([
+        // Validate the request data
+        $request->validate([
             'name' => 'required|unique:roles,name,except,id',
         ]);
-
-        
 
         // Insert the data into the database
         Role::insert([
@@ -89,31 +87,30 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-       // Validate the request data
-       $request->validate([
-        'name' => 'required|unique:roles,name,' . $id
+        // Validate the request data
+        $request->validate([
+            'name' => 'required|unique:roles,name,'.$id,
         ]);
 
-    Role::findOrFail($id)->update([
-        'name' => $request->name,
-        'updated_at' => Carbon::now(),
-        'updated_by' => Auth::guard('admin')->user()->id,
-    ]);
+        Role::findOrFail($id)->update([
+            'name' => $request->name,
+            'updated_at' => Carbon::now(),
+            'updated_by' => Auth::guard('admin')->user()->id,
+        ]);
 
-    // Create a notification message
-    $notification = [
-        'message' => 'Role Update Successfully',
-        'type' => 'success',
-    ];
+        // Create a notification message
+        $notification = [
+            'message' => 'Role Update Successfully',
+            'type' => 'success',
+        ];
 
-    // Redirect back with the notification message
-    return redirect()->back()->with($notification);
+        // Redirect back with the notification message
+        return redirect()->back()->with($notification);
 
     }
 
@@ -130,13 +127,15 @@ class RoleController extends Controller
 
     public function ActiveRole($id)
     {
-        Role::where('id','=',$id)->update(['status' => 1]);
-        return redirect()->back()->with(notification('Role Active Successfully','success'));
+        Role::where('id', '=', $id)->update(['status' => 1]);
+
+        return redirect()->back()->with(notification('Role Active Successfully', 'success'));
     }
 
     public function InactiveRole($id)
     {
-        Role::where('id','=',$id)->update(['status' => 0]);
-        return redirect()->back()->with(notification('Role Inactive Successfully','success'));
+        Role::where('id', '=', $id)->update(['status' => 0]);
+
+        return redirect()->back()->with(notification('Role Inactive Successfully', 'success'));
     }
 }

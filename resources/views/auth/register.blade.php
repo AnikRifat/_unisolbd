@@ -104,6 +104,9 @@
         <!-- End breadcrumb -->
 
         <div class="container">
+            @if($errors->any())
+    {{ implode('', $errors->all('<div>:message</div>')) }}
+@endif
             <div class="my-2 my-xl-4">
                 <div class="row d-flex justify-content-center">
                     <div class="margin-both">

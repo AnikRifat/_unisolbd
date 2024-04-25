@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
@@ -46,10 +45,11 @@ class OderMail extends Mailable
      */
     public function content()
     {
-        $order=$this->data;
+        $order = $this->data;
+
         return new Content(
             view: 'main.order_mail',
-            with:$order,
+            with: $order,
         );
     }
 
