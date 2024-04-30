@@ -30,9 +30,9 @@ use App\Http\Controllers\Backend\SpecificationDetailController;
 use App\Http\Controllers\Backend\SubcategoryController;
 use App\Http\Controllers\Backend\SubsubcategoryController;
 use App\Http\Controllers\Backend\UnitController;
+use App\Http\Controllers\Backend\UserDetailsController;
 use App\Http\Controllers\Backend\UserManagementController;
 use App\Http\Controllers\Backend\VendorController;
-use App\Http\Controllers\UserDetailsController;
 use Illuminate\Support\Facades\Route;
 
 route::middleware(['auth:admin'])->group(function () {
@@ -68,6 +68,9 @@ route::middleware(['auth:admin'])->group(function () {
 
     //vendor
     Route::resource('vendor', VendorController::class);
+
+        //user
+    Route::resource('user', UserDetailsController::class);
 
     //site setting
     Route::resource('site-setting', SiteSettingController::class);

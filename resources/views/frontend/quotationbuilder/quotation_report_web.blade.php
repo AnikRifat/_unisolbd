@@ -1,4 +1,7 @@
 
+@extends('frontend.main_master')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -157,10 +160,10 @@
                             </div> --}}
                         </div>
                         <div class="invoice-btn-section clearfix d-print-none">
-                            <a class="btn btn-lg btn-print " id="printInvoice">
+                            <a class="btn btn-lg btn-print text-light" id="printInvoice">
                                 <i class="fa fa-print"></i> Print Quotation
                             </a>
-                            <a id="downloadPdfButton" class="btn btn-lg btn-download btn-theme">
+                            <a id="downloadPdfButton" class="btn btn-lg btn-download btn-theme text-light">
                                 <i class="fa fa-download"></i> Download Quotation
                             </a>
                         </div>
@@ -212,3 +215,5 @@
 </body>
 
 </html>
+@endsection
+

@@ -37,7 +37,7 @@
                                 href="{{ route('view.packageDetails',(encrypt($packageDetails->first()->package->id)))  }}">{{ $packageDetails->first()->package->name }}</a>
                             </li>
                             @endif
-                                
+
                             </li>
                         </ol>
                     </nav>
@@ -58,10 +58,40 @@
                     <div class="col-lg-10 mb-10">
                         <div class="d-flex d-flex justify-content-between align-items-center">
                             <div class="d-lg-block d-none d-flex justify-content-center align-items-center">
+                                <button type="button" data-toggle="modal" data-target="#calcModal" class="font-size-16 bg-dark rounded rounded-lg  p-2 text-center text-white">
+Calculate Storage
+                                </button>
+
+<!-- The Modal -->
+<div class="modal" id="calcModal">
+    <div class="modal-dialog modal-block">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          Modal body..
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
                                 <span class="font-size-16 bg-dark rounded rounded-lg  p-2 text-center text-white">Total :
                                     <span
                                         id="txtTotal">{{ Session::has($packageDetails->first()->package->name) ? number_format(Session::get($packageDetails->first()->package->name)['total_price'] , 0, '.', ','): 0 }}</span><span
-                                        
+
                                         class="font-size-22">{{ $currency->symbol }}</span></span>
 
                                         @if (Session::has($packageDetails->first()->package->name))
@@ -74,8 +104,8 @@
                                             @endif
                                         @endif
 
-                                        
-							
+
+
                                 {{-- {{ Session::get($packageDetails->first()->package->name)['total_price'] }} --}}
                             </div>
                             <div class="center-text-side">
@@ -109,7 +139,7 @@
                                         <div class="ms-2">
                                             <div
                                                 class="d-flex align-items-center justify-content-between font-size-16 font-weight-bold">
-                                              
+
                                                 {{ $dynamicKey }}
                                             </div>
                                             <div class="mt-1"><a href="#"

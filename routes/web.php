@@ -149,10 +149,10 @@ Route::middleware([
         $id = Auth::user()->id;
         $user = User::find($id);
         $quotations = CustomerPackage::with('vendor')
-            ->where('user_id', auth()->user()->id)
+            ->where('customer_id', auth()->user()->id)
             ->orderBy('id', 'DESC')
             ->get();
-        return view('dashboard', compact('user'));
+        return view('dashboard', compact('user','quotations'));
     })->name('dashboard');
 });
 
