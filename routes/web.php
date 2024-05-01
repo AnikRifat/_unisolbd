@@ -134,6 +134,7 @@ Route::post('/user/register/store', [UserController::class, 'StoreUserRegister']
 // Route::get('/otp/verify', [OTPValidationController::class, 'showVerificationForm'])->name('otp.verify');
 // Route::post('/otp/validate', [OTPValidationController::class, 'validateOTP'])->name('otp.validate');
 Route::get('/', [IndexController::class, 'Index'])->name('home');
+Route::get('/storage-calculator', [IndexController::class, 'storageCalc'])->name('storage.calculator');
 Route::get('/user/logout', [IndexController::class, 'UserLogout'])->name('user.logout');
 Route::get('/user/profile', [IndexController::class, 'UserProfile'])->name('user.profile');
 Route::post('/user/profile/store', [IndexController::class, 'UserProfileStore'])->name('user.profile.store');
