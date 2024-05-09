@@ -1,11 +1,7 @@
 @php
-    $setting = App\Models\SiteSetting::limit(1)
-        ->get()
-        ->first();
+    $setting = App\Models\SiteSetting::limit(1)->get()->first();
 
-    $categories = App\Models\Category::where('status', 1)
-        ->orderBy('category_name', 'ASC')
-        ->get();
+    $categories = App\Models\Category::where('status', 1)->orderBy('category_name', 'ASC')->get();
 
 @endphp
 
@@ -175,25 +171,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-        <div class="floating_btn">
-            <a type="button" href="{{ route('view.package') }}"
-                class="btn btn-sm contact_icon text-white font-weight-bold">
-                Quotation Builder
-            </a>
-        </div>
-
         <!-- Logo-Search-header-icons -->
         <div class="py-2 py-xl-5 bg-primary-down-lg">
             <div class="container my-0dot5 my-xl-0">
@@ -263,17 +240,78 @@
 
                                                     @foreach ($categories as $category)
                                                         @php
-                                                            $subcategories = App\Models\Category::select('categories.id', 'categories.category_name', 'categories.category_slug', DB::raw('IFNULL(brands.id, \'\') AS brand_id'), DB::raw('IFNULL(brands.brand_name, \'\') AS brand_name'), DB::raw('IFNULL(subCategories.id, \'\') AS subcategory_id'), DB::raw('IFNULL(subCategories.subcategory_name, \'\') AS subcategory_name'), DB::raw('IFNULL(subCategories.subcategory_slug, \'\') AS subcategory_slug'), DB::raw('IFNULL(subSubCategories.id, \'\') AS subsubcategory_id'), DB::raw('IFNULL(subSubCategories.subsubcategory_name, \'\') AS subsubcategory_name'))
-                                                                ->leftJoin('products', 'categories.id', '=', 'products.category_id')
-                                                                ->leftJoin('brands', 'products.brand_id', '=', 'brands.id')
-                                                                ->leftJoin('sub_categories as subCategories', 'products.subcategory_id', '=', 'subCategories.id')
-                                                                ->leftJoin('sub_sub_categories as subSubCategories', 'products.subsubcategory_id', '=', 'subSubCategories.id')
+                                                            $subcategories = App\Models\Category::select(
+                                                                'categories.id',
+                                                                'categories.category_name',
+                                                                'categories.category_slug',
+                                                                DB::raw('IFNULL(brands.id, \'\') AS brand_id'),
+                                                                DB::raw(
+                                                                    'IFNULL(brands.brand_name, \'\') AS brand_name',
+                                                                ),
+                                                                DB::raw(
+                                                                    'IFNULL(subCategories.id, \'\') AS subcategory_id',
+                                                                ),
+                                                                DB::raw(
+                                                                    'IFNULL(subCategories.subcategory_name, \'\') AS subcategory_name',
+                                                                ),
+                                                                DB::raw(
+                                                                    'IFNULL(subCategories.subcategory_slug, \'\') AS subcategory_slug',
+                                                                ),
+                                                                DB::raw(
+                                                                    'IFNULL(subSubCategories.id, \'\') AS subsubcategory_id',
+                                                                ),
+                                                                DB::raw(
+                                                                    'IFNULL(subSubCategories.subsubcategory_name, \'\') AS subsubcategory_name',
+                                                                ),
+                                                            )
+                                                                ->leftJoin(
+                                                                    'products',
+                                                                    'categories.id',
+                                                                    '=',
+                                                                    'products.category_id',
+                                                                )
+                                                                ->leftJoin(
+                                                                    'brands',
+                                                                    'products.brand_id',
+                                                                    '=',
+                                                                    'brands.id',
+                                                                )
+                                                                ->leftJoin(
+                                                                    'sub_categories as subCategories',
+                                                                    'products.subcategory_id',
+                                                                    '=',
+                                                                    'subCategories.id',
+                                                                )
+                                                                ->leftJoin(
+                                                                    'sub_sub_categories as subSubCategories',
+                                                                    'products.subsubcategory_id',
+                                                                    '=',
+                                                                    'subSubCategories.id',
+                                                                )
                                                                 ->where('categories.id', $category->id)
                                                                 ->where('subCategories.status', 1)
-                                                                ->groupBy('categories.id', 'categories.category_name', 'categories.category_slug', 'brands.id', 'brands.brand_name', 'subCategories.id', 'subCategories.subcategory_name', 'subCategories.subcategory_slug', 'subSubCategories.id', 'subSubCategories.subsubcategory_name')
+                                                                ->groupBy(
+                                                                    'categories.id',
+                                                                    'categories.category_name',
+                                                                    'categories.category_slug',
+                                                                    'brands.id',
+                                                                    'brands.brand_name',
+                                                                    'subCategories.id',
+                                                                    'subCategories.subcategory_name',
+                                                                    'subCategories.subcategory_slug',
+                                                                    'subSubCategories.id',
+                                                                    'subSubCategories.subsubcategory_name',
+                                                                )
                                                                 ->get();
 
-                                                            $hasBrandOrSubcategoryId = collect($subcategories)->contains(fn($item) => (isset($item['brand_id']) && !empty($item['brand_id'])) || (isset($item['subcategory_id']) && !empty($item['subcategory_id'])));
+                                                            $hasBrandOrSubcategoryId = collect(
+                                                                $subcategories,
+                                                            )->contains(
+                                                                fn($item) => (isset($item['brand_id']) &&
+                                                                    !empty($item['brand_id'])) ||
+                                                                    (isset($item['subcategory_id']) &&
+                                                                        !empty($item['subcategory_id'])),
+                                                            );
                                                             $subcategoriesArray = [];
 
                                                         @endphp
@@ -310,11 +348,27 @@
                                                                     {{-- if there has sub category or there has no subcategories --}}
                                                                     @foreach ($subcategories as $subcat)
                                                                         @php
-                                                                            $subsubcategories = App\Models\Product::where('subcategory_id', $subcat->subcategory_id)
+                                                                            $subsubcategories = App\Models\Product::where(
+                                                                                'subcategory_id',
+                                                                                $subcat->subcategory_id,
+                                                                            )
                                                                                 ->where('status', 1)
                                                                                 ->get();
 
-                                                                            $hasBrandOrSubSubcategory = collect($subsubcategories)->contains(fn($item) => (isset($item['brand_id']) && !empty($item['brand_id'])) || (isset($item['subsubcategory_id']) && !empty($item['subsubcategory_id'])));
+                                                                            $hasBrandOrSubSubcategory = collect(
+                                                                                $subsubcategories,
+                                                                            )->contains(
+                                                                                fn($item) => (isset(
+                                                                                    $item['brand_id'],
+                                                                                ) &&
+                                                                                    !empty($item['brand_id'])) ||
+                                                                                    (isset(
+                                                                                        $item['subsubcategory_id'],
+                                                                                    ) &&
+                                                                                        !empty(
+                                                                                            $item['subsubcategory_id']
+                                                                                        )),
+                                                                            );
 
                                                                             $subsubcategoriesArray = [];
                                                                             $subsubBrandArray = [];
@@ -324,7 +378,8 @@
                                                                             {{-- check duplicate subcategory_name --}}
                                                                             @if (!in_array($subcat->subcategory_id, $subcategoriesArray))
                                                                                 @php
-                                                                                    $subcategoriesArray[] = $subcat->subcategory_id;
+                                                                                    $subcategoriesArray[] =
+                                                                                        $subcat->subcategory_id;
                                                                                 @endphp
                                                                                 <ul id="headerSidebarList"
                                                                                     class="u-header-collapse__nav-list u-header-collapse__nav">
@@ -358,7 +413,8 @@
                                                                                                     @if (!in_array($subsubcat->subsubcategory_id, $subsubcategoriesArray))
                                                                                                         @php
 
-                                                                                                            $subsubcategoriesArray[] = $subsubcat->subsubcategory_id;
+                                                                                                            $subsubcategoriesArray[] =
+                                                                                                                $subsubcat->subsubcategory_id;
 
                                                                                                         @endphp
                                                                                                         <ul id="headerSidebarList"
@@ -404,7 +460,8 @@
                                                                                                         @if (!in_array($subsubcat->brand_id, $subsubBrandArray))
                                                                                                             @php
 
-                                                                                                                $subsubBrandArray[] = $subsubcat->brand_id;
+                                                                                                                $subsubBrandArray[] =
+                                                                                                                    $subsubcat->brand_id;
 
                                                                                                             @endphp
                                                                                                             <ul
@@ -546,6 +603,32 @@
                     <div class="col col-xl-auto text-right text-xl-left pl-0 pl-xl-3 position-static">
                         <div class="d-inline-flex">
                             <ul class="d-flex list-unstyled mb-0 align-items-center">
+
+                                <li class="col pr-xl-0 px-2 px-sm-3 d-none d-xl-block">
+                                    <a type="button" href="{{ route('view.package') }}"
+                                        class="btn btn-sm contact_icon text-white ">
+                                        Quotation Builder
+                                    </a>
+                                </li>
+                                <li class="col pr-xl-0 px-2 px-sm-3 d-none d-xl-block">
+                                    <a type="button" href="{{ route('storage.calculator') }}"
+                                        class="btn btn-sm contact_icon text-white ">
+                                        Storage Calculator
+                                    </a>
+                                </li>
+
+
+                                <li class="col pr-xl-0 px-2 px-sm-3 d-block d-xl-none" href="{{ route('view.package') }}" data-toggle="tooltip"
+                                data-placement="top" title="Generate Invoice">
+                                    <a  class="text-gray-90">
+                                        <span class="ec ec-printer"></span>
+                                </li>
+                                <li class="col pr-xl-0 px-2 px-sm-3 d-block d-xl-none">
+                                    <a  class="text-gray-90" href="{{ route('storage.calculator') }}" data-toggle="tooltip"
+                                            data-placement="top" title="Calculate storage for camera">
+                                            <span class="ec ec-tvs"></span>
+
+                                </li>
                                 <!-- Search -->
                                 <li class="col d-xl-none px-2 px-sm-3 position-static">
                                     <a id="searchClassicInvoker"
@@ -576,13 +659,17 @@
                                     </div>
                                     <!-- End Input -->
                                 </li>
+
+
+
+
                                 <!-- End Search -->
-                                <li class="col d-none d-xl-block"><a href="../shop/compare.html" class="text-gray-90"
+                                {{-- <li class="col d-none d-xl-block"><a href="../shop/compare.html" class="text-gray-90"
                                         data-toggle="tooltip" data-placement="top" title="Compare"><i
                                             class="font-size-22 ec ec-compare"></i></a></li>
                                 <li class="col d-xl-block"><a href="{{ route('wishlist') }}" class="text-gray-90"
                                         data-toggle="tooltip" data-placement="top" title="Favorites"><i
-                                            class="font-size-22 ec ec-favorites"></i></a></li>
+                                            class="font-size-22 ec ec-favorites"></i></a></li> --}}
                                 <li class="col d-xl-none px-2 px-sm-3">
                                     @if (Auth::guard('web')->check())
                                         <a href="{{ route('dashboard') }}" class="text-gray-90"
@@ -597,7 +684,7 @@
                                     @endif
 
                                 </li>
-                                <li class="col pr-xl-0 px-2 px-sm-3 d-xl-none">
+                                {{-- <li class="col pr-xl-0 px-2 px-sm-3 d-xl-none">
                                     <a href="{{ route('mycart') }}" class="text-gray-90 position-relative d-flex "
                                         data-toggle="tooltip" data-placement="top" title="Cart">
                                         <i class="font-size-22 ec ec-shopping-bag"></i>
@@ -638,7 +725,7 @@
 
 
                                     </div>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </div>
@@ -683,17 +770,78 @@
                                                     @if (count($categories) > 0)
                                                         @foreach ($categories as $category)
                                                             @php
-                                                                $subcategories = App\Models\Category::select('categories.id', 'categories.category_name', 'categories.category_slug', DB::raw('IFNULL(brands.id, \'\') AS brand_id'), DB::raw('IFNULL(brands.brand_name, \'\') AS brand_name'), DB::raw('IFNULL(subCategories.id, \'\') AS subcategory_id'), DB::raw('IFNULL(subCategories.subcategory_name, \'\') AS subcategory_name'), DB::raw('IFNULL(subCategories.subcategory_slug, \'\') AS subcategory_slug'), DB::raw('IFNULL(subSubCategories.id, \'\') AS subsubcategory_id'), DB::raw('IFNULL(subSubCategories.subsubcategory_name, \'\') AS subsubcategory_name'))
-                                                                    ->leftJoin('products', 'categories.id', '=', 'products.category_id')
-                                                                    ->leftJoin('brands', 'products.brand_id', '=', 'brands.id')
-                                                                    ->leftJoin('sub_categories as subCategories', 'products.subcategory_id', '=', 'subCategories.id')
-                                                                    ->leftJoin('sub_sub_categories as subSubCategories', 'products.subsubcategory_id', '=', 'subSubCategories.id')
+                                                                $subcategories = App\Models\Category::select(
+                                                                    'categories.id',
+                                                                    'categories.category_name',
+                                                                    'categories.category_slug',
+                                                                    DB::raw('IFNULL(brands.id, \'\') AS brand_id'),
+                                                                    DB::raw(
+                                                                        'IFNULL(brands.brand_name, \'\') AS brand_name',
+                                                                    ),
+                                                                    DB::raw(
+                                                                        'IFNULL(subCategories.id, \'\') AS subcategory_id',
+                                                                    ),
+                                                                    DB::raw(
+                                                                        'IFNULL(subCategories.subcategory_name, \'\') AS subcategory_name',
+                                                                    ),
+                                                                    DB::raw(
+                                                                        'IFNULL(subCategories.subcategory_slug, \'\') AS subcategory_slug',
+                                                                    ),
+                                                                    DB::raw(
+                                                                        'IFNULL(subSubCategories.id, \'\') AS subsubcategory_id',
+                                                                    ),
+                                                                    DB::raw(
+                                                                        'IFNULL(subSubCategories.subsubcategory_name, \'\') AS subsubcategory_name',
+                                                                    ),
+                                                                )
+                                                                    ->leftJoin(
+                                                                        'products',
+                                                                        'categories.id',
+                                                                        '=',
+                                                                        'products.category_id',
+                                                                    )
+                                                                    ->leftJoin(
+                                                                        'brands',
+                                                                        'products.brand_id',
+                                                                        '=',
+                                                                        'brands.id',
+                                                                    )
+                                                                    ->leftJoin(
+                                                                        'sub_categories as subCategories',
+                                                                        'products.subcategory_id',
+                                                                        '=',
+                                                                        'subCategories.id',
+                                                                    )
+                                                                    ->leftJoin(
+                                                                        'sub_sub_categories as subSubCategories',
+                                                                        'products.subsubcategory_id',
+                                                                        '=',
+                                                                        'subSubCategories.id',
+                                                                    )
                                                                     ->where('categories.id', $category->id)
                                                                     ->where('subCategories.status', 1)
-                                                                    ->groupBy('categories.id', 'categories.category_name', 'categories.category_slug', 'brands.id', 'brands.brand_name', 'subCategories.id', 'subCategories.subcategory_name', 'subCategories.subcategory_slug', 'subSubCategories.id', 'subSubCategories.subsubcategory_name')
+                                                                    ->groupBy(
+                                                                        'categories.id',
+                                                                        'categories.category_name',
+                                                                        'categories.category_slug',
+                                                                        'brands.id',
+                                                                        'brands.brand_name',
+                                                                        'subCategories.id',
+                                                                        'subCategories.subcategory_name',
+                                                                        'subCategories.subcategory_slug',
+                                                                        'subSubCategories.id',
+                                                                        'subSubCategories.subsubcategory_name',
+                                                                    )
                                                                     ->get();
                                                                 $subcategoriesArray = [];
-                                                                $hasBrandOrSubcategory = collect($subcategories)->contains(fn($item) => (isset($item['brand_id']) && !empty($item['brand_id'])) || (isset($item['subcategory_id']) && !empty($item['subcategory_id'])));
+                                                                $hasBrandOrSubcategory = collect(
+                                                                    $subcategories,
+                                                                )->contains(
+                                                                    fn($item) => (isset($item['brand_id']) &&
+                                                                        !empty($item['brand_id'])) ||
+                                                                        (isset($item['subcategory_id']) &&
+                                                                            !empty($item['subcategory_id'])),
+                                                                );
 
                                                             @endphp
 
@@ -724,13 +872,38 @@
                                                                                     {{-- check duplicate subcategory_name --}}
                                                                                     @if (!in_array($subcat->subcategory_id, $subcategoriesArray))
                                                                                         @php
-                                                                                            $subsubcategories = App\Models\Product::where('subcategory_id', $subcat->subcategory_id)
+                                                                                            $subsubcategories = App\Models\Product::where(
+                                                                                                'subcategory_id',
+                                                                                                $subcat->subcategory_id,
+                                                                                            )
                                                                                                 ->where('status', 1)
                                                                                                 ->get();
 
-                                                                                            $hasBrandOrSubSubcategory = collect($subsubcategories)->contains(fn($item) => (isset($item['brand_id']) && !empty($item['brand_id'])) || (isset($item['subsubcategory_id']) && !empty($item['subsubcategory_id'])));
+                                                                                            $hasBrandOrSubSubcategory = collect(
+                                                                                                $subsubcategories,
+                                                                                            )->contains(
+                                                                                                fn($item) => (isset(
+                                                                                                    $item['brand_id'],
+                                                                                                ) &&
+                                                                                                    !empty(
+                                                                                                        $item[
+                                                                                                            'brand_id'
+                                                                                                        ]
+                                                                                                    )) ||
+                                                                                                    (isset(
+                                                                                                        $item[
+                                                                                                            'subsubcategory_id'
+                                                                                                        ],
+                                                                                                    ) &&
+                                                                                                        !empty(
+                                                                                                            $item[
+                                                                                                                'subsubcategory_id'
+                                                                                                            ]
+                                                                                                        )),
+                                                                                            );
 
-                                                                                            $subcategoriesArray[] = $subcat->subcategory_id;
+                                                                                            $subcategoriesArray[] =
+                                                                                                $subcat->subcategory_id;
                                                                                             $brandArray = [];
 
                                                                                         @endphp
@@ -761,7 +934,8 @@
                                                                                                             @if (!in_array($subsubcat->subsubcategory_id, $subsubcategoriesArray))
                                                                                                                 @php
 
-                                                                                                                    $subsubcategoriesArray[] = $subsubcat->subsubcategory_id;
+                                                                                                                    $subsubcategoriesArray[] =
+                                                                                                                        $subsubcat->subsubcategory_id;
                                                                                                                 @endphp
 
                                                                                                                 <li class="nav-item hs-has-mega-menu u-header__nav-item"
@@ -815,7 +989,8 @@
                                                                                             @if (!in_array($subsubcat->brand_id, $brandArray))
                                                                                                 @php
 
-                                                                                                    $brandArray[] = $subsubcat->brand_id;
+                                                                                                    $brandArray[] =
+                                                                                                        $subsubcat->brand_id;
                                                                                                 @endphp
                                                                                                 <li class="nav-item hs-has-mega-menu u-header__nav-item"
                                                                                                     data-event="hover"

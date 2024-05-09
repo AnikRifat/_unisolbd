@@ -27,7 +27,12 @@ class IndexController extends Controller
 
         return view('frontend.index', compact('categories', 'featured', 'currency'));
     }
+    public function storageCalc()
+    {
 
+        return view('frontend.quotationbuilder.storage_calculator');
+
+    }
     public function UserLogout()
     {
         Auth::logout();
