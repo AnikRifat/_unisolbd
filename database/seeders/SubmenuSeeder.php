@@ -306,12 +306,21 @@ class SubmenuSeeder extends Seeder
             ],
 
             [
-                'name' => 'User Management',
+                'name' => 'Users',
                 'icon' => 'fa-stop',
                 'route' => 'user-management.index',
-                'module_id' => 3,
-                'menu_id' => 14,
-                'ordering' => 2,
+                'module_id' => 1,
+                'menu_id' => 25,
+                'ordering' => 1,
+                'created_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'groups',
+                'icon' => 'fa-stop',
+                'route' => 'user-management.index',
+                'module_id' => 1,
+                'menu_id' => 25,
+                'ordering' => 1,
                 'created_at' => Carbon::now(),
             ],
 

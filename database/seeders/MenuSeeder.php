@@ -96,7 +96,7 @@ class MenuSeeder extends Seeder
                 'name' => 'User Management',
                 'icon' => 'users',
                 'module_id' => 1,
-                'prefix' => '/user-management',
+                'prefix' => '/use',
                 'route' => null,
                 'ordering' => 9,
                 'created_at' => Carbon::now(),
