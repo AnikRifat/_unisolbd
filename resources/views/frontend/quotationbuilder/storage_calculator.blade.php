@@ -341,7 +341,7 @@ type="text/css"
                       data-slider-value="5"
                       data-slider-tooltip="hide"
                       data-slider-handle="custom"
-                    />
+                    />g
                     <input
                       style="margin-bottom: 37px"
                       class="slideEdit hidden-phone"
@@ -559,5 +559,5 @@ type="text/css"
 
   <script src="https://www.seagate.com/content/dam/seagate/assets/system/patch/patch.js"></script>
   @endpush
-  
+
 @endsection

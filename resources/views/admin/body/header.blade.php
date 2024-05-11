@@ -1,5 +1,6 @@
 @php
-
+//   session()->forget('hierarchicalData');
+  dd(session()->get('hierarchicalData'));
     $userID = Auth::guard('admin')->user()->id;
     // dd(session()->has('hierarchicalData'));
     if (!session()->has('hierarchicalData')) {
@@ -89,7 +90,8 @@ if (!empty(session('hierarchicalData'))) {
 $hierarchicalData = session('hierarchicalData');
 $activeModule = session('activeModule');
 
- //session()->forget('hierarchicalData');
+//   session()->forget('hierarchicalData');
+//   dd(session()->get('hierarchicalData'));
 @endphp
 
 

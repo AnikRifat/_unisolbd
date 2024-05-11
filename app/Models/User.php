@@ -52,4 +52,9 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function customerGroups()
+    {
+        return $this->belongsToMany(CustomerGroup::class, 'assign_customer_to_groups', 'customer_id', 'customer_group_id');
+    }
 }
