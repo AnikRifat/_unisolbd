@@ -401,7 +401,12 @@
                                         class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
                                 </div>
                             </div>
-                            @endauth
+                            <div class="prodcut-add-cart">
+                                                    <a href="{{ route('login') }}"
+                                                        class="btn btn-primary transition-3d-hover btn-block"><i
+                                                            class="ec ec-login"></i>Login to see price</a>
+                                                </div>
+                                            @endauth
                         </div>
                         <div class="product-item__footer">
                             <div class="border-top pt-2 flex-center-between flex-wrap">

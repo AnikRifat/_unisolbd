@@ -45,7 +45,7 @@
                 // $orders=(auth()->guard('admin')->user()->orders==1);
                 // $reports=(auth()->guard('admin')->user()->reports==1);
                 // $adminuserrole=(auth()->guard('admin')->user()->adminuserrole==1);
-                
+
                 $brand = 1;
                 $category = 1;
                 $product = 1;
@@ -113,7 +113,7 @@
                 <ul class="treeview-menu">
                     <li class="{{ $route == 'package.index' ? 'active' : '' }}"><a
                             href="{{ route('package.index') }}"><i class="ti-more"></i>Create Quotation Package</a></li>
-                    
+
                     <li class="{{ $route == 'quotation.create' ? 'active' : '' }}"><a href="{{ route('quotation.create') }}"><i class="ti-more"></i>Create
                         Quotation</a></li>
 
@@ -400,7 +400,7 @@
                 <ul class="treeview-menu">
                     <li class="{{ $route == 'role.index' ? 'active' : '' }}"><a href="{{ route('role.index') }}"><i
                                 class="ti-more"></i>Role Permission</a></li>
-                   
+
                     </li>
                     <li class="{{ $route == 'user-management.index' ? 'active' : '' }}"><a
                             href="{{ route('user-management.index') }}"><i class="ti-more"></i>User Management</a>

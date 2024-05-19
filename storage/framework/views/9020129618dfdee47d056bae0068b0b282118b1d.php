@@ -1,4 +1,4 @@
-@php
+<?php
 //   session()->forget('hierarchicalData');
 //   dd(session()->get('hierarchicalData'));
     $userID = Auth::guard('admin')->user()->id;
@@ -92,7 +92,7 @@ $activeModule = session('activeModule');
 
 //   session()->forget('hierarchicalData');
 //   dd(session()->get('hierarchicalData'));
-@endphp
+?>
 
 
 
@@ -213,28 +213,28 @@ $activeModule = session('activeModule');
                 </li>
 
 
-                @php
+                <?php
                     $adminData = DB::table('admins')->find(Auth::id());
-                @endphp
+                ?>
 
 
                 <!-- User Account-->
                 <li class="dropdown user user-menu">
                     <a href="#" class="waves-effect waves-light rounded dropdown-toggle p-0"
                         data-toggle="dropdown" title="User">
-                        <img src="{{ !empty($adminData->profile_photo_path) ? url($adminData->profile_photo_path) : url('upload/no_image.jpg') }}"
+                        <img src="<?php echo e(!empty($adminData->profile_photo_path) ? url($adminData->profile_photo_path) : url('upload/no_image.jpg')); ?>"
                             alt="">
                     </a>
                     <ul class="dropdown-menu animated flipInX">
                         <li class="user-body">
-                            <a class="dropdown-item" href="{{ route('admin.profile') }}"><i
+                            <a class="dropdown-item" href="<?php echo e(route('admin.profile')); ?>"><i
                                     class="ti-user text-muted mr-2"></i> Profile</a>
-                            <a class="dropdown-item" href="{{ route('admin.change.password') }}"><i
+                            <a class="dropdown-item" href="<?php echo e(route('admin.change.password')); ?>"><i
                                     class="ti-wallet text-muted mr-2"></i> Change Password</a>
                             <a class="dropdown-item" href="#"><i class="ti-settings text-muted mr-2"></i>
                                 Settings</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ route('admin.logout') }}"><i
+                            <a class="dropdown-item" href="<?php echo e(route('admin.logout')); ?>"><i
                                     class="ti-lock text-muted mr-2"></i> Logout</a>
                         </li>
                     </ul>
@@ -248,17 +248,18 @@ $activeModule = session('activeModule');
                     <ul class="dropdown-menu animated flipInX custom-dropdown">
                         <li class="module-body">
                             <div class="row justify-content-center align-items-center">
-                                @foreach ($hierarchicalData as $moduleName => $moduleData)
-                                    @php
+                                <?php $__currentLoopData = $hierarchicalData; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $moduleName => $moduleData): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php
                                         $isActive = $moduleData['id'] === $activeModule['id'];
                                         $borderClass = $isActive ? 'b-3 b-dotted border-danger' : '';
-                                    @endphp
-                                    <a id="module{{ $moduleData['id'] }}"
-                                        class="btn btn-app {{ $moduleData['bg_color'] }} {{ $borderClass }}"
-                                        onclick="moduleWiseData('{{ $moduleName }}')">
-                                        <i class="fa {{ $moduleData['icon'] }}"></i> {{ $moduleName }}
+                                    ?>
+                                    <a id="module<?php echo e($moduleData['id']); ?>"
+                                        class="btn btn-app <?php echo e($moduleData['bg_color']); ?> <?php echo e($borderClass); ?>"
+                                        onclick="moduleWiseData('<?php echo e($moduleName); ?>')">
+                                        <i class="fa <?php echo e($moduleData['icon']); ?>"></i> <?php echo e($moduleName); ?>
+
                                     </a>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
                             </div>
@@ -273,3 +274,4 @@ $activeModule = session('activeModule');
 </header>
 
 
+<?php /**PATH C:\xampp\htdocs\unisolbd\resources\views/admin/body/header.blade.php ENDPATH**/ ?>

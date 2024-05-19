@@ -170,7 +170,12 @@
                                         </ins>
 
                                     </div>
-                                    @endauth
+                                    <div class="prodcut-add-cart">
+                                        <a href="{{ route('login') }}"
+                                            class="btn btn-primary transition-3d-hover btn-block"><i
+                                                class="ec ec-login"></i>Login to see price</a>
+                                    </div>
+                                @endauth
                                     </div>
                                 </div>
                             </li>
@@ -324,12 +329,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            {{-- <div class="product-item__footer">
-                                            <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                <a href="../shop/compare.html" class="text-gray-6 font-size-13"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                                <a href="../shop/wishlist.html" class="text-gray-6 font-size-13"><i class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
-                                            </div>
-                                        </div> --}}
                                         </div>
                                     </div>
                                 </li>
@@ -383,12 +382,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            {{-- <div class="product-item__footer">
-                                            <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                <a href="../shop/compare.html" class="text-gray-6 font-size-13"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                                <a href="../shop/wishlist.html" class="text-gray-6 font-size-13"><i class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
-                                            </div>
-                                        </div> --}}
+
                                         </div>
                                     </div>
                                 </li>
