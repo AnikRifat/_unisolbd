@@ -40,8 +40,8 @@
                 <li class="<?php echo e($route == 'user-management.index' ? 'active' : ''); ?>"><a
                         href="<?php echo e(route('user-management.index')); ?>"><i class="ti-more"></i>All Users</a></li>
 
-                <li class="<?php echo e($route == 'confirmed-orders' ? 'active' : ''); ?>"><a
-                        href="<?php echo e(route('confirmed-orders')); ?>"><i class="ti-more"></i>User Group</a>
+                <li class="<?php echo e($route == 'customer-groups.index' ? 'active' : ''); ?>"><a
+                        href="<?php echo e(route('customer-groups.index')); ?>"><i class="ti-more"></i>User Group</a>
                 </li>
 
 

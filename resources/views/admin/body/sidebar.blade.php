@@ -40,8 +40,8 @@
                 <li class="{{ $route == 'user-management.index' ? 'active' : '' }}"><a
                         href="{{ route('user-management.index') }}"><i class="ti-more"></i>All Users</a></li>
 
-                <li class="{{ $route == 'confirmed-orders' ? 'active' : '' }}"><a
-                        href="{{ route('confirmed-orders') }}"><i class="ti-more"></i>User Group</a>
+                <li class="{{ $route == 'customer-groups.index' ? 'active' : '' }}"><a
+                        href="{{ route('customer-groups.index') }}"><i class="ti-more"></i>User Group</a>
                 </li>
 
 

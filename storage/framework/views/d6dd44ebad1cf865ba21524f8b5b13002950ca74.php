@@ -1,6 +1,4 @@
-@extends('admin.admin_master')
-
-@section('admin')
+<?php $__env->startSection('admin'); ?>
     <div class="container-full">
         <!-- Main content -->
         <section class="content">
@@ -24,30 +22,30 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($customerGroups as $group)
+                                        <?php $__currentLoopData = $customerGroups; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr>
-                                                <td>{{ $group->name }}</td>
+                                                <td><?php echo e($group->name); ?></td>
                                                 <td>
-                                                    @foreach($group->rules as $key => $value)
-                                                <span class="badge badge-primary">{{ $key[0] }}: {{ $value[0] }}</span>
-                                            @endforeach
+                                                    <?php $__currentLoopData = $group->rules; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <span class="badge badge-primary"><?php echo e($key[0]); ?>: <?php echo e($value[0]); ?></span>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </td>
-                                                <td>{{ $group->status }}</td>
+                                                <td><?php echo e($group->status); ?></td>
                                                 <td class="d-flex justify-content-center">
-                                                    <a href="{{ route('customer-groups.edit', $group->id) }}"
+                                                    <a href="<?php echo e(route('customer-groups.edit', $group->id)); ?>"
                                                         class="btn btn-sm btn-info mr-1"><i
                                                             class="fa-solid fa-edit"></i></a>
-                                                    <form action="{{ route('customer-groups.destroy', $group->id) }}"
+                                                    <form action="<?php echo e(route('customer-groups.destroy', $group->id)); ?>"
                                                         method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
+                                                        <?php echo csrf_field(); ?>
+                                                        <?php echo method_field('DELETE'); ?>
                                                         <button type="submit"
                                                             class="btn btn-sm btn-danger mr-1"><i
                                                                 class="fa-sharp fa-solid fa-trash"></i></button>
                                                     </form>
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -66,8 +64,8 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="table-responsive">
-                            <form id="groupForm" method="POST" action="{{ route('customer-groups.store') }}">
-                                @csrf
+                            <form id="groupForm" method="POST" action="<?php echo e(route('customer-groups.store')); ?>">
+                                <?php echo csrf_field(); ?>
                                 <div class="form-group">
                                     <label class="info-title">Name<span class="text-danger">*</span></label>
                                     <input type="text" name="name" class="form-control form-control-sm">
@@ -132,7 +130,7 @@
                     );
                 }
                 // Set the form action dynamically
-                $('#couponForm').attr('action', "{{ route('coupon.update', ['coupon' => ':id']) }}"
+                $('#couponForm').attr('action', "<?php echo e(route('coupon.update', ['coupon' => ':id'])); ?>"
                     .replace(
                         ':id', editData.id));
 
@@ -154,7 +152,7 @@
             }
 
             // Set the form action dynamically
-            $('#couponForm').attr('action', "{{ route('coupon.store') }}");
+            $('#couponForm').attr('action', "<?php echo e(route('coupon.store')); ?>");
 
             // Change the method override field value to PUT
             $("input[name='_method']").val('POST');
@@ -186,4 +184,6 @@
         });
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.admin_master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\unisolbd\resources\views/backend/customer_groups/index.blade.php ENDPATH**/ ?>

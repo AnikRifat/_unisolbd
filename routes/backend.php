@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\CurrencyController;
+use App\Http\Controllers\Backend\CustomerGroupController;
 use App\Http\Controllers\Backend\ExpenseController;
 use App\Http\Controllers\Backend\MultiImageController;
 use App\Http\Controllers\Backend\OrderController;
@@ -285,6 +286,21 @@ route::middleware(['auth:admin'])->group(function () {
     route::prefix('stock')->group(function () {
         route::get('/product', [ProductController::class, 'ProductStock'])->name('product.stock');
     });
+
+
+
+    //all admin user role route
+     route::prefix('user-group')->group(function () {
+         route::get('/all', [CustomerGroupController::class, 'index'])->name('customer-groups.index');
+         route::get('/add', [CustomerGroupController::class, 'create'])->name('customer-groups.create');
+         route::get('/show/{id}', [CustomerGroupController::class, 'show'])->name('customer-groups.show');
+         route::post('/store', [CustomerGroupController::class, 'store'])->name('customer-groups.store');
+         route::get('/edit/{id}', [CustomerGroupController::class, 'edit'])->name('customer-groups.edit');
+         route::post('/update/{id}', [CustomerGroupController::class, 'update'])->name('customer-groups.update');
+         route::get('/delete/{id}', [CustomerGroupController::class, 'delete'])->name('customer-groups.destroy');
+     });
+
+
 
     //all admin user role route
     // route::prefix('adminuserrole')->group(function () {

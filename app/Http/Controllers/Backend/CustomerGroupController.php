@@ -23,6 +23,7 @@ class CustomerGroupController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'name' => 'required|string|max:255',
             'rules' => 'required|array',
@@ -42,9 +43,10 @@ class CustomerGroupController extends Controller
     }
 
 
-    public function edit(CustomerGroup $customerGroup)
+    public function edit($group)
     {
-        return view('customer_groups.edit', compact('customerGroup'));
+        $group = CustomerGroup::find($group);
+        return view('backend.customer_groups.edit', compact('group'));
     }
 
 
