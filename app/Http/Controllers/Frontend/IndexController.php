@@ -375,19 +375,12 @@ class IndexController extends Controller
     //    return view('frontend.product.all_search_result', compact('allSearchResults', 'currency', 'searchTerm'));
     // }
 
-    public function AllSearchResult()
+    public function AllSearchResult(Request $request)
     {
-        $searchTerm = request()->query('search');
+        $searchTerm = request()->query('search')??$request['search'];
 
-        // Use the "paginate" method to retrieve all search results without pagination
-        $allSearchResultsData = Product::search($searchTerm)->paginate(PHP_INT_MAX);
-
-        $allSearchResults = $allSearchResultsData->items();
-
-        foreach ($allSearchResults as &$product) {
-            $product->enc_id = encrypt($product->id); // Assuming you want to encrypt the ID
-        }
-
+        $allSearchResults = Product::where('product_name', 'LIKE', "%$searchTerm%")->get();
+// dd($products);
         // $allSearchResults = Product::search($searchTerm)->get();
         //dd($allSearchResults);
 

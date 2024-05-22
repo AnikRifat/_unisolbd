@@ -1,6 +1,4 @@
-@extends('frontend.main_master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
     <main id="content" role="main">
         <!-- breadcrumb -->
         <div class="bg-gray-13 bg-md-transparent">
@@ -9,29 +7,29 @@
                 <div class="my-md-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                            <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="{{ url('/') }}"><i class="fa fa-home"></i></a>
+                            <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="<?php echo e(url('/')); ?>"><i class="fa fa-home"></i></a>
                             </li>
 
-                            @if ($product->category_id != null)
+                            <?php if($product->category_id != null): ?>
                                 <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a
-                                        href="{{ url('category/product/'.$product->category->category_slug.'/'.encrypt($product->category_id)) }}">{{ $product->category->category_name }}</a>
+                                        href="<?php echo e(url('category/product/'.$product->category->category_slug.'/'.encrypt($product->category_id))); ?>"><?php echo e($product->category->category_name); ?></a>
                                 </li>
-                            @endif
-                            @if ($product->subcategory_id != null)
+                            <?php endif; ?>
+                            <?php if($product->subcategory_id != null): ?>
                                 <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a
-                                        href="{{ url('subcategory/product/'.$product->subcategory->subcategory_slug.'/'.encrypt($product->subcategory_id)) }}">{{ $product->subcategory->subcategory_name }}</a>
+                                        href="<?php echo e(url('subcategory/product/'.$product->subcategory->subcategory_slug.'/'.encrypt($product->subcategory_id))); ?>"><?php echo e($product->subcategory->subcategory_name); ?></a>
                                 </li>
-                            @endif
-                            @if ($product->subsubcategory_id != null)
+                            <?php endif; ?>
+                            <?php if($product->subsubcategory_id != null): ?>
                                 <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a
-                                        href="{{ url('subsubcategory/product/'.$product->subsubcategory->subsubcategory_slug .'/'.encrypt($product->subsubcategory_id)) }}">{{ $product->subsubcategory->subsubcategory_name }}</a>
+                                        href="<?php echo e(url('subsubcategory/product/'.$product->subsubcategory->subsubcategory_slug .'/'.encrypt($product->subsubcategory_id))); ?>"><?php echo e($product->subsubcategory->subsubcategory_name); ?></a>
                                 </li>
-                            @endif
+                            <?php endif; ?>
 
 
                             <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">
                                 <a
-                                    href="{{ url('/product/details/' .$product->product_slug. '/' .encrypt($product->id)) }}"> {{ $product->product_name }}</a>
+                                    href="<?php echo e(url('/product/details/' .$product->product_slug. '/' .encrypt($product->id))); ?>"> <?php echo e($product->product_name); ?></a>
                                </li>
 
                         </ol>
@@ -53,16 +51,16 @@
                             data-arrow-right-classes="fas fa-arrow-right u-slick__arrow-classic-inner u-slick__arrow-classic-inner--right mr-lg-2 mr-xl-4"
                             data-nav-for="#sliderSyncingThumb">
                             <div class="js-slide">
-                                <img class="img-fluid" src=" {{ asset($product->product_thambnail) }}"
+                                <img class="img-fluid" src=" <?php echo e(asset($product->product_thambnail)); ?>"
                                     alt="Image Description">
                             </div>
-                            @if (count($multiImg) > 0)
-                                @foreach ($multiImg as $img)
+                            <?php if(count($multiImg) > 0): ?>
+                                <?php $__currentLoopData = $multiImg; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div class="js-slide">
-                                        <img class="img-fluid" src="{{ asset($img->photo_name) }}" alt="Image Description">
+                                        <img class="img-fluid" src="<?php echo e(asset($img->photo_name)); ?>" alt="Image Description">
                                     </div>
-                                @endforeach
-                            @endif
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
 
                         </div>
 
@@ -72,51 +70,52 @@
                             data-nav-for="#sliderSyncingNav">
 
                             <div class="js-slide" style="cursor: pointer;">
-                                <img class="img-fluid" src=" {{ asset($product->product_thambnail) }}"
+                                <img class="img-fluid" src=" <?php echo e(asset($product->product_thambnail)); ?>"
                                     alt="Image Description">
                             </div>
-                            @if ($multiImg)
-                                @foreach ($multiImg as $img)
+                            <?php if($multiImg): ?>
+                                <?php $__currentLoopData = $multiImg; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div class="js-slide" style="cursor: pointer;">
-                                        <img class="img-fluid" src="{{ asset($img->photo_name) }}" alt="Image Description">
+                                        <img class="img-fluid" src="<?php echo e(asset($img->photo_name)); ?>" alt="Image Description">
                                     </div>
-                                @endforeach
-                            @endif
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-4 col-xl-4 mb-md-6 mb-lg-0">
                         <div class="mb-2">
-                            {{-- <a href="#" class="font-size-12 text-gray-5 mb-2 d-inline-block">Headphones</a> --}}
-                            <h2 class="font-size-25 text-lh-1dot2">{{ $product->product_name }}</h2>
+                            
+                            <h2 class="font-size-25 text-lh-1dot2"><?php echo e($product->product_name); ?></h2>
 
                             <div class="mb-2">
-                                {!! $product->short_descp !!}
+                                <?php echo $product->short_descp; ?>
+
                             </div>
-                            <p><strong>SKU</strong>: {{ $product->product_code }}</p>
+                            <p><strong>SKU</strong>: <?php echo e($product->product_code); ?></p>
                         </div>
                     </div>
                     <div class="mx-md-auto mx-lg-0 col-md-6 col-lg-4 col-xl-3">
                         <div class="mb-2">
-                            @auth
+                            <?php if(auth()->guard()->check()): ?>
                             <div class="card p-5 border-width-2 border-color-1 borders-radius-17">
                                 <div class="text-gray-9 font-size-14 pb-2 border-color-1 border-bottom mb-3">Availability:
-                                    <span class="text-green font-weight-bold">{{ $stock }} in stock</span>
+                                    <span class="text-green font-weight-bold"><?php echo e($stock); ?> in stock</span>
                                 </div>
                                 <div class="mb-3">
 
-                                    @if ($product->discount_price != null)
+                                    <?php if($product->discount_price != null): ?>
                                         <ins
-                                            class="font-size-20 text-decoration-none text-danger">{{ number_format($product->discount_price, 0, '.', ',') }}{{ $currency->symbol }}</ins>
+                                            class="font-size-20 text-decoration-none text-danger"><?php echo e(number_format($product->discount_price, 0, '.', ',')); ?><?php echo e($currency->symbol); ?></ins>
                                         <del
-                                            class="font-size-16 text-gray-9 ml-2">{{ number_format($product->selling_price, 0, '.', ',') }}{{ $currency->symbol }}</del>
-                                    @else
+                                            class="font-size-16 text-gray-9 ml-2"><?php echo e(number_format($product->selling_price, 0, '.', ',')); ?><?php echo e($currency->symbol); ?></del>
+                                    <?php else: ?>
                                         <ins
-                                            class="font-size-20 text-decoration-none text-danger">{{ number_format($product->selling_price, 0, '.', ',') }}{{ $currency->symbol }}</ins>
-                                    @endif
+                                            class="font-size-20 text-decoration-none text-danger"><?php echo e(number_format($product->selling_price, 0, '.', ',')); ?><?php echo e($currency->symbol); ?></ins>
+                                    <?php endif; ?>
 
                                 </div>
-                                <form method="POST" action="{{ route('buy', ['id' => base64_encode($product->id)]) }}">
-                                    @csrf
+                                <form method="POST" action="<?php echo e(route('buy', ['id' => base64_encode($product->id)])); ?>">
+                                    <?php echo csrf_field(); ?>
                                     <div class="mb-3">
                                         <h6 class="font-size-14">Quantity</h6>
                                         <!-- Quantity -->
@@ -144,7 +143,7 @@
 
                                     <div class="mb-2 pb-0dot5">
                                         <a href="javascript:void(0)" onclick="addToCart(this)"
-                                            data-product-id="{{ base64_encode($product->id) }}" class="btn btn-block btn-primary-dark"><i
+                                            data-product-id="<?php echo e(base64_encode($product->id)); ?>" class="btn btn-block btn-primary-dark"><i
                                                 class="ec ec-add-to-cart mr-2 font-size-20"></i> Add to Cart</a>
                                     </div>
                                     <div class="mb-3">
@@ -153,18 +152,18 @@
                                 </form>
                                 <div class="flex-content-center flex-wrap">
                                     <a href="javascript:void(0)" onclick="addWishlist(this)"
-                                    data-product="{{ base64_encode($product->id) }}" class="text-gray-6 font-size-13 mr-2"><i
+                                    data-product="<?php echo e(base64_encode($product->id)); ?>" class="text-gray-6 font-size-13 mr-2"><i
                                             class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
                                     <a  href="#" class="text-gray-6 font-size-13 ml-2"><i
                                             class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
                                 </div>
                             </div>
                             <div class="prodcut-add-cart">
-                                <a href="{{ route('login') }}"
+                                <a href="<?php echo e(route('login')); ?>"
                                     class="btn btn-primary transition-3d-hover btn-block"><i
                                         class="ec ec-login"></i>Login to see price</a>
                             </div>
-                        @endauth
+                        <?php endif; ?>
 
                         </div>
                     </div>
@@ -179,9 +178,7 @@
                     <div class="position-relative position-md-static px-md-6">
                         <ul class="nav nav-classic nav-tab nav-tab-lg justify-content-xl-center flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble border-0 pb-1 pb-xl-0 mb-n1 mb-xl-0"
                             id="pills-tab-8" role="tablist">
-                            {{-- <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
-                            <a class="nav-link active" id="Jpills-one-example1-tab" data-toggle="pill" href="#Jpills-one-example1" role="tab" aria-controls="Jpills-one-example1" aria-selected="true">Accessories</a>
-                        </li> --}}
+                            
                             <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
                                 <a class="nav-link active" id="Jpills-two-example1-tab" data-toggle="pill"
                                     href="#Jpills-two-example1" role="tab" aria-controls="Jpills-two-example1"
@@ -201,11 +198,13 @@
 
                             <div class="tab-pane fade active show" id="Jpills-two-example1" role="tabpanel"
                                 aria-labelledby="Jpills-two-example1-tab">
-                                {!! $product->long_descp !!}
+                                <?php echo $product->long_descp; ?>
+
                             </div>
                             <div class="tab-pane fade" id="Jpills-three-example1" role="tabpanel"
                                 aria-labelledby="Jpills-three-example1-tab">
-                                {!! $product->specification_descp !!}
+                                <?php echo $product->specification_descp; ?>
+
                             </div>
 
                         </div>
@@ -219,75 +218,75 @@
         <div class="container">
             <!-- Related products -->
 
-            @if (count($relatedproduct) > 0)
+            <?php if(count($relatedproduct) > 0): ?>
             <div class="row">
                 <div class="col-12 col-wd-12gdot4">
                     <div class="border-bottom border-color-1 mb-2">
                         <h3 class="section-title mb-0 pb-2 font-size-22">Related Products</h3>
                     </div>
                     <ul class="row list-unstyled products-group no-gutters mb-6">
-                        @foreach ($relatedproduct as $product)
+                        <?php $__currentLoopData = $relatedproduct; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <li class="col-6 col-md-2 product-item">
                             <div class="product-item__outer h-100">
                                 <div class="product-item__inner px-xl-4 p-3">
                                     <div class="product-item__body pb-xl-2">
 
                                         <div class="mb-2">
-                                            @if ($product->subsubcategory_id != null)
-                                                <a href="{{ url('subsubcategory/product/' . $product->subsubcategory->subsubcategory_slug . '/' . encrypt($product->subsubcategory_id)) }}"
-                                                    class="font-size-12 text-gray-5">{{ $product->subsubcategory->subsubcategory_name }}</a>
-                                            @elseif ($product->subcategory_id != null)
-                                                <a href="{{ url('subcategory/product/' . $product->subcategory->subcategory_slug . '/' . encrypt($product->subcategory_id)) }}"
-                                                    class="font-size-12 text-gray-5">{{ $product->subcategory->subcategory_name }}</a>
-                                            @else
-                                                <a href="{{ url('category/product/' . $product->category->category_slug . '/' . encrypt($product->category_id)) }}"
-                                                    class="font-size-12 text-gray-5">{{ $product->category->category_name }}</a>
-                                            @endif
+                                            <?php if($product->subsubcategory_id != null): ?>
+                                                <a href="<?php echo e(url('subsubcategory/product/' . $product->subsubcategory->subsubcategory_slug . '/' . encrypt($product->subsubcategory_id))); ?>"
+                                                    class="font-size-12 text-gray-5"><?php echo e($product->subsubcategory->subsubcategory_name); ?></a>
+                                            <?php elseif($product->subcategory_id != null): ?>
+                                                <a href="<?php echo e(url('subcategory/product/' . $product->subcategory->subcategory_slug . '/' . encrypt($product->subcategory_id))); ?>"
+                                                    class="font-size-12 text-gray-5"><?php echo e($product->subcategory->subcategory_name); ?></a>
+                                            <?php else: ?>
+                                                <a href="<?php echo e(url('category/product/' . $product->category->category_slug . '/' . encrypt($product->category_id))); ?>"
+                                                    class="font-size-12 text-gray-5"><?php echo e($product->category->category_name); ?></a>
+                                            <?php endif; ?>
                                         </div>
 
                                         <h5 class="mb-1 product-item__title"><a
-                                                href="{{ url('/product/details/' . $product->product_slug . '/' . encrypt($product->id)) }}"
+                                                href="<?php echo e(url('/product/details/' . $product->product_slug . '/' . encrypt($product->id))); ?>"
                                                 class="text-blue font-weight-bold" data-toggle="tooltip"
                                                 data-placement="top"
-                                                title="{{ $product->product_name }}">{{ $product->product_name }}</a>
+                                                title="<?php echo e($product->product_name); ?>"><?php echo e($product->product_name); ?></a>
                                         </h5>
                                         <div class="mb-2">
-                                            <a href="{{ url('/product/details/' . $product->product_slug . '/' . encrypt($product->id)) }}"
+                                            <a href="<?php echo e(url('/product/details/' . $product->product_slug . '/' . encrypt($product->id))); ?>"
                                                 class="d-block text-center"><img class="img-fluid"
-                                                    src="{{ asset($product->product_thambnail) }}"
+                                                    src="<?php echo e(asset($product->product_thambnail)); ?>"
                                                     alt="Image Description"></a>
                                         </div>
-                                        @auth
+                                        <?php if(auth()->guard()->check()): ?>
                                             <div class="flex-center-between mb-1">
                                                 <div
                                                     class="prodcut-price d-flex align-items-center flex-wrap position-relative">
 
 
-                                                    @if ($product->discount_price != null)
+                                                    <?php if($product->discount_price != null): ?>
                                                         <ins class="font-size-20 text-red text-decoration-none mr-2">
-                                                            {{ number_format($product->discount_price, 0, '.', ',') }}{{ $currency->symbol }}</ins>
+                                                            <?php echo e(number_format($product->discount_price, 0, '.', ',')); ?><?php echo e($currency->symbol); ?></ins>
                                                         <del
-                                                            class="font-size-12 tex-gray-6 position-absolute bottom-100">{{ number_format($product->selling_price, 0, '.', ',') }}{{ $currency->symbol }}</del>
-                                                    @else
+                                                            class="font-size-12 tex-gray-6 position-absolute bottom-100"><?php echo e(number_format($product->selling_price, 0, '.', ',')); ?><?php echo e($currency->symbol); ?></del>
+                                                    <?php else: ?>
                                                         <ins class="font-size-20 text-red text-decoration-none mr-2">
-                                                            {{ number_format($product->selling_price, 0, '.', ',') }}{{ $currency->symbol }}</ins>
-                                                    @endif
+                                                            <?php echo e(number_format($product->selling_price, 0, '.', ',')); ?><?php echo e($currency->symbol); ?></ins>
+                                                    <?php endif; ?>
 
                                                 </div>
                                                 <div class="prodcut-add-cart">
                                                     <a href="javascript:void(0)" onclick="addToCart(this)"
-                                                        data-product-id="{{ base64_encode($product->id) }}"
+                                                        data-product-id="<?php echo e(base64_encode($product->id)); ?>"
                                                         class="btn-add-cart btn-primary transition-3d-hover"><i
                                                             class="ec ec-add-to-cart"></i></a>
                                                 </div>
                                             </div>
-                                        @else
+                                        <?php else: ?>
                                             <div class="prodcut-add-cart">
-                                                <a href="{{ route('login') }}"
+                                                <a href="<?php echo e(route('login')); ?>"
                                                     class="btn btn-primary transition-3d-hover btn-block"><i
                                                         class="ec ec-login"></i>Login to see price</a>
                                             </div>
-                                        @endauth
+                                        <?php endif; ?>
 
 
                                     </div>
@@ -296,7 +295,7 @@
                                             <a href="javascript:void(0)" class="text-gray-6 font-size-13"><i
                                                     class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
                                             <a href="javascript:void(0)"
-                                                onclick="addWishlist(this)"data-product="{{ base64_encode($product->id) }}"
+                                                onclick="addWishlist(this)"data-product="<?php echo e(base64_encode($product->id)); ?>"
                                                 class="text-gray-6 font-size-13"><i
                                                     class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
                                         </div>
@@ -304,11 +303,11 @@
                                 </div>
                             </div>
                         </li>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
                 </div>
             </div>
-            @endif
+            <?php endif; ?>
 
             <!-- End Related products -->
 
@@ -364,4 +363,6 @@
 
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('frontend.main_master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /opt/lampp/htdocs/_unisolbd/resources/views/frontend/product/product_details.blade.php ENDPATH**/ ?>

@@ -119,8 +119,9 @@ route::get('/state-get/ajax/{id}', [CheckoutController::class, 'LoadState']);
 route::post('/checkout/store', [CheckoutController::class, 'CheckoutStore'])->name('checkout.store');
 
 //all search product route....
-route::get('/search', [IndexController::class, 'ProductSearch'])->name('product.search')->middleware(['user', 'auth']);
-route::post('search-product', [IndexController::class, 'SearchProduct'])->middleware(['user', 'auth']);
+route::get('/product/search/{search?}', [IndexController::class, 'AllSearchResult'])->name('product.search.all');
+route::get('/search', [IndexController::class, 'ProductSearch'])->name('product.search');
+route::post('search-product', [IndexController::class, 'SearchProduct']);
 
 Route::get('/barcode', [ProductController::class, 'GenerateBarcode']);
 

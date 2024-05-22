@@ -278,7 +278,7 @@
                         var search = $("#searchproduct-item").val();
                         $(".ui-autocomplete").append(
                             '<li class="see-all-results">' +
-                            '<a href="/product/search?search=' + search +
+                            '<a href="{{url('/')}}/product/search?search=' + search +
                             '" class="btn btn-soft-primary rounded-0 btn-block mt-2">See all results</a>' +
                             '</li>'
                         );

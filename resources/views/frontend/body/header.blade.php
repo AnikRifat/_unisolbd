@@ -564,14 +564,14 @@
                     <!-- Search Bar -->
 
                     <div class="col d-none d-xl-block">
-                        <form class="js-focus-state">
+                        <form class="js-focus-state" method="GET" action="{{route('product.search.all')}}">
                             <label class="sr-only" for="searchproduct">Search</label>
                             <div class="input-group">
                                 <input type="text"
                                     class="form-control searchproduct-item py-2 pl-5 font-size-15 border-right-0 height-40 border-width-1 rounded-left-pill-custom border-primary"
                                     name="search" id="searchproduct-item" placeholder="Search for Products"
                                     aria-label="Search for Products" aria-describedby="searchProduct1" required>
-                                <div class="input-group-append">
+                                <div class="input-group-append lsd">
                                     <!-- Select -->
                                     {{-- <select
                                         class="js-select selectpicker dropdown-select custom-search-categories-select"
