@@ -133,6 +133,7 @@ class UserDetailsController extends Controller
             $userData['nid_back'] = uploadAndResizeImage($request->file('nid_back'), 'upload/user/nid_back', 300, 300); // Fixed the function parameters
         }
 
+        dd($userData);
         User::findOrFail($id)->update($userData);
 
         return redirect()->route('user.index')->with(notification('User Update Successfully', 'success'));

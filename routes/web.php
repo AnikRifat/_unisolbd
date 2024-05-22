@@ -39,98 +39,14 @@ Route::middleware([
 ])->group(function () {
     Route::get('/admin/dashboard', function () {
 
-        $userID = Auth::guard('admin')->user()->id;
-
-        // if (!session()->has('hierarchicalData')) {
-        //     $rolePermissions = App\Models\RolePermission::select('role_permissions.*', 'modules.ordering as module_ordering', 'menus.ordering as menu_ordering', 'submenus.ordering as submenu_ordering', 'menus.prefix as menu_prefix', 'menus.route as menu_route')
-        //         ->join('menus', 'role_permissions.menu_id', '=', 'menus.id')
-        //         ->leftJoin('submenus', 'role_permissions.submenu_id', '=', 'submenus.id')
-        //         ->join('modules', 'menus.module_id', '=', 'modules.id') // Join the 'modules' table
-        //         ->with('module', 'menu', 'submenu', 'permission')
-        //         ->whereIn('role_id', function ($query) use ($userID) {
-        //             // Subquery to retrieve the role_ids from user_roles table based on the user_id
-        //             $query
-        //                 ->select('role_id')
-        //                 ->from('user_roles')
-        //                 ->where('user_id', $userID);
-        //         })
-        //         ->orderBy('module_ordering') // Use the alias for ordering
-        //         ->orderBy('menu_ordering') // Use the alias for ordering
-        //         ->orderBy('submenu_ordering') // Use the alias for ordering
-        //         ->get();
-
-        //     $hierarchicalData = [];
-        //     foreach ($rolePermissions as $item) {
-        //         $moduleName = $item->module ? $item->module->name : null;
-        //         $menuName = $item->menu ? $item->menu->name : null;
-        //         $submenuName = $item->submenu ? $item->submenu->name : null;
-        //         $permissionId = $item->permission_id;
-        //         $menuRoute = $item->menu ? $item->menu->route : null;
-        //         $menuPrefix = $item->menu ? $item->menu->prefix : null;
-        //         $submenuRoute = $item->submenu ? $item->submenu->route : null;
-        //         // Create the module if it doesn't exist
-        //         if (!isset($hierarchicalData[$moduleName])) {
-        //             $hierarchicalData[$moduleName] = [
-        //                 'id' => $item->module->id,
-        //                 'icon' => $item->module->icon,
-        //                 'bg_color' => $item->module->bg_color,
-        //                 'menu' => [],
-        //             ];
-        //         }
-
-        //         // Create the menu if it doesn't exist
-        //         if (!isset($hierarchicalData[$moduleName]['menu'][$menuName])) {
-        //             $hierarchicalData[$moduleName]['menu'][$menuName] = [
-        //                 'icon' => $item->menu->icon,
-        //                 'prefix' => $menuPrefix, // You can set this based on your data
-        //                 'route' => $menuRoute,
-        //                 'url' => $menuRoute != null ? route($menuRoute) : null,
-        //                 'submenu' => [],
-        //             ];
-        //         }
-
-        //         // Check if submenu is null or not
-        //         if ($submenuName === null) {
-        //             // Add the permission to the menu
-        //             $hierarchicalData[$moduleName]['menu'][$menuName]['submenu'] = null;
-        //             $hierarchicalData[$moduleName]['menu'][$menuName]['permissions'][] = $permissionId;
-        //         } else {
-        //             // Create the submenu if it doesn't exist
-        //             if (!isset($hierarchicalData[$moduleName]['menu'][$menuName]['submenu'][$submenuName])) {
-        //                 $hierarchicalData[$moduleName]['menu'][$menuName]['submenu'][$submenuName] = [
-        //                     'route' => $submenuRoute,
-        //                     'url' => route($submenuRoute),
-        //                     'permissions' => [],
-        //                 ];
-        //             }
-
-        //             // Add the permission to the submenu
-        //             $hierarchicalData[$moduleName]['menu'][$menuName]['submenu'][$submenuName]['permissions'][] = $permissionId;
-        //         }
-        //     }
-
-        //     session(['hierarchicalData' => $hierarchicalData]);
-        // }
-
-        // if (!empty(session('hierarchicalData'))) {
-        //     $firstModuleName = key(session('hierarchicalData'));
-        //     $activeModuleData = session('hierarchicalData')[$firstModuleName];
-
-        //     // Set the active module with its key name in the session
-        //     // $activeModuleWithKey = [$firstModuleName => $activeModuleData];
-        //     session(['activeModule' => $activeModuleData]);
-        // }
-
-        //    return $activeModule = session('activeModule');
-
-        //return $hierarchicalData = session('hierarchicalData');
-
         return view('admin.index');
+
     })->name('admin.dashboard')->middleware('auth:admin');
 });
 
 //user route
 Route::post('/user/register/store', [UserController::class, 'StoreUserRegister'])->name('register.store');
+Route::put('/customer/update/{user}', [UserController::class, 'updateUser'])->name('customer.update');
 // Route::get('/otp/verify', [OTPValidationController::class, 'showVerificationForm'])->name('otp.verify');
 // Route::post('/otp/validate', [OTPValidationController::class, 'validateOTP'])->name('otp.validate');
 Route::get('/', [IndexController::class, 'Index'])->name('home');
@@ -153,7 +69,8 @@ Route::middleware([
             ->where('customer_id', auth()->user()->id)
             ->orderBy('id', 'DESC')
             ->get();
-        return view('dashboard', compact('user','quotations'));
+
+        return view('dashboard', compact('user', 'quotations'));
     })->name('dashboard');
 });
 

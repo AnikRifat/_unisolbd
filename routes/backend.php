@@ -70,7 +70,7 @@ route::middleware(['auth:admin'])->group(function () {
     //vendor
     Route::resource('vendor', VendorController::class);
 
-        //user
+    //user
     Route::resource('user', UserDetailsController::class);
 
     //site setting
@@ -93,6 +93,7 @@ route::middleware(['auth:admin'])->group(function () {
         Route::resource('role-permission', RolePermissionController::class);
 
         Route::resource('user-management', UserManagementController::class);
+        // Route::put('/user/update/{id}', [UserManagementController::class, 'update'])->name('user.update');
         Route::post('/user/active/{id}', [UserManagementController::class, 'ActiveUser'])->name('active.user');
         Route::post('/user/inactive/{id}', [UserManagementController::class, 'InactiveUser'])->name('inactive.user');
 
@@ -287,20 +288,19 @@ route::middleware(['auth:admin'])->group(function () {
         route::get('/product', [ProductController::class, 'ProductStock'])->name('product.stock');
     });
 
-
-
     //all admin user role route
-     route::prefix('user-group')->group(function () {
-         route::get('/all', [CustomerGroupController::class, 'index'])->name('customer-groups.index');
-         route::get('/add', [CustomerGroupController::class, 'create'])->name('customer-groups.create');
-         route::get('/show/{id}', [CustomerGroupController::class, 'show'])->name('customer-groups.show');
-         route::post('/store', [CustomerGroupController::class, 'store'])->name('customer-groups.store');
-         route::get('/edit/{id}', [CustomerGroupController::class, 'edit'])->name('customer-groups.edit');
-         route::post('/update/{id}', [CustomerGroupController::class, 'update'])->name('customer-groups.update');
-         route::get('/delete/{id}', [CustomerGroupController::class, 'delete'])->name('customer-groups.destroy');
-     });
-
-
+    route::prefix('user-group')->group(function () {
+        route::get('/all', [CustomerGroupController::class, 'index'])->name('customer-groups.index');
+        route::get('/add', [CustomerGroupController::class, 'create'])->name('customer-groups.create');
+        route::get('/show/{id}', [CustomerGroupController::class, 'show'])->name('customer-groups.show');
+        route::get('/assign-customer/{id}', [CustomerGroupController::class, 'assignCustomer'])->name('customer-groups.assign');
+        route::POST('/assign-customer-to-group/{id}', [CustomerGroupController::class, 'storeAssignedCustomers'])->name('customer-groups.assign-user');
+        route::get('customer-groups/{group}/detach/{user}', [CustomerGroupController::class, 'detachCustomer'])->name('customer-groups.detach');
+        route::post('/store', [CustomerGroupController::class, 'store'])->name('customer-groups.store');
+        route::get('/edit/{id}', [CustomerGroupController::class, 'edit'])->name('customer-groups.edit');
+        route::put('/update/{customerGroup}', [CustomerGroupController::class, 'update'])->name('customer-groups.update');
+        route::get('/delete/{id}', [CustomerGroupController::class, 'delete'])->name('customer-groups.destroy');
+    });
 
     //all admin user role route
     // route::prefix('adminuserrole')->group(function () {

@@ -35,6 +35,7 @@ class PackageController extends Controller
         $decryptId = decrypt($id);
         $packageDetails = PackageItem::with('package', 'category', 'subcategory', 'subsubcategory')->where('package_id', $decryptId)->get();
         $currency = Currency::limit(1)->get()->first();
+
         return view('frontend.quotationbuilder.view_packagedetails', compact('packageDetails', 'currency'));
     }
 
@@ -151,7 +152,6 @@ class PackageController extends Controller
     public function RemovePackageProduct(Request $request)
     {
 
-
         $quotation = decrypt($request->qutation);
         $key = decrypt($request->key);
         // $package_id = decrypt($request->package_id);
@@ -208,38 +208,36 @@ class PackageController extends Controller
         if (Session::has($package->name)) {
             $sessionData = Session::get($package->name);
 
-    $customer_package = CustomerPackage::create([
-        'invoice_no' => $invoice_no,
-        'package_id' => $decryptId,
-        'customer_id' => auth()->user()->id,
-        'channel' => 'online',
-        'created_by' =>  auth()->user()->i,
-        'created_at' => now(),
-    ]);
+            $customer_package = CustomerPackage::create([
+                'invoice_no' => $invoice_no,
+                'package_id' => $decryptId,
+                'customer_id' => auth()->user()->id,
+                'channel' => 'online',
+                'created_by' => auth()->user()->i,
+                'created_at' => now(),
+            ]);
 
-//     $existingCustomer = Vendor::where('type', 2)
-//     ->where('name', auth()->user()->name)
-//     ->where('phone', auth()->user()->phone)
-//     ->first();
+            //     $existingCustomer = Vendor::where('type', 2)
+            //     ->where('name', auth()->user()->name)
+            //     ->where('phone', auth()->user()->phone)
+            //     ->first();
 
-// $customer = $existingCustomer ?? Vendor::create([
-//     'type' => 2,
-//     'name' => auth()->user()->name,
-//     'email' => auth()->user()->email,
-//     'phone' => auth()->user()->phone,
-//     'details' => auth()->user()->userDetails->company_name,
-//     'created_at' => now(),
-// ]);
-// $customer_package = CustomerPackage::create([
-//     'invoice_no' => $invoice_no,
-//     'package_id' => $decryptId,
-//     'customer_id' => $customer->id,
-//     'channel' => 'online',
-//     'created_by' => Auth::guard('admin')->user()?->id,
-//     'created_at' => now(),
-// ]);
-
-
+            // $customer = $existingCustomer ?? Vendor::create([
+            //     'type' => 2,
+            //     'name' => auth()->user()->name,
+            //     'email' => auth()->user()->email,
+            //     'phone' => auth()->user()->phone,
+            //     'details' => auth()->user()->userDetails->company_name,
+            //     'created_at' => now(),
+            // ]);
+            // $customer_package = CustomerPackage::create([
+            //     'invoice_no' => $invoice_no,
+            //     'package_id' => $decryptId,
+            //     'customer_id' => $customer->id,
+            //     'channel' => 'online',
+            //     'created_by' => Auth::guard('admin')->user()?->id,
+            //     'created_at' => now(),
+            // ]);
 
             foreach ($sessionData as $key => $value) {
                 if ($key !== 'total_price') {
@@ -258,15 +256,13 @@ class PackageController extends Controller
 
             $customerPackageId = $customer_package->id;
 
-
             $currency = Currency::limit(1)->get()->first();
             $setting = SiteSetting::first();
 
             return view('frontend.quotationbuilder.quotation_report_web', compact('setting', 'currency', 'customer_package'))->with([
-                     'notification' => notification('Quotation Save Successfully', 'success'),
-                     'customerPackageId' => $customerPackageId,
-                 ]);
-
+                'notification' => notification('Quotation Save Successfully', 'success'),
+                'customerPackageId' => $customerPackageId,
+            ]);
 
             // return redirect()->back()->with([
             //     'notification' => notification('Quotation Save Successfully', 'success'),

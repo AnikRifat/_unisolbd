@@ -160,26 +160,6 @@ class SubmenuSeeder extends Seeder
                 'created_at' => Carbon::now(),
             ],
 
-            //order
-            [
-                'name' => 'All Users',
-                'icon' => 'fa-stop',
-                'route' => 'user-management.index',
-                'module_id' => 1,
-                'menu_id' => 9,
-                'ordering' => 1,
-                'created_at' => Carbon::now(),
-            ],
-            [
-                'name' => 'Pending Users',
-                'icon' => 'fa-stop',
-                'route' => 'user-management.pending',
-                'module_id' => 1,
-                'menu_id' => 9,
-                'ordering' => 2,
-                'created_at' => Carbon::now(),
-            ],
-
             //purchase
             [
                 'name' => 'Add Purchase',

@@ -124,4 +124,56 @@ class UserController extends Controller
         return redirect()->back()->with(notification('some problem occurs', 'error'));
         // Redirect the user to the dashboard or another page after successful registration
     }
+
+    public function updateUser(Request $request, User $user)
+    {
+        // Validate the request data
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:255', 'unique:users,phone,'.$user->id],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
+            'password' => ['nullable', 'string'],
+            'company_name' => ['nullable', 'string', 'max:255'],
+            'trade_license_number' => ['nullable', 'string', 'max:255'],
+            'nid_no' => ['nullable', 'string', 'max:255'],
+            'passport_number' => ['nullable', 'string', 'max:255'],
+            'bin_num' => ['nullable', 'string', 'max:255'],
+            'tin_num' => ['nullable', 'string', 'max:255'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'city' => ['nullable', 'string', 'max:255'],
+            'postcode' => ['nullable', 'string', 'max:255'],
+            'country' => ['nullable', 'string', 'max:255'],
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // // Retrieve the authenticated user
+        // $user = Auth::user();
+        // Update user details
+        $user->name = $request->name;
+        $user->phone = $request->phone;
+        $user->email = $request->email;
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
+        $userData = [
+            'company_name' => $request->company_name,
+            'trade_license_number' => $request->trade_license_number,
+            'nid_no' => $request->nid_no,
+            'passport_number' => $request->passport_number,
+            'bin_num' => $request->bin_num,
+            'tin_num' => $request->tin_num,
+            'address' => $request->address,
+            'city' => $request->city,
+            'post_code' => $request->post_code,
+            'country' => 'Bangladesh',
+        ];
+        // dd($userData);
+        $user->userDetails()->updateOrCreate($userData);
+
+        // Redirect the user to the appropriate page
+        return redirect()->back()->with('success', 'User details updated successfully.');
+    }
 }

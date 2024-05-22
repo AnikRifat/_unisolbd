@@ -14,6 +14,7 @@ class CustomerGroup extends Model
     protected $casts = [
         'rules' => 'array', // Cast rules attribute to array
     ];
+
     public function customers()
     {
         return $this->belongsToMany(User::class, 'assign_customer_to_groups', 'customer_group_id', 'customer_id');
