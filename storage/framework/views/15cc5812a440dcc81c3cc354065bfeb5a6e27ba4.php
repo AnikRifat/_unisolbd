@@ -1,11 +1,4 @@
 
-
-@extends('frontend.main_master')
-@section('title')
-User Login/Register Page
-@endsection
-@section('content')
-
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -15,12 +8,12 @@ User Login/Register Page
     <meta charset="UTF-8">
 
     <!-- External CSS libraries -->
-    <link type="text/css" rel="stylesheet" href="{{ asset('backend/custom/assets/css/bootstrap.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="<?php echo e(asset('backend/custom/assets/css/bootstrap.min.css')); ?>">
     <link type="text/css" rel="stylesheet"
-        href="{{ asset('backend/custom/assets/fonts/font-awesome/css/font-awesome.min.css') }}">
+        href="<?php echo e(asset('backend/custom/assets/fonts/font-awesome/css/font-awesome.min.css')); ?>">
 
     <!-- Favicon icon -->
-    <link rel="shortcut icon" href="{{ asset($setting->logo) }}" type="image/x-icon">
+    <link rel="shortcut icon" href="<?php echo e(asset($setting->logo)); ?>" type="image/x-icon">
 
 
     <!-- Google fonts -->
@@ -29,7 +22,7 @@ User Login/Register Page
         href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900">
 
     <!-- Custom Stylesheet -->
-    <link type="text/css" rel="stylesheet" href="{{ asset('backend/custom/assets/css/style.css') }}">
+    <link type="text/css" rel="stylesheet" href="<?php echo e(asset('backend/custom/assets/css/style.css')); ?>">
 
 
 </head>
@@ -52,7 +45,7 @@ User Login/Register Page
                                 <div class="invoice-logo">
                                     <!-- logo started -->
                                     <div>
-                                        <img src="{{ asset($setting->logo) }}" alt="logo">
+                                        <img src="<?php echo e(asset($setting->logo)); ?>" alt="logo">
                                     </div>
                                     <!-- logo ended -->
                                 </div>
@@ -63,15 +56,16 @@ User Login/Register Page
                                     -webkit-background-clip: text;
                                     background-clip: text;
                                     color: transparent;">
-                                        {{ strtoupper($setting->company_name) }}</h3>
+                                        <?php echo e(strtoupper($setting->company_name)); ?></h3>
                                     <p class="m-0"><span class="font-weight-bold">Phone :
-                                        </span>{{ $setting->phone_one }}, {{ $setting->phone_two }}</p>
+                                        </span><?php echo e($setting->phone_one); ?>, <?php echo e($setting->phone_two); ?></p>
                                     <p class="m-0"><span class="font-weight-bold">Email :
-                                        </span>{{ $setting->email }}</p>
+                                        </span><?php echo e($setting->email); ?></p>
                                 </div>
                             </div>
                             <div class="text-center my-3">
-                                <p class="font-weight-bold">Your Items for {{ $customerPackage->package->name }}
+                                <p class="font-weight-bold">Your Items for <?php echo e($customerPackage->package->name); ?>
+
                                 </p>
                             </div>
 
@@ -79,15 +73,15 @@ User Login/Register Page
                             <div class="row my-4">
                                 <div class="col-4">
                                     <p class="m-0"><span class="font-weight-bold">Name :
-                                        </span>{{ $customerPackage->user->name }}</p>
+                                        </span><?php echo e($customerPackage->user->name); ?></p>
                                 </div>
                                 <div class="col-4">
                                     <p class="m-0"><span class="font-weight-bold">Phone :
-                                        </span>{{ $customerPackage->user->phone }}</p>
+                                        </span><?php echo e($customerPackage->user->phone); ?></p>
                                 </div>
                                 <div class="col-4">
                                     <p class="m-0"><span class="font-weight-bold">Email :
-                                        </span>{{ $customerPackage->user->email }}</p>
+                                        </span><?php echo e($customerPackage->user->email); ?></p>
                                 </div>
                             </div>
 
@@ -108,59 +102,47 @@ User Login/Register Page
                                         </thead>
                                         <tbody>
 
-                                            @php
+                                            <?php
                                                 $total = 0;
-                                            @endphp
+                                            ?>
 
-                                            @foreach ($customerPackage->customerPackageItems as $index => $item)
+                                            <?php $__currentLoopData = $customerPackage->customerPackageItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr>
-                                                    <td class="text-center">{{ $index + 1 }}</td>
-                                                    <td class="text-center">{{ $item->component }}</td>
+                                                    <td class="text-center"><?php echo e($index + 1); ?></td>
+                                                    <td class="text-center"><?php echo e($item->component); ?></td>
 
-                                                    <td><img src="{{ asset($item->product->product_thambnail) }}"
+                                                    <td><img src="<?php echo e(asset($item->product->product_thambnail)); ?>"
                                                             alt=""
                                                             style="height:40px; width:40px; margin-right:10px">
-                                                        {{ $item->product->product_name }}
+                                                        <?php echo e($item->product->product_name); ?>
+
 
                                                     </td>
 
-                                                    <td class="text-center">{{ $item->price }}{{ $currency->symbol }}</td>
-                                                    <td class="text-center">{{ $item->qty }}</td>
-                                                    <td class="text-center">{{ $item->qty * $item->price }}{{ $currency->symbol }}</td>
+                                                    <td class="text-center"><?php echo e($item->price); ?><?php echo e($currency->symbol); ?></td>
+                                                    <td class="text-center"><?php echo e($item->qty); ?></td>
+                                                    <td class="text-center"><?php echo e($item->qty * $item->price); ?><?php echo e($currency->symbol); ?></td>
 
 
                                                 </tr>
 
-                                                @php
+                                                <?php
                                                     $total += $item->qty * $item->price;
-                                                @endphp
-                                            @endforeach
+                                                ?>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                             <tr class="tr3 custom-border">
                                                 <td colspan="4"></td>
                                                 <td class="text-center f-w-600 active-color">Total</td>
                                                 <td class="text-center f-w-600 active-color">
-                                                    {{ $total }}{{ $currency->symbol }}</td>
+                                                    <?php echo e($total); ?><?php echo e($currency->symbol); ?></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
 
-                            {{-- <div class="invoice-contact clearfix">
-                                <div class="row g-0">
-                                    <div class="col-lg-9 col-md-11 col-sm-12">
-                                        <div class="contact-info">
-                                            <a href="tel:+55-4XX-634-7071"><i class="fa fa-phone"></i> +00 123 647
-                                                840</a>
-                                            <a href="tel:info@themevessel.com"><i class="fa fa-envelope"></i>
-                                                info@themevessel.com</a>
-                                            <a href="tel:info@themevessel.com" class="mr-0 d-none-580"><i
-                                                    class="fa fa-map-marker"></i> 169 Teroghoria, Bangladesh</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
+                            
                         </div>
                         <div class="invoice-btn-section clearfix d-print-none">
                             <a class="btn btn-lg btn-print " id="printInvoice">
@@ -211,10 +193,11 @@ User Login/Register Page
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <script src="{{ asset('backend/custom/assets/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('backend/custom/assets/js/jspdf.min.js') }}"></script>
-    <script src="{{ asset('backend/custom/assets/js/html2canvas.js') }}"></script>
-    <script src="{{ asset('backend/custom/assets/js/app.js') }}"></script>
+    <script src="<?php echo e(asset('backend/custom/assets/js/jquery.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend/custom/assets/js/jspdf.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend/custom/assets/js/html2canvas.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend/custom/assets/js/app.js')); ?>"></script>
 </body>
 
 </html>
+<?php /**PATH /opt/lampp/htdocs/_unisolbd/resources/views/frontend/quotationbuilder/quotation_report.blade.php ENDPATH**/ ?>

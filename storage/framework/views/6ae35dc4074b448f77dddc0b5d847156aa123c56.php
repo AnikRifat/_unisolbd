@@ -1,16 +1,15 @@
-@extends('frontend.main_master')
-@section('title')
+<?php $__env->startSection('title'); ?>
     Sub Category Product
-@endsection
-@section('content')
-    <script src="{{ asset('frontendassets/custom-js/pagination.js') }}"></script>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+    <script src="<?php echo e(asset('frontendassets/custom-js/pagination.js')); ?>"></script>
     <!-- Include jQuery -->
 
     <!-- Include twbsPagination -->
 
 
     <script>
-        var currencySymbol = "{!! $currency->symbol !!}";
+        var currencySymbol = "<?php echo $currency->symbol; ?>";
     </script>
 
 
@@ -26,10 +25,16 @@
                 <div class="my-md-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                            <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="{{ url('/') }}"><i class="fa fa-home"></i></a>
+                            <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="<?php echo e(url('/')); ?>"><i class="fa fa-home"></i></a>
+                            </li>
+                            <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1" aria-current="page"><a
+                                href="<?php echo e(url('category/product/' . $SubcategoryBrandWiseProducts->first()->subcategory->category_slug . '/' . encrypt($SubcategoryBrandWiseProducts->first()->category->id))); ?>"><?php echo e($SubcategoryBrandWiseProducts->first()->category->category_name); ?></a>
+                            </li>
+                            <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1" aria-current="page"><a
+                                    href="<?php echo e(url('subcategory/product/' . $SubcategoryBrandWiseProducts->first()->subcategory->subcategory_slug . '/' . encrypt($SubcategoryBrandWiseProducts->first()->subcategory->id))); ?>"><?php echo e($SubcategoryBrandWiseProducts->first()->subcategory->subcategory_name); ?></a>
                             </li>
                             <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page"><a
-                                    href="{{ url('category/product/' . $CategoryWiseProducts->first()->category->category_slug . '/' . encrypt($CategoryWiseProducts->first()->category->id)) }}">{{ $CategoryWiseProducts->first()->category->category_name }}</a>
+                                href="<?php echo e(url('brand_wise_subcategory/product/' . $SubcategoryBrandWiseProducts->first()->subcategory->subcategory_slug . '/' . encrypt($SubcategoryBrandWiseProducts->first()->subcategory->id).'/'.base64_encode($brand->id))); ?>"><?php echo e($brand->brand_name); ?></a>
                             </li>
                         </ol>
                     </nav>
@@ -44,26 +49,15 @@
             <div class="row mb-8">
                 <div class="d-none d-xl-block col-xl-3 col-wd-2gdot5">
                     <div class="mb-2">
-                        <div class="border-bottom border-color-1 mb-2">
-                            <h3 class="section-title section-title__sm mb-0 pb-2 font-size-18">Filters</h3>
-                        </div>
+
 
                         <div class="border-bottom pb-2 mb-2">
                             <h4 class="font-size-14 mb-3 font-weight-bold">Brands</h4>
 
-                            {{-- @php
-                                $brandCounts = $CategoryWiseProducts->groupBy('brand_id')->map(function ($products, $brandId) {
-                                    $brand = \App\Models\Brand::find($brandId); // Assuming you have a Brand model
-                                    return [
-                                        'id' => $brandId,
-                                        'name' => $brand->brand_name,
-                                        'count' => $products->count(),
-                                    ];
-                                });
-                            @endphp --}}
+                            
 
-                            @php
-                                $brandCounts = $CategoryWiseProducts
+                            <?php
+                                $brandCounts = $SubcategoryBrandWiseProducts
                                     ->groupBy('brand_id')
                                     ->map(function ($products, $brandId) {
                                         $brand = \App\Models\Brand::find($brandId);
@@ -80,41 +74,41 @@
                                         }
                                     })
                                     ->filter(); // Filter out null values
-                            @endphp
+                            ?>
 
 
 
 
-                            @foreach ($brandCounts as $brand)
-                                @if ($loop->index < 3)
+                            <?php $__currentLoopData = $brandCounts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php if($loop->index < 3): ?>
                                     <div
                                         class="filter-with-brand form-group d-flex align-items-center justify-content-between mb-2 pb-1">
                                         <div class="custom-control custom-checkbox">
-                                            <input value="{{ $brand['id'] }}" type="checkbox"
-                                                class="brand_filter custom-control-input" id="brand{{ $brand['id'] }}">
-                                            <label class="custom-control-label" for="brand{{ $brand['id'] }}">
-                                                {{ $brand['name'] }} ({{ $brand['count'] }})
+                                            <input value="<?php echo e($brand['id']); ?>" type="checkbox"
+                                                class="brand_filter custom-control-input" id="brand<?php echo e($brand['id']); ?>">
+                                            <label class="custom-control-label" for="brand<?php echo e($brand['id']); ?>">
+                                                <?php echo e($brand['name']); ?> (<?php echo e($brand['count']); ?>)
                                             </label>
                                         </div>
                                     </div>
-                                @else
-                                    @if ($loop->index === 3)
+                                <?php else: ?>
+                                    <?php if($loop->index === 3): ?>
                                         <!-- View More - Collapse -->
                                         <div class="collapse" id="collapseBrand">
-                                    @endif
+                                    <?php endif; ?>
 
                                     <div
                                         class="filter-with-brand form-group d-flex align-items-center justify-content-between mb-2 pb-1">
                                         <div class="custom-control custom-checkbox">
-                                            <input value="{{ $brand['id'] }}" type="checkbox"
-                                                class="brand_filter custom-control-input" id="brand{{ $brand['id'] }}">
-                                            <label class="custom-control-label" for="brand{{ $brand['id'] }}">
-                                                {{ $brand['name'] }} ({{ $brand['count'] }})
+                                            <input value="<?php echo e($brand['id']); ?>" type="checkbox"
+                                                class="brand_filter custom-control-input" id="brand<?php echo e($brand['id']); ?>">
+                                            <label class="custom-control-label" for="brand<?php echo e($brand['id']); ?>">
+                                                <?php echo e($brand['name']); ?> (<?php echo e($brand['count']); ?>)
                                             </label>
                                         </div>
                                     </div>
 
-                                    @if ($loop->last)
+                                    <?php if($loop->last): ?>
                         </div>
                         <!-- End View More - Collapse -->
 
@@ -129,87 +123,49 @@
                             <span class="link-collapse__active">Show less</span>
                         </a>
                         <!-- End Link -->
-                        @endif
-                        @endif
-                        @endforeach
+                        <?php endif; ?>
+                        <?php endif; ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                 </div>
-                {{-- <div class="mb-8">
-                    <div class="border-bottom border-color-1 mb-5">
-                        <h3 class="section-title section-title__sm mb-0 pb-2 font-size-18">Latest Products</h3>
-                    </div>
-                    <ul class="list-unstyled" id="jar">
-                        @forelse ($latest_products as $product)
-                            <li class="mb-4">
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <a href="{{ url('/product/details/' . $product->id . '/' . $product->product_slug) }}"
-                                            class="d-block width-75">
-                                            <img class="img-fluid" src="{{ asset($product->product_thambnail) }}"
-                                                alt="Image Description">
-                                        </a>
-                                    </div>
-                                    <div class="col">
-                                        <h3 class="text-lh-1dot2 font-size-14 mb-0"><a
-                                                href="{{ url('/product/details/' . $product->id . '/' . $product->product_slug) }}">{{ $product->product_name }}</a>
-                                        </h3>
-
-                                        <div class="font-weight-bold">
-                                            @if ($product->discount_price != null)
-                                                <del
-                                                    class="font-size-11 text-gray-9 d-block">{{ number_format($product->selling_price, 0, '.', ',') }}{{ $currency->symbol }}</del>
-                                                <ins
-                                                    class="font-size-15 text-red text-decoration-none d-block">{{ number_format($product->discount_price, 0, '.', ',') }}{{ $currency->symbol }}</ins>
-                                            @else
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        @empty
-                        @endforelse
-
-                    </ul>
-                </div> --}}
                 <div class="mb-8">
                     <div class="border-bottom border-color-1 mb-5">
                         <h3 class="section-title section-title__sm mb-0 pb-2 font-size-18">Latest Products</h3>
                     </div>
                     <ul class="list-unstyled">
-                        @foreach($latest_products as $product)
-                        <li class="mb-4">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <a href="{{ url('/product/details/' .$product->product_slug. '/' .encrypt($product->id)) }}" class="d-block width-75">
-                                        <img class="img-fluid" src="{{ asset($product->product_thambnail) }}" alt="Image Description">
-                                    </a>
-                                </div>
-                                <div class="col">
-                                    <h3 class="text-lh-1dot2 font-size-14 mb-0"><a href="{{ url('/product/details/' .$product->product_slug. '/' .encrypt($product->id)) }}">{{ $product->product_name }}</a></h3>
-                                    {{-- <div class="text-warning text-ls-n2 font-size-16 mb-1" style="width: 80px;">
-                                        <small class="fas fa-star"></small>
-                                        <small class="fas fa-star"></small>
-                                        <small class="fas fa-star"></small>
-                                        <small class="fas fa-star"></small>
-                                        <small class="far fa-star text-muted"></small>
-                                    </div> --}}
-                                    @auth
+                        <?php $__currentLoopData = $latest_products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <li class="mb-4">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <a href="<?php echo e(url('/product/details/' . $product->product_slug . '/' . encrypt($product->id))); ?>"
+                                            class="d-block width-75">
+                                            <img class="img-fluid" src="<?php echo e(asset($product->product_thambnail)); ?>"
+                                                alt="Image Description">
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <h3 class="text-lh-1dot2 font-size-14 mb-0"><a
+                                                href="<?php echo e(url('/product/details/' . $product->product_slug . '/' . encrypt($product->id))); ?>"><?php echo e($product->product_name); ?></a>
+                                        </h3>
+                                        
+                                    <?php if(auth()->guard()->check()): ?>
                                     <div class="font-weight-bold">
-                                        {{-- <del class="font-size-11 text-gray-9 d-block">{{$product->discount_price != null ? $prouduct->selling_price  $currency->symbol:""}}</del>
-                                    <ins class="font-size-15 text-red text-decoration-none d-block">{{$product->discount_price != null ? $prouduct->discount_price:$product->selling_price}}{{ $currency->symbol }}</ins> --}}
+                                        
                                         <del class="font-size-11 text-gray-9 d-block">
-                                            {{ $product->discount_price != null ? $product->selling_price . $currency->symbol : '' }}
+                                            <?php echo e($product->discount_price != null ? $product->selling_price . $currency->symbol : ''); ?>
+
                                         </del>
                                         <ins class="font-size-15 text-red text-decoration-none d-block">
-                                            {{ $product->discount_price != null ? $product->discount_price : $product->selling_price }}{{ $currency->symbol }}
+                                            <?php echo e($product->discount_price != null ? $product->discount_price : $product->selling_price); ?><?php echo e($currency->symbol); ?>
+
                                         </ins>
 
                                     </div>
-                                    @endauth
+                                    <?php endif; ?>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        @endforeach
+                            </li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
                 </div>
             </div>
@@ -230,7 +186,7 @@
                         <!-- End Account Sidebar Toggle Button -->
                     </div>
                     <div class="px-3 d-none d-xl-block">
-                        <h4>{{ $CategoryWiseProducts->first()->category->category_name }}</h4>
+                        <h4><?php echo e($brand['name']); ?></h4>
                     </div>
                     <div class="d-flex">
                         <form method="get">
@@ -245,7 +201,7 @@
 
                             <!-- End Select -->
                         </form>
-                        <form method="POST" class="ml-2 d-none d-xl-block">
+                        <form method="POST" class="ml-2">
                             <!-- Select -->
                             <select id="productPerPage" class="js-select selectpicker dropdown-select max-width-100"
                                 data-style="btn-sm bg-white font-weight-normal py-2 border text-gray-20 bg-lg-down-transparent border-lg-down-0">
@@ -275,16 +231,7 @@
                 <!-- End Tab Content -->
                 <!-- End Shop Body -->
                 <!-- Shop Pagination -->
-                {{-- <nav class="d-md-flex justify-content-between align-items-center border-top pt-3"
-                    aria-label="Page navigation example">
-                    <div class="text-center text-md-left mb-3 mb-md-0">Showing 1–25 of 56 results</div>
-                    <ul class="pagination mb-0 pagination-shop justify-content-center justify-content-md-start"
-                        id="pagination-links">
-                        <li class="page-item"><a class="page-link current" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    </ul>
-                </nav> --}}
+                
 
                 <nav class="d-md-flex justify-content-between align-items-center border-top pt-3"
                     aria-label="Page navigation example">
@@ -308,7 +255,7 @@
     <script>
         jQuery.noConflict();
         jQuery(document).ready(function($) {
-            var slicedProducts = {!! json_encode($CategoryWiseProducts->toArray()) !!};
+            var slicedProducts = <?php echo json_encode($SubcategoryBrandWiseProducts->toArray()); ?>;
             var currentPage = 1;
             var productsPerPage = parseInt($('#productPerPage').val());
             var totalPages = Math.ceil(slicedProducts.length / productsPerPage);
@@ -346,7 +293,7 @@
 
             function applyFiltersAndSort() {
 
-                slicedProducts = {!! json_encode($CategoryWiseProducts->toArray()) !!};
+                slicedProducts = <?php echo json_encode($SubcategoryBrandWiseProducts->toArray()); ?>;
                 // Apply brand filter
                 var filteredProducts = selectedBrandIds.length > 0 ?
                     slicedProducts.filter(product => selectedBrandIds.includes(product.brand_id)) :
@@ -420,7 +367,7 @@
                             </ul>
 
                             <div class="text-gray-20 mb-2 font-size-12">SKU: ${product.product_code}</div>
-                            @auth
+                            <?php if(auth()->guard()->check()): ?>
                             <div class="flex-center-between mb-2">
                                 <div class="prodcut-price">
                                     <del class="font-size-12 tex-gray-6">${product.discount_price != null ? `${formatPrice(product.selling_price)}${currencySymbol}` : ""}</del>
@@ -432,13 +379,13 @@
                                         class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
                                 </div>
                             </div>
-                            @else
+                            <?php else: ?>
                             <div class="prodcut-add-cart">
-                                                    <a href="{{ route('login') }}"
+                                                    <a href="<?php echo e(route('login')); ?>"
                                                         class="btn btn-primary transition-3d-hover btn-block"><i
                                                             class="ec ec-login"></i>Login to see price</a>
                                                 </div>
-                                            @endauth
+                                            <?php endif; ?>
                         </div>
                         <div class="product-item__footer">
                             <div class="border-top pt-2 flex-center-between flex-wrap">
@@ -485,11 +432,13 @@
     </script>
 
 
-<script>
-   function formatPrice(price) {
-    price = Number(price);
-    // Format the price with commas as separators
-    return price.toLocaleString('en');
-  }
-  </script>
-@endsection
+    <script>
+        function formatPrice(price) {
+            price = Number(price);
+            // Format the price with commas as separators
+            return price.toLocaleString('en');
+        }
+    </script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('frontend.main_master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /opt/lampp/htdocs/_unisolbd/resources/views/frontend/product/subcategory_brand_wise_product.blade.php ENDPATH**/ ?>

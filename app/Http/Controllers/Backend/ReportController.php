@@ -323,7 +323,6 @@ class ReportController extends Controller
                 'vendor',
                 'admin',
             ])->findOrFail($id);
-
             $currency = Currency::limit(1)->get()->first();
             $setting = SiteSetting::first();
             $customerPackage = CustomerPackage::with('customerPackageItems.product', 'package', 'vendor')->findOrFail($id);

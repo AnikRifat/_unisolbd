@@ -407,6 +407,7 @@
                                         class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
                                 </div>
                             </div>
+                            @else
                             <div class="prodcut-add-cart">
                                                     <a href="{{ route('login') }}"
                                                         class="btn btn-primary transition-3d-hover btn-block"><i

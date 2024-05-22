@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\ReportController;
 use App\Http\Controllers\Backend\ShippingAreaController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\IndexController;
@@ -65,11 +66,11 @@ Route::middleware([
     Route::get('/dashboard', function () {
         $id = Auth::user()->id;
         $user = User::find($id);
-        $quotations = CustomerPackage::with('vendor')
+        $quotations = CustomerPackage::with('user')
             ->where('customer_id', auth()->user()->id)
             ->orderBy('id', 'DESC')
             ->get();
-
+// dd($quotations);
         return view('dashboard', compact('user', 'quotations'));
     })->name('dashboard');
 });
@@ -131,6 +132,9 @@ Route::get('/test', function () {
 
 route::get('/frontend/district/ajax/{id}', [ShippingAreaController::class, 'getDistrict'])->name('get-district-fronted');
 route::get('/frontend/state/ajax/{id}', [ShippingAreaController::class, 'getStateById'])->name('get-state-fronted');
+
+Route::get('/{type}/{id}', [ReportController::class, 'QuotationAndSaleInvoiceReport'])->name('user.invoice.report');
+
 
 require __DIR__.'/backend.php';
 require __DIR__.'/frontend.php';
