@@ -11,6 +11,7 @@
 
 
         <div class="container">
+
             <div class="row">
                 <div class="col-12">
                     <div class="mb-2">
@@ -73,7 +74,7 @@
                   align-items: center;
                 }
               </style>
- <div class="row">
+ <div class="row row no-gutters">
     <div class="col-md-12">
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
@@ -102,6 +103,7 @@
           </div>
     </div>
  </div>
+ @include('frontend.body.portfolio')
             <div class="row">
                 <div class="col-12 col-wd-12gdot5">
                     <div class="mb-2">
@@ -191,6 +193,14 @@
                     </ul>
                 </div>
             </div>
+
+
+
+
+
+
+
+
         </div>
     </main>
 

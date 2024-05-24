@@ -10,6 +10,18 @@
 
 
         <div class="container">
+
+
+
+
+
+
+
+
+
+
+
+
             <div class="row">
                 <div class="col-12">
                     <div class="mb-2">
@@ -64,7 +76,7 @@
                   text-align: center;
                   font-size: 18px;
                   background: #fff;
-                  height: calc((100% - 30px) / 2) !important;
+                  height: calc((70% - 30px) / 2) !important;
 
                   /* Center slide text vertically */
                   display: flex;
@@ -72,7 +84,7 @@
                   align-items: center;
                 }
               </style>
- <div class="row">
+ <div class="row row no-gutters">
     <div class="col-md-12">
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
@@ -83,7 +95,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <a href="<?php echo e(url('/product/details/' . $item->product_slug . '/' . encrypt($item->id))); ?>"
-                                class="d-block text-center"><img class="img-fluid"
+                                class="d-block text-center"><img style="height: 100px" class="img-fluid"
                                     src="<?php echo e(asset($item->product_thambnail)); ?>"
                                     alt="Image Description"></a>
                         </div>
@@ -102,6 +114,7 @@
           </div>
     </div>
  </div>
+ <?php echo $__env->make('frontend.body.portfolio', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <div class="row">
                 <div class="col-12 col-wd-12gdot5">
                     <div class="mb-2">
@@ -191,6 +204,14 @@
                     </ul>
                 </div>
             </div>
+
+
+
+
+
+
+
+
         </div>
     </main>
 
