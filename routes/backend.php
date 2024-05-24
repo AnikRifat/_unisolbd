@@ -288,9 +288,9 @@ route::middleware(['auth:admin'])->group(function () {
         route::get('/product', [ProductController::class, 'ProductStock'])->name('product.stock');
     });
 
-    //all admin user role route
+    //all admin user role rout
     route::prefix('user-group')->group(function () {
-        route::get('/all', [CustomerGroupController::class, 'index'])->name('customer-groups.index');
+        route::get('/alla', [CustomerGroupController::class, 'index'])->name('customer-groups.index');
         route::get('/add', [CustomerGroupController::class, 'create'])->name('customer-groups.create');
         route::get('/show/{id}', [CustomerGroupController::class, 'show'])->name('customer-groups.show');
         route::get('/assign-customer/{id}', [CustomerGroupController::class, 'assignCustomer'])->name('customer-groups.assign');

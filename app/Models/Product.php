@@ -6,7 +6,9 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Searchable;
+use Stripe\Discount;
 
 class Product extends Model
 {
@@ -100,4 +102,40 @@ class Product extends Model
     {
         return $this->hasOne(PurchaseDetails::class, 'product_id', 'id')->latest('created_at');
     }
+
+    // Add a scope to filter products by customer group
+    public function DiscountedPrice()
+    {
+        if (auth()->check() && auth()->user()->customerGroups) {
+            $customerGroup = auth()->user()->customerGroups->first();
+
+            if ($customerGroup && isset(json_decode($customerGroup->rules, true)['discount'])) {
+                $discount = json_decode($customerGroup->rules, true)['discount'];
+                $discountedPrice = $this->selling_price - ($this->selling_price * ($discount / 100));
+                return $discountedPrice;
+            }
+        }
+        // Return the original selling price if no discount is available
+        return $this->selling_price;
+    }
+
+
+    public function scopeApplyPriceModifier($query)
+    {
+
+        if (auth()->check() && auth()->user()->customerGroups) {
+            $customerGroup = auth()->user()->customerGroups->first();
+
+            if ($customerGroup && isset(json_decode($customerGroup->rules, true)['discount'])) {
+                $discount = 10;
+
+                // Apply the discount to the selling price
+                return $query->select('*')->selectRaw('selling_price * (1- ? / 100) as selling_price', [$discount]);
+            }
+        }
+
+        // Return the original query if no discount is available
+        return $query;
+    }
+
 }

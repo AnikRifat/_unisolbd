@@ -12,6 +12,7 @@ class CustomerGroupController extends Controller
 {
     public function index()
     {
+        dd('ok');
         $customerGroups = CustomerGroup::all();
 
         return view('backend.customer_groups.index', compact('customerGroups'));
