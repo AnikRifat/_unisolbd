@@ -23,6 +23,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @if($customerGroups->count()> 0)
                                         @foreach ($customerGroups as $group)
                                             <tr>
                                                 <td>{{ $group->name }}</td>
@@ -48,6 +49,7 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>

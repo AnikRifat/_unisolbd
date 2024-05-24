@@ -107,9 +107,7 @@ class IndexController extends Controller
     public function ProductDetails($slug, $product_id)
     {
         $id = decrypt($product_id);
-
-        $product = Product::where('id',$id)->applyPriceModifier()->first();
-// dd($product);
+        $product = Product::findOrFail($id);
         $saleController = new SaleController();
         $stock = $saleController->getStock($id);
 

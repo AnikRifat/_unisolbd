@@ -34,6 +34,7 @@ use App\Http\Controllers\Backend\UnitController;
 use App\Http\Controllers\Backend\UserDetailsController;
 use App\Http\Controllers\Backend\UserManagementController;
 use App\Http\Controllers\Backend\VendorController;
+use App\Http\Controllers\testController;
 use Illuminate\Support\Facades\Route;
 
 route::middleware(['auth:admin'])->group(function () {
@@ -287,10 +288,11 @@ route::middleware(['auth:admin'])->group(function () {
     route::prefix('stock')->group(function () {
         route::get('/product', [ProductController::class, 'ProductStock'])->name('product.stock');
     });
+    route::get('/testc', [CustomerGroupController::class, 'index']);
 
     //all admin user role rout
     route::prefix('user-group')->group(function () {
-        route::get('/alla', [CustomerGroupController::class, 'index'])->name('customer-groups.index');
+        route::get('/all', [testController::class, 'index'])->name('customer-groups.index');
         route::get('/add', [CustomerGroupController::class, 'create'])->name('customer-groups.create');
         route::get('/show/{id}', [CustomerGroupController::class, 'show'])->name('customer-groups.show');
         route::get('/assign-customer/{id}', [CustomerGroupController::class, 'assignCustomer'])->name('customer-groups.assign');

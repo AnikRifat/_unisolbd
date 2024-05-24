@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\ApplyPriceModifierScope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -122,20 +123,22 @@ class Product extends Model
 
     public function scopeApplyPriceModifier($query)
     {
+        $customerGroup = auth()->check() ? auth()->user()->customerGroups->first() : null;
 
-        if (auth()->check() && auth()->user()->customerGroups) {
-            $customerGroup = auth()->user()->customerGroups->first();
-
-            if ($customerGroup && isset(json_decode($customerGroup->rules, true)['discount'])) {
-                $discount = 10;
-
-                // Apply the discount to the selling price
-                return $query->select('*')->selectRaw('selling_price * (1- ? / 100) as selling_price', [$discount]);
-            }
+        if ($customerGroup && isset(json_decode($customerGroup->rules, true)['discount'])) {
+            // Apply the discount to the selling price
+            $discount = json_decode($customerGroup->rules, true)['discount'];
+            return $query->select('*')->selectRaw('selling_price * (1- ? / 100) as discount_price', [$discount]);
         }
 
         // Return the original query if no discount is available
         return $query;
+    }
+
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new ApplyPriceModifierScope);
     }
 
 }
