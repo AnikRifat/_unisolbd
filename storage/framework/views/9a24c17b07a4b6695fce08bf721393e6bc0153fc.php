@@ -1,7 +1,6 @@
-@extends('frontend.main_master')
-@section('content')
-    <script src="{{ asset('frontendassets/custom-js/dataTables.min.js') }}"></script>
-    <script src="{{ asset('frontendassets/custom-js/bootstrap4.min.js') }}"></script>
+<?php $__env->startSection('content'); ?>
+    <script src="<?php echo e(asset('frontendassets/custom-js/dataTables.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontendassets/custom-js/bootstrap4.min.js')); ?>"></script>
 
 
     <style>
@@ -60,7 +59,7 @@
         }
     </style>
 
-    @php
+    <?php
         // Retrieve the order details in the controller and pass it to the view
         // $orderDetails = App\Models\Order::select('orders.*')
         //     ->join('order_items', 'orders.id', '=', 'order_items.order_id')
@@ -71,7 +70,7 @@
             ->where('user_id', Auth::user()->id)
             ->get();
 
-    @endphp
+    ?>
     <section class="py-5">
         <div class="container">
             <div class="bg-white shadow rounded-lg d-block">
@@ -80,10 +79,10 @@
                         <div class="profile-tab-nav border-right">
                             <div class="px-4">
                                 <div class="img-circle text-center mb-3">
-                                    <img src="{{ !empty(Auth::user()->profile_photo_path) ? asset('storage/' . Auth::user()->profile_photo_path) : asset('upload/no_image.png') }}"
+                                    <img src="<?php echo e(!empty(Auth::user()->profile_photo_path) ? asset('storage/' . Auth::user()->profile_photo_path) : asset('upload/no_image.png')); ?>"
                                         alt="Image" class="shadow">
                                 </div>
-                                <h5 class="text-center">{{ Auth::user()->name }}</h5>
+                                <h5 class="text-center"><?php echo e(Auth::user()->name); ?></h5>
                             </div>
                             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                                 aria-orientation="vertical">
@@ -102,14 +101,10 @@
                                     <i class="fa fa-key text-center mr-1"></i>
                                     Change Password
                                 </a>
-                                {{-- <a class="nav-link" id="security-tab" data-toggle="pill" href="#security" role="tab"
-                                    aria-controls="security" aria-selected="false">
-                                    <i class="fa fa-shopping-cart text-center mr-1"></i>
-                                    Orders
-                                </a> --}}
+                                
 
-                                <form action="{{ route('logout') }}" method="POST">
-                                    @csrf
+                                <form action="<?php echo e(route('logout')); ?>" method="POST">
+                                    <?php echo csrf_field(); ?>
                                     <button id="logout" href="javascript:void(0)" class="btn nav-link">
                                         <i class="fa fa-arrow-circle-down text-center mr-1"></i>
                                         Logout
@@ -124,17 +119,17 @@
 
                             <div class="tab-pane fade show active" id="account" role="tabpanel"
                                 aria-labelledby="account-tab">
-                                <form action="{{ route('user-profile-information.update') }}" method="POST"
+                                <form action="<?php echo e(route('user-profile-information.update')); ?>" method="POST"
                                     enctype="multipart/form-data">
-                                    @csrf
-                                    @method('PUT')
+                                    <?php echo csrf_field(); ?>
+                                    <?php echo method_field('PUT'); ?>
                                     <h3 class="mb-4">Account Settings</h3>
 
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>Name<span class="text-danger">*</span></label>
-                                                <input type="text" name="name" value="{{ Auth::user()->name }}"
+                                                <input type="text" name="name" value="<?php echo e(Auth::user()->name); ?>"
                                                     class="form-control" placeholder="full name">
                                             </div>
                                         </div>
@@ -144,7 +139,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>Email<span class="text-danger">*</span></label>
-                                                <input type="email" name="email" value="{{ Auth::user()->email }}"
+                                                <input type="email" name="email" value="<?php echo e(Auth::user()->email); ?>"
                                                     class="form-control" placeholder="example@gmail.com">
                                             </div>
                                         </div>
@@ -154,7 +149,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>Phone number<span class="text-danger">*</span></label>
-                                                <input type="text" name="phone" value="{{ Auth::user()->phone }}"
+                                                <input type="text" name="phone" value="<?php echo e(Auth::user()->phone); ?>"
                                                     class="form-control" placeholder="+88">
                                             </div>
                                         </div>
@@ -200,42 +195,42 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($quotations as $index => $item)
+                                            <?php $__currentLoopData = $quotations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr>
-                                                    <td>{{ $index + 1 }}</td>
-                                                    <td>{{ $item->created_at->format('j F Y') }}</td>
-                                                    <td>{{ $item->channel }}</td>
-                                                    <td>{{ $item->user->name }}</td>
-                                                    <td>{{ $item->user->phone }}</td>
+                                                    <td><?php echo e($index + 1); ?></td>
+                                                    <td><?php echo e($item->created_at->format('j F Y')); ?></td>
+                                                    <td><?php echo e($item->channel); ?></td>
+                                                    <td><?php echo e($item->user->name); ?></td>
+                                                    <td><?php echo e($item->user->phone); ?></td>
                                                     <td class="text-center">
-                                                        @if ($item->status == 'quotation')
+                                                        <?php if($item->status == 'quotation'): ?>
                                                             <span
-                                                                class="badge badge-pill badge-success rounded-0">{{ $item->status }}</span>
-                                                        @else
+                                                                class="badge badge-pill badge-success rounded-0"><?php echo e($item->status); ?></span>
+                                                        <?php else: ?>
                                                             <span
-                                                                class="badge badge-pill badge-danger rounded-0">{{ $item->status }}</span>
-                                                        @endif
+                                                                class="badge badge-pill badge-danger rounded-0"><?php echo e($item->status); ?></span>
+                                                        <?php endif; ?>
 
                                                     </td>
                                                     <td class="d-flex" style="width:80px">
-                                                        <a data-print="{{ $item->id }}"
+                                                        <a data-print="<?php echo e($item->id); ?>"
                                                             class="btn btn-sm btn-primary btnPrint mr-10" data-toggle="tooltip" data-placement="top" title="Print Quotation"
-                                                            href="{{route('user.invoice.report',['id' => $item->id, 'type' => 'quotation'])}}"><i class="fa fa-print"></i></a>
+                                                            href="<?php echo e(route('user.invoice.report',['id' => $item->id, 'type' => 'quotation'])); ?>"><i class="fa fa-print"></i></a>
 
 
 
 
-                                                        @if ($item->status == 'quotation')
-                                                        <a data-edit="{{ $item->id }}"
+                                                        <?php if($item->status == 'quotation'): ?>
+                                                        <a data-edit="<?php echo e($item->id); ?>"
                                                             class="btn btn-sm btn-success btnEdit mr-10" data-toggle="tooltip" data-placement="top" title="Edit Quotation"
-                                                            href="{{ route('quotation-edit-or-invoice', ['id' => $item->id, 'type' => 'edit']) }}"><i
+                                                            href="<?php echo e(route('quotation-edit-or-invoice', ['id' => $item->id, 'type' => 'edit'])); ?>"><i
                                                                 class="fa fa-edit"></i></a>
 
-                                                            <a data-edit="{{ $item->id }}"
+                                                            <a data-edit="<?php echo e($item->id); ?>"
                                                                 class="btn btn-sm btn-info btnSale mr-10" data-toggle="tooltip" data-placement="top" title="Make Invoice"
-                                                                href="{{ route('quotation-edit-or-invoice', ['id' => $item->id, 'type' => 'invoice']) }}"><i
+                                                                href="<?php echo e(route('quotation-edit-or-invoice', ['id' => $item->id, 'type' => 'invoice'])); ?>"><i
                                                                     class="si-basket-loaded si"></i></a>
-                                                        @endif
+                                                        <?php endif; ?>
 
 
 
@@ -245,7 +240,7 @@
                                                     </td>
 
                                                 </tr>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </tbody>
 
                                     </table>
@@ -278,49 +273,37 @@
                                         </thead>
                                         <tbody>
 
-                                            {{-- <tr>
-                                                <td><span class="badge badge-success p-2">1</span></td>
-                                                <td class="font-weight-bold" style="width:200px"><img
-                                                        src="http://127.0.0.1:8000/upload/no_image.png"
-                                                        style="height:50px; width:50px; margin-right:10px"><a
-                                                        class="text-blue" href="javascript:void(0)">jfsksdf jjojdofs
-                                                        jodjoidsf jijofsad</a></td>
-                                                <td>3000<span class="text-danger">*</span>1</td>
-                                                <td class="text-danger">50,000</td>
-                                                <td><span class="text-secondary">5,dec 2023,02;10am</span></td>
-                                                <td><span class="badge badge-success p-2">pending</span></td>
-                                                <td><a href="javascript:void(0)"><i class="fa fa-eye text-dark"></i></a>
-                                                </td>
-                                            </tr> --}}
+                                            
 
 
-                                            @php $itemCounter = 1; @endphp
+                                            <?php $itemCounter = 1; ?>
 
-                                            @foreach ($orderDetails as $order)
+                                            <?php $__currentLoopData = $orderDetails; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                                                @foreach ($order->orderItems as $item)
+                                                <?php $__currentLoopData = $order->orderItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <tr>
                                                         <td><span
-                                                                class="badge badge-dark p-2">{{ $itemCounter }}</span>
+                                                                class="badge badge-dark p-2"><?php echo e($itemCounter); ?></span>
                                                         </td>
                                                         <td class="font-weight-bold"
                                                             style="max-width: 200px; overflow: hidden;">
                                                             <div style="display: flex; align-items: center;">
-                                                                <img src="{{ asset($item->product->product_thambnail) }}"
+                                                                <img src="<?php echo e(asset($item->product->product_thambnail)); ?>"
                                                                     style="height: 50px; width: 50px; margin-right: 10px">
                                                                 <a class="text-blue" href="javascript:void(0)">
-                                                                    {{ $item->product->product_name }}
+                                                                    <?php echo e($item->product->product_name); ?>
+
                                                                 </a>
                                                             </div>
                                                         </td>
 
-                                                        <td>{{ $item->price }}*{{ $item->qty }}</td>
+                                                        <td><?php echo e($item->price); ?>*<?php echo e($item->qty); ?></td>
                                                         <td class="text-danger">
-                                                            {{ number_format($item->subtotal, 0, '.', ',') }}</td>
+                                                            <?php echo e(number_format($item->subtotal, 0, '.', ',')); ?></td>
                                                         <td style="width: 120px"><span
-                                                                class="text-secondary">{{ $order->created_at->format('d M Y, h:ia') }}</span>
+                                                                class="text-secondary"><?php echo e($order->created_at->format('d M Y, h:ia')); ?></span>
                                                         </td>
-                                                        @php
+                                                        <?php
                                                             $statusBadges = [
                                                                 'Pending' => 'badge-secondary',
                                                                 'Confirmed' => 'badge-primary',
@@ -330,18 +313,18 @@
                                                                 'Delivered' => 'badge-success',
                                                                 'Cancel' => 'badge-danger',
                                                             ];
-                                                        @endphp
+                                                        ?>
 
                                                         <td>
-                                                            <span class="badge {{ $statusBadges[$order->status] }} p-2">{{ ucfirst($order->status) }}</span>
+                                                            <span class="badge <?php echo e($statusBadges[$order->status]); ?> p-2"><?php echo e(ucfirst($order->status)); ?></span>
                                                         </td>
 
                                                         <td><a href="javascript:void(0)"><i
                                                                     class="fa fa-eye text-dark"></i></a></td>
                                                     </tr>
-                                                    @php $itemCounter++; @endphp
-                                                @endforeach
-                                            @endforeach
+                                                    <?php $itemCounter++; ?>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
 
@@ -411,7 +394,7 @@
 
             $(document).on("click", "#removeButton", function() {
                 var profileImg = $("#profileImg");
-                profileImg.find("img").attr("src", "{{ asset('frontend/user/img/user2.png') }}");
+                profileImg.find("img").attr("src", "<?php echo e(asset('frontend/user/img/user2.png')); ?>");
                 profileImg.hide();
                 // Clear input file selection if needed
                 $("#inputFile").val("");
@@ -419,7 +402,7 @@
         });
     </script>
 
-    <script src="{{ asset('frontendassets/custom-js/password_validator.js') }}"></script>
+    <script src="<?php echo e(asset('frontendassets/custom-js/password_validator.js')); ?>"></script>
 
     <script>
         $(document).ready(function() {
@@ -512,4 +495,6 @@
     <script>
         new DataTable('#example');
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('frontend.main_master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /opt/lampp/htdocs/_unisolbd/resources/views/dashboard.blade.php ENDPATH**/ ?>

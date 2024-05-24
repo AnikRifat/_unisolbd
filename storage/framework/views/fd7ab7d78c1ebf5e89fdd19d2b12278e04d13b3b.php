@@ -1,4 +1,4 @@
-@php
+<?php
     $setting = App\Models\SiteSetting::limit(1)
         ->get()
         ->first();
@@ -10,7 +10,7 @@
         return $product;
     });
 
-@endphp
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,61 +18,59 @@
 <head>
 
     <!-- Title -->
-    <title>{{ $setting->company_name }}</title>
+    <title><?php echo e($setting->company_name); ?></title>
 
     <!-- Required Meta Tags Always Come First -->
     <meta charset="utf-8">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset($setting->logo) }}">
+    <link rel="shortcut icon" href="<?php echo e(asset($setting->logo)); ?>">
 
 
     <!-- Google Fonts -->
-    {{-- <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap"
-        rel="stylesheet"> --}}
+    
 
-    <link rel="stylesheet" href="{{ asset('frontendassets/auto-complete/jquery-ui.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('frontendassets/auto-complete/jquery-ui.css')); ?>">
     <!-- CSS Implementing Plugins -->
-    <link rel="stylesheet" href="{{ asset('frontendassets/vendor/font-awesome/css/fontawesome-all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontendassets/css/font-electro.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontendassets/vendor/ion-rangeslider/css/ion.rangeSlider.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontendassets/vendor/animate.css/animate.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontendassets/vendor/hs-megamenu/src/hs.megamenu.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontendassets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontendassets/vendor/fancybox/jquery.fancybox.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontendassets/vendor/slick-carousel/slick/slick.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('frontendassets/vendor/font-awesome/css/fontawesome-all.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('frontendassets/css/font-electro.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('frontendassets/vendor/ion-rangeslider/css/ion.rangeSlider.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('frontendassets/vendor/animate.css/animate.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('frontendassets/vendor/hs-megamenu/src/hs.megamenu.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('frontendassets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('frontendassets/vendor/fancybox/jquery.fancybox.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('frontendassets/vendor/slick-carousel/slick/slick.css')); ?>">
     <link rel="stylesheet"
-        href="{{ asset('frontendassets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}">
+        href="<?php echo e(asset('frontendassets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')); ?>">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 
     <!-- CSS Electro Template -->
-    <link rel="stylesheet" href="{{ asset('frontendassets/css/theme.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('frontendassets/css/theme.css')); ?>">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
-    {{-- toastr cnd --}}
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
-    {{-- toastr cnd --}}
+    
 </head>
 
 <body>
     <!-- ========== HEADER ========== -->
-    @include('frontend.body.header')
+    <?php echo $__env->make('frontend.body.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <!-- ========== END HEADER ========== -->
 
     <!-- ========== MAIN CONTENT ========== -->
-    @yield('content')
+    <?php echo $__env->yieldContent('content'); ?>
     <!-- ========== END MAIN CONTENT ========== -->
 
     <!-- ========== FOOTER ========== -->
-    @include('frontend.body.footer')
+    <?php echo $__env->make('frontend.body.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <!-- ========== END FOOTER ========== -->
 
     <!-- ========== SECONDARY CONTENTS ========== -->
@@ -89,51 +87,51 @@
     <!-- End Go to Top -->
 
     <!-- JS Global Compulsory -->
-    <script src="{{ asset('frontendassets/vendor/jquery/dist/jquery.min.js') }}"></script>
+    <script src="<?php echo e(asset('frontendassets/vendor/jquery/dist/jquery.min.js')); ?>"></script>
 
 
-    <script src="{{ asset('frontendassets/vendor/jquery-migrate/dist/jquery-migrate.min.js') }}"></script>
-    <script src="{{ asset('frontendassets/vendor/popper.js/dist/umd/popper.min.js') }}"></script>
-    <script src="{{ asset('frontendassets/vendor/bootstrap/bootstrap.min.js') }}"></script>
+    <script src="<?php echo e(asset('frontendassets/vendor/jquery-migrate/dist/jquery-migrate.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontendassets/vendor/popper.js/dist/umd/popper.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontendassets/vendor/bootstrap/bootstrap.min.js')); ?>"></script>
 
     <!-- JS Implementing Plugins -->
-    {{-- <script src="{{ asset('frontendassets/vendor/appear.js') }}"></script> --}}
-    {{-- <script src="{{ asset('frontendassets/vendor/jquery.countdown.min.js') }}"></script> --}}
-    <script src="{{ asset('frontendassets/vendor/hs-megamenu/src/hs.megamenu.js') }}"></script>
-    <script src="{{ asset('frontendassets/vendor/svg-injector/dist/svg-injector.min.js') }}"></script>
+    
+    
+    <script src="<?php echo e(asset('frontendassets/vendor/hs-megamenu/src/hs.megamenu.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontendassets/vendor/svg-injector/dist/svg-injector.min.js')); ?>"></script>
     <script
-        src="{{ asset('frontendassets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js') }}">
+        src="<?php echo e(asset('frontendassets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js')); ?>">
     </script>
-    {{-- <script src="{{ asset('frontendassets/vendor/jquery-validation/dist/jquery.validate.min.js') }}"></script> --}}
-    {{-- <script src="{{ asset('frontendassets/vendor/fancybox/jquery.fancybox.min.js') }}"></script> --}}
-    {{-- <script src="{{ asset('frontendassets/vendor/typed.js/lib/typed.min.js') }}"></script> --}}
-    <script src="{{ asset('frontendassets/vendor/slick-carousel/slick/slick.js') }}"></script>
-    <script src="{{ asset('frontendassets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
+    
+    
+    
+    <script src="<?php echo e(asset('frontendassets/vendor/slick-carousel/slick/slick.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontendassets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')); ?>"></script>
 
     <!-- JS Electro -->
-    <script src="{{ asset('frontendassets/js/hs.core.js') }}"></script>
-    <script src="{{ asset('frontendassets/js/components/hs.countdown.js') }}"></script>
+    <script src="<?php echo e(asset('frontendassets/js/hs.core.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontendassets/js/components/hs.countdown.js')); ?>"></script>
 
-    <script src="{{ asset('frontendassets/js/components/hs.header.js') }}"></script>
-    <script src="{{ asset('frontendassets/js/components/hs.hamburgers.js') }}"></script>
-    <script src="{{ asset('frontendassets/js/components/hs.unfold.js') }}"></script>
-    <script src="{{ asset('frontendassets/js/components/hs.focus-state.js') }}"></script>
-    <script src="{{ asset('frontendassets/js/components/hs.malihu-scrollbar.js') }}"></script>
-    <script src="{{ asset('frontendassets/js/components/hs.validation.js') }}"></script>
+    <script src="<?php echo e(asset('frontendassets/js/components/hs.header.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontendassets/js/components/hs.hamburgers.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontendassets/js/components/hs.unfold.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontendassets/js/components/hs.focus-state.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontendassets/js/components/hs.malihu-scrollbar.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontendassets/js/components/hs.validation.js')); ?>"></script>
 
 
-    <script src="{{ asset('frontendassets/js/components/hs.fancybox.js') }}"></script>
-    <script src="{{ asset('frontendassets/js/components/hs.onscroll-animation.js') }}"></script>
-    <script src="{{ asset('frontendassets/js/components/hs.slick-carousel.js') }}"></script>
-    {{-- <script src="{{ asset('frontendassets/js/components/hs.quantity-counter.js ') }}"></script> --}}
+    <script src="<?php echo e(asset('frontendassets/js/components/hs.fancybox.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontendassets/js/components/hs.onscroll-animation.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontendassets/js/components/hs.slick-carousel.js')); ?>"></script>
+    
 
-    {{-- <script src="{{ asset('frontendassets/js/components/hs.range-slider.js') }}"></script> --}}
-    <script src="{{ asset('frontendassets/js/components/hs.show-animation.js') }}"></script>
-    {{-- <script src="{{ asset('frontendassets/js/components/hs.scroll-nav.js') }}"></script> --}}
-    <script src="{{ asset('frontendassets/js/components/hs.svg-injector.js') }}"></script>
-    <script src="{{ asset('frontendassets/js/components/hs.go-to.js') }}"></script>
-    <script src="{{ asset('frontendassets/js/components/hs.selectpicker.js') }}"></script>
-    <script src="{{ asset('frontendassets/auto-complete/jquery-ui.js') }}"></script>
+    
+    <script src="<?php echo e(asset('frontendassets/js/components/hs.show-animation.js')); ?>"></script>
+    
+    <script src="<?php echo e(asset('frontendassets/js/components/hs.svg-injector.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontendassets/js/components/hs.go-to.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontendassets/js/components/hs.selectpicker.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontendassets/auto-complete/jquery-ui.js')); ?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
 
   <!-- Swiper JS -->
@@ -260,7 +258,7 @@
         $(function() {
             var showSeeAllButton = true; // Default to showing the button
 
-            var availableTags = {!! json_encode($products) !!};
+            var availableTags = <?php echo json_encode($products); ?>;
 
             var options = {
                 keys: ['product_name'],
@@ -295,7 +293,7 @@
                         var search = $("#searchproduct-item").val();
                         $(".ui-autocomplete").append(
                             '<li class="see-all-results">' +
-                            '<a href="{{url('/')}}/product/search?search=' + search +
+                            '<a href="<?php echo e(url('/')); ?>/product/search?search=' + search +
                             '" class="btn btn-soft-primary rounded-0 btn-block mt-2">See all results</a>' +
                             '</li>'
                         );
@@ -322,10 +320,10 @@
                             .product_name + '" style="height:50px;width:50px"/></div>' +
                             '<div class="">' +
                             '<div>' + item.product_name + '</div>' +
-                            '@auth<div class="mt-1 text-danger">' + (item.discount_price != null ?
+                            '<?php if(auth()->guard()->check()): ?><div class="mt-1 text-danger">' + (item.discount_price != null ?
                                 formatNumberWithCommas(item.discount_price) : formatNumberWithCommas(item
                                     .selling_price)) +
-                            '</div>@endauth' +
+                            '</div><?php endif; ?>' +
                             '</div>' +
                             '</div>'
                         )
@@ -386,10 +384,10 @@
                             .product_name + '" style="height:50px;width:50px"/></div>' +
                             '<div class="">' +
                             '<div>' + item.product_name + '</div>' +
-                            '@auth<div class="mt-1 text-danger">' + (item.discount_price != null ?
+                            '<?php if(auth()->guard()->check()): ?><div class="mt-1 text-danger">' + (item.discount_price != null ?
                                 formatNumberWithCommas(item.discount_price) : formatNumberWithCommas(item
                                     .selling_price)) +
-                            '</div>@endauth' +
+                            '</div><?php endif; ?>' +
                             '</div>' +
                             '</div>'
                         )
@@ -407,26 +405,26 @@
     </script>
 
     <script>
-        @if (Session::has('message'))
-            var type = "{{ Session::get('type', 'info') }}";
+        <?php if(Session::has('message')): ?>
+            var type = "<?php echo e(Session::get('type', 'info')); ?>";
             switch (type) {
                 case 'info':
-                    toastr.info("{{ Session::get('message') }}");
+                    toastr.info("<?php echo e(Session::get('message')); ?>");
                     break;
 
                 case 'warning':
-                    toastr.warning("{{ Session::get('message') }}");
+                    toastr.warning("<?php echo e(Session::get('message')); ?>");
                     break;
 
                 case 'success':
-                    toastr.success("{{ Session::get('message') }}");
+                    toastr.success("<?php echo e(Session::get('message')); ?>");
                     break;
 
                 case 'error':
-                    toastr.error("{{ Session::get('message') }}");
+                    toastr.error("<?php echo e(Session::get('message')); ?>");
                     break;
             }
-        @endif
+        <?php endif; ?>
 
 
         function showToastr(type, message) {
@@ -471,7 +469,7 @@
 
             $.ajax({
                 type: "post",
-                url: "{{ route('add-to-cart') }}",
+                url: "<?php echo e(route('add-to-cart')); ?>",
                 data: {
                     id: decodedProductId,
                     qty: quantity
@@ -491,12 +489,12 @@
         function getCartData() {
             $.ajax({
                 type: "get",
-                url: "{{ route('get-cart-data') }}",
+                url: "<?php echo e(route('get-cart-data')); ?>",
                 dataType: "json",
                 success: function(response) {
                     console.log(response);
                     miniCart(response);
-                    var route = '{{ isset($route) ? $route : '' }}';
+                    var route = '<?php echo e(isset($route) ? $route : ''); ?>';
                     console.log(route);
                     if (route == "mycart") {
                         cartPage(response);
@@ -573,11 +571,11 @@
                     <div class="card">
                         <div class="card-body cart">
                             <div class="col-sm-12 empty-cart-cls text-center">
-                                <img src="{{ asset('frontend/assets/img/cart.png') }}" width="130" height="130"
+                                <img src="<?php echo e(asset('frontend/assets/img/cart.png')); ?>" width="130" height="130"
                                     class="img-fluid mb-4 mr-3">
                                 <h3><strong>Your Cart is Empty</strong></h3>
                                 <h4>Add something to make me happy 😊</h4>
-                                <a href="{{ route('home') }}" class="btn btn-primary cart-btn-transform m-3" data-abc="true">continue
+                                <a href="<?php echo e(route('home')); ?>" class="btn btn-primary cart-btn-transform m-3" data-abc="true">continue
                                     shopping</a>
                             </div>
                         </div>
@@ -677,7 +675,7 @@
         function removeCart(rowId) {
             $.ajax({
                 type: "post",
-                url: "{{ route('remove-cart') }}",
+                url: "<?php echo e(route('remove-cart')); ?>",
                 data: {
                     rowId: rowId
                 },
@@ -722,7 +720,7 @@
             console.log(coupon);
             $.ajax({
                 type: "post",
-                url: "{{ route('remove-coupon') }}",
+                url: "<?php echo e(route('remove-coupon')); ?>",
                 data: {
                     coupon: coupon
                 },
@@ -769,7 +767,7 @@
 
                 $('#couponList').html(couponsHtml);
             } else {
-                var subtotal = {{ isset($cartTotal) ? $cartTotal : 0 }};
+                var subtotal = <?php echo e(isset($cartTotal) ? $cartTotal : 0); ?>;
                 $('.cart-discount').addClass('d-none');
                 $('.order-total .amount').text(subtotal.toLocaleString('en-IN') +
                     response
@@ -788,7 +786,7 @@
 
             $.ajax({
                 type: "post",
-                url: "{{ route('add-to-wishlist') }}",
+                url: "<?php echo e(route('add-to-wishlist')); ?>",
                 data: {
                     id: productIdDecoded
                 },
@@ -806,8 +804,9 @@
 
 
 
-@stack('js')
+<?php echo $__env->yieldPushContent('js'); ?>
 
 </body>
 
 </html>
+<?php /**PATH /opt/lampp/htdocs/_unisolbd/resources/views/frontend/main_master.blade.php ENDPATH**/ ?>

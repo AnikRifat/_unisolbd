@@ -133,7 +133,7 @@ Route::get('/test', function () {
 route::get('/frontend/district/ajax/{id}', [ShippingAreaController::class, 'getDistrict'])->name('get-district-fronted');
 route::get('/frontend/state/ajax/{id}', [ShippingAreaController::class, 'getStateById'])->name('get-state-fronted');
 
-Route::get('/{type}/{id}', [ReportController::class, 'QuotationAndSaleInvoiceReport'])->name('user.invoice.report');
+Route::get('/frontend/{type}/{id}', [ReportController::class, 'QuotationAndSaleInvoiceReport'])->name('user.invoice.report');
 
 
 require __DIR__.'/backend.php';

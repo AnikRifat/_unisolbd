@@ -24,8 +24,9 @@ class IndexController extends Controller
         $currency = Currency::where('status', 1)->orderBy('id', 'DESC')->first();
         // Filter the cached products to get featured products
         $featured = Product::with('category', 'subcategory', 'subsubcategory')->where('featured', 1)->inRandomOrder()->limit(30)->get();
+        $new_arrival = Product::with('category', 'subcategory', 'subsubcategory')->latest()->limit(10)->get();
 
-        return view('frontend.index', compact('categories', 'featured', 'currency'));
+        return view('frontend.index', compact('categories', 'featured', 'currency','new_arrival'));
     }
 
     public function storageCalc()

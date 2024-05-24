@@ -18,7 +18,7 @@ class ApplyPriceModifierScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $customerGroup = Auth::check() ? Auth::user()->customerGroups->first() : null;
+        $customerGroup = Auth::check() ? Auth::user()->customerGroups?->first() : null;
 
         if ($customerGroup && isset(json_decode($customerGroup->rules, true)['discount'])) {
             // Apply the discount to the selling price

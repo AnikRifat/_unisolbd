@@ -1,9 +1,9 @@
-@php
+<?php
     $setting = App\Models\SiteSetting::limit(1)->get()->first();
 
     $categories = App\Models\Category::where('status', 1)->orderBy('category_name', 'ASC')->get();
 
-@endphp
+?>
 
 
 <style>
@@ -78,83 +78,39 @@
                     </div>
                     <div class="topbar-right ml-auto">
                         <ul class="list-inline mb-0">
-                            {{-- <li
-                                class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
-                                <a href="../home/contact-v2.html" class="u-header-topbar__nav-link"><i
-                                        class="ec ec-map-pointer mr-1"></i> Store Locator</a>
-                            </li> --}}
-                            {{-- <li
-                                class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
-                                <a href="../shop/track-your-order.html" class="u-header-topbar__nav-link"><i
-                                        class="ec ec-transport mr-1"></i> Track Your Order</a>
-                            </li> --}}
-                            {{-- <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border u-header-topbar__nav-item-no-border u-header-topbar__nav-item-border-single">
-                                <div class="d-flex align-items-center">
-                                    <!-- Language -->
-                                    <div class="position-relative">
-                                        <a id="languageDropdownInvoker" class="dropdown-nav-link dropdown-toggle d-flex align-items-center u-header-topbar__nav-link font-weight-normal" href="javascript:;" role="button"
-                                            aria-controls="languageDropdown"
-                                            aria-haspopup="true"
-                                            aria-expanded="false"
-                                            data-unfold-event="hover"
-                                            data-unfold-target="#languageDropdown"
-                                            data-unfold-type="css-animation"
-                                            data-unfold-duration="300"
-                                            data-unfold-delay="300"
-                                            data-unfold-hide-on-scroll="true"
-                                            data-unfold-animation-in="slideInUp"
-                                            data-unfold-animation-out="fadeOut">
-                                            <span class="d-inline-block d-sm-none">US</span>
-                                            <span class="d-none d-sm-inline-flex align-items-center"><i class="ec ec-dollar mr-1"></i> Dollar (US)</span>
-                                        </a>
-
-                                        <div id="languageDropdown" class="dropdown-menu dropdown-unfold" aria-labelledby="languageDropdownInvoker">
-                                            <a class="dropdown-item active" href="#">English</a>
-                                            <a class="dropdown-item" href="#">Deutsch</a>
-                                            <a class="dropdown-item" href="#">Español‎</a>
-                                        </div>
-                                    </div>
-                                    <!-- End Language -->
-                                </div>
-                            </li> --}}
+                            
+                            
+                            
                             <li
                                 class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
                                 <!-- Account Sidebar Toggle Button -->
-                                {{-- id="sidebarNavToggler" --}}
+                                
 
 
-                                @if (Auth::guard('web')->check())
-                                    <a href="{{ route('dashboard') }}" role="button" class="u-header-topbar__nav-link"
+                                <?php if(Auth::guard('web')->check()): ?>
+                                    <a href="<?php echo e(route('dashboard')); ?>" role="button" class="u-header-topbar__nav-link"
                                         aria-controls="sidebarContent" aria-haspopup="true" aria-expanded="false"
                                         data-unfold-event="click" data-unfold-hide-on-scroll="false"
                                         data-unfold-target="#sidebarContent" data-unfold-type="css-animation"
                                         data-unfold-animation-in="fadeInRight" data-unfold-animation-out="fadeOutRight"
                                         data-unfold-duration="500"><i class="ec ec-user mr-1"></i>My Profile</a>
-                                @else
-                                    {{-- <a href="{{ route('login') }}" role="button" class="u-header-topbar__nav-link"
-                                        aria-controls="sidebarContent" aria-haspopup="true" aria-expanded="false"
-                                        data-unfold-event="click" data-unfold-hide-on-scroll="false"
-                                        data-unfold-target="#sidebarContent" data-unfold-type="css-animation"
-                                        data-unfold-animation-in="fadeInRight" data-unfold-animation-out="fadeOutRight"
-                                        data-unfold-duration="500">
-                                        <i class="ec ec-user mr-1"></i> Register <span class="text-gray-50">or</span>
-                                        Sign in
-                                    </a> --}}
+                                <?php else: ?>
+                                    
 
-                                    <a href="{{ route('register') }}" role="button" class="u-header-topbar__nav-link"
+                                    <a href="<?php echo e(route('register')); ?>" role="button" class="u-header-topbar__nav-link"
                                         aria-controls="sidebarContent" aria-haspopup="true" aria-expanded="false"
                                         data-unfold-event="click" data-unfold-hide-on-scroll="false"
                                         data-unfold-target="#sidebarContent" data-unfold-type="css-animation"
                                         data-unfold-animation-in="fadeInRight" data-unfold-animation-out="fadeOutRight"
                                         data-unfold-duration="500"><i class="ec ec-user mr-1"></i>Resiger</a><span
-                                        class="text-gray-50 mx-1">or</span><a href="{{ route('login') }}" role="button"
+                                        class="text-gray-50 mx-1">or</span><a href="<?php echo e(route('login')); ?>" role="button"
                                         class="u-header-topbar__nav-link" aria-controls="sidebarContent"
                                         aria-haspopup="true" aria-expanded="false" data-unfold-event="click"
                                         data-unfold-hide-on-scroll="false" data-unfold-target="#sidebarContent"
                                         data-unfold-type="css-animation" data-unfold-animation-in="fadeInRight"
                                         data-unfold-animation-out="fadeOutRight" data-unfold-duration="500">Sign
                                         in</a>
-                                @endif
+                                <?php endif; ?>
 
 
 
@@ -182,8 +138,8 @@
                             class="navbar navbar-expand u-header__navbar py-0 justify-content-xl-between max-width-270 min-width-270">
                             <!-- Logo -->
                             <a class="order-1 t3solutionlogo order-xl-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-center"
-                                href="{{ url('/') }}" aria-label="trush tech">
-                                <img src="{{ asset($setting->logo) }}" alt="">
+                                href="<?php echo e(url('/')); ?>" aria-label="trush tech">
+                                <img src="<?php echo e(asset($setting->logo)); ?>" alt="">
                             </a>
                             <!-- End Logo -->
 
@@ -229,17 +185,17 @@
                                                 class="u-sidebar__content u-header-sidebar__content">
                                                 <!-- Logo -->
                                                 <a class="navbar-brand t3solutionlogo u-header__navbar-brand u-header__navbar-brand-center mb-3"
-                                                    href="{{ url('/') }}" aria-label="trust tech">
+                                                    href="<?php echo e(url('/')); ?>" aria-label="trust tech">
 
-                                                    <img src="{{ asset($setting->logo) }}" alt="">
+                                                    <img src="<?php echo e(asset($setting->logo)); ?>" alt="">
                                                 </a>
                                                 <!-- End Logo -->
 
 
-                                                @if (count($categories) > 0)
+                                                <?php if(count($categories) > 0): ?>
 
-                                                    @foreach ($categories as $category)
-                                                        @php
+                                                    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <?php
                                                             $subcategories = App\Models\Category::select(
                                                                 'categories.id',
                                                                 'categories.category_name',
@@ -314,7 +270,7 @@
                                                             );
                                                             $subcategoriesArray = [];
 
-                                                        @endphp
+                                                        ?>
 
 
 
@@ -325,16 +281,17 @@
                                                             <!-- Cameras, Audio & Video -->
                                                             <li class="u-has-submenu u-header-collapse__submenu">
                                                                 <div class="d-flex justify-content-between">
-                                                                    <a href="{{ url('category/product/' . $category->category_slug . '/' . encrypt($category->id)) }}"
+                                                                    <a href="<?php echo e(url('category/product/' . $category->category_slug . '/' . encrypt($category->id))); ?>"
                                                                         class="u-header-collapse__nav-link">
-                                                                        {{ $category->category_name }}
+                                                                        <?php echo e($category->category_name); ?>
+
                                                                     </a>
-                                                                    <a class="u-header-collapse__nav-link {{ $hasBrandOrSubcategoryId ? 'u-header-collapse__nav-pointer' : '' }}  p-0 pl-3"
+                                                                    <a class="u-header-collapse__nav-link <?php echo e($hasBrandOrSubcategoryId ? 'u-header-collapse__nav-pointer' : ''); ?>  p-0 pl-3"
                                                                         href="javascript:;"
-                                                                        data-target="#headerSidebarCategoryCollapse{{ $category->id }}"
+                                                                        data-target="#headerSidebarCategoryCollapse<?php echo e($category->id); ?>"
                                                                         role="button" data-toggle="collapse"
                                                                         aria-expanded="false"
-                                                                        aria-controls="headerSidebarCategoryCollapse{{ $category->id }}"></a>
+                                                                        aria-controls="headerSidebarCategoryCollapse<?php echo e($category->id); ?>"></a>
                                                                 </div>
 
 
@@ -343,11 +300,11 @@
 
 
 
-                                                                <div id="headerSidebarCategoryCollapse{{ $category->id }}"
+                                                                <div id="headerSidebarCategoryCollapse<?php echo e($category->id); ?>"
                                                                     class="collapse">
-                                                                    {{-- if there has sub category or there has no subcategories --}}
-                                                                    @foreach ($subcategories as $subcat)
-                                                                        @php
+                                                                    
+                                                                    <?php $__currentLoopData = $subcategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                        <?php
                                                                             $subsubcategories = App\Models\Product::where(
                                                                                 'subcategory_id',
                                                                                 $subcat->subcategory_id,
@@ -372,15 +329,15 @@
 
                                                                             $subsubcategoriesArray = [];
                                                                             $subsubBrandArray = [];
-                                                                        @endphp
+                                                                        ?>
 
-                                                                        @if ($subcat->subcategory_id != '')
-                                                                            {{-- check duplicate subcategory_name --}}
-                                                                            @if (!in_array($subcat->subcategory_id, $subcategoriesArray))
-                                                                                @php
+                                                                        <?php if($subcat->subcategory_id != ''): ?>
+                                                                            
+                                                                            <?php if(!in_array($subcat->subcategory_id, $subcategoriesArray)): ?>
+                                                                                <?php
                                                                                     $subcategoriesArray[] =
                                                                                         $subcat->subcategory_id;
-                                                                                @endphp
+                                                                                ?>
                                                                                 <ul id="headerSidebarList"
                                                                                     class="u-header-collapse__nav-list u-header-collapse__nav">
                                                                                     <!-- Cameras, Audio & Video -->
@@ -388,35 +345,36 @@
                                                                                         class="u-has-submenu u-header-collapse__submenu">
                                                                                         <div
                                                                                             class="d-flex justify-content-between">
-                                                                                            <a href="{{ url('subcategory/product/' . $subcat->subcategory_slug . '/' . encrypt($subcat->subcategory_id)) }}"
+                                                                                            <a href="<?php echo e(url('subcategory/product/' . $subcat->subcategory_slug . '/' . encrypt($subcat->subcategory_id))); ?>"
                                                                                                 class="u-header-collapse__nav-link">
-                                                                                                {{ $subcat->subcategory_name }}
+                                                                                                <?php echo e($subcat->subcategory_name); ?>
+
 
                                                                                             </a>
-                                                                                            <a class="u-header-collapse__nav-link {{ $hasBrandOrSubSubcategory ? 'u-header-collapse__nav-pointer' : '' }} p-0 pl-3"
+                                                                                            <a class="u-header-collapse__nav-link <?php echo e($hasBrandOrSubSubcategory ? 'u-header-collapse__nav-pointer' : ''); ?> p-0 pl-3"
                                                                                                 href="javascript:;"
-                                                                                                data-target="#headerSidebarSubcategoryCollapse{{ $subcat->subcategory_id }}"
+                                                                                                data-target="#headerSidebarSubcategoryCollapse<?php echo e($subcat->subcategory_id); ?>"
                                                                                                 role="button"
                                                                                                 data-toggle="collapse"
                                                                                                 aria-expanded="false"
-                                                                                                aria-controls="headerSidebarSubcategoryCollapse{{ $subcat->subcategory_id }}"></a>
+                                                                                                aria-controls="headerSidebarSubcategoryCollapse<?php echo e($subcat->subcategory_id); ?>"></a>
                                                                                         </div>
 
-                                                                                        <div id="headerSidebarSubcategoryCollapse{{ $subcat->subcategory_id }}"
+                                                                                        <div id="headerSidebarSubcategoryCollapse<?php echo e($subcat->subcategory_id); ?>"
                                                                                             class="collapse">
 
 
 
 
-                                                                                            @foreach ($subsubcategories as $subsubcat)
-                                                                                                @if ($subsubcat->subsubcategory_id != null)
-                                                                                                    @if (!in_array($subsubcat->subsubcategory_id, $subsubcategoriesArray))
-                                                                                                        @php
+                                                                                            <?php $__currentLoopData = $subsubcategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subsubcat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                                <?php if($subsubcat->subsubcategory_id != null): ?>
+                                                                                                    <?php if(!in_array($subsubcat->subsubcategory_id, $subsubcategoriesArray)): ?>
+                                                                                                        <?php
 
                                                                                                             $subsubcategoriesArray[] =
                                                                                                                 $subsubcat->subsubcategory_id;
 
-                                                                                                        @endphp
+                                                                                                        ?>
                                                                                                         <ul id="headerSidebarList"
                                                                                                             class="u-header-collapse__nav-list">
                                                                                                             <!-- Cameras, Audio & Video -->
@@ -424,58 +382,59 @@
                                                                                                                 class="u-has-submenu u-header-collapse__submenu">
                                                                                                                 <div
                                                                                                                     class="d-flex justify-content-between">
-                                                                                                                    <a href="{{ url('subsubcategory/product/' . $subsubcat->subsubcategory->subsubcategory_slug . '/' . encrypt($subsubcat->subsubcategory_id)) }}"
+                                                                                                                    <a href="<?php echo e(url('subsubcategory/product/' . $subsubcat->subsubcategory->subsubcategory_slug . '/' . encrypt($subsubcat->subsubcategory_id))); ?>"
                                                                                                                         class="u-header-collapse__nav-link">
-                                                                                                                        {{ $subsubcat->subsubcategory->subsubcategory_name }}
+                                                                                                                        <?php echo e($subsubcat->subsubcategory->subsubcategory_name); ?>
+
                                                                                                                     </a>
-                                                                                                                    <a class="u-header-collapse__nav-link {{ $hasBrandOrSubSubcategory ? 'u-header-collapse__nav-pointer' : '' }} p-0 pl-3"
+                                                                                                                    <a class="u-header-collapse__nav-link <?php echo e($hasBrandOrSubSubcategory ? 'u-header-collapse__nav-pointer' : ''); ?> p-0 pl-3"
                                                                                                                         href="javascript:;"
-                                                                                                                        data-target="#headerSidebarSubsubcategoryCollapse{{ $subsubcat->subsubcategory_id }}"
+                                                                                                                        data-target="#headerSidebarSubsubcategoryCollapse<?php echo e($subsubcat->subsubcategory_id); ?>"
                                                                                                                         role="button"
                                                                                                                         data-toggle="collapse"
                                                                                                                         aria-expanded="false"
-                                                                                                                        aria-controls="headerSidebarSubsubcategoryCollapse{{ $subsubcat->subsubcategory_id }}"></a>
+                                                                                                                        aria-controls="headerSidebarSubsubcategoryCollapse<?php echo e($subsubcat->subsubcategory_id); ?>"></a>
                                                                                                                 </div>
 
-                                                                                                                @if ($subsubcat->brand_id != '')
-                                                                                                                    <div id="headerSidebarSubsubcategoryCollapse{{ $subsubcat->subsubcategory_id }}"
+                                                                                                                <?php if($subsubcat->brand_id != ''): ?>
+                                                                                                                    <div id="headerSidebarSubsubcategoryCollapse<?php echo e($subsubcat->subsubcategory_id); ?>"
                                                                                                                         class="collapse"
                                                                                                                         data-parent="#headerSidebarContent">
                                                                                                                         <ul
                                                                                                                             class="u-header-collapse__nav-list">
                                                                                                                             <li><a class="u-header-collapse__submenu-nav-link"
-                                                                                                                                    href="{{ url('brand_wise_subsubcategory/product/' . $subsubcat->subsubcategory->subsubcategory_slug . '/' . encrypt($subsubcat->subsubcategory_id) . '/' . base64_encode($subsubcat->brand_id)) }}">{{ $subsubcat->brand->brand_name }}</a>
+                                                                                                                                    href="<?php echo e(url('brand_wise_subsubcategory/product/' . $subsubcat->subsubcategory->subsubcategory_slug . '/' . encrypt($subsubcat->subsubcategory_id) . '/' . base64_encode($subsubcat->brand_id))); ?>"><?php echo e($subsubcat->brand->brand_name); ?></a>
                                                                                                                             </li>
                                                                                                                         </ul>
                                                                                                                     </div>
-                                                                                                                @endif
+                                                                                                                <?php endif; ?>
 
                                                                                                             </li>
                                                                                                             <!-- End Cameras, Audio & Video -->
                                                                                                         </ul>
-                                                                                                    @endif
-                                                                                                @else
-                                                                                                    {{-- if there have no subsubcategory and have any brand then print it  --}}
-                                                                                                    @if ($subsubcat->brand_id != '')
-                                                                                                        @if (!in_array($subsubcat->brand_id, $subsubBrandArray))
-                                                                                                            @php
+                                                                                                    <?php endif; ?>
+                                                                                                <?php else: ?>
+                                                                                                    
+                                                                                                    <?php if($subsubcat->brand_id != ''): ?>
+                                                                                                        <?php if(!in_array($subsubcat->brand_id, $subsubBrandArray)): ?>
+                                                                                                            <?php
 
                                                                                                                 $subsubBrandArray[] =
                                                                                                                     $subsubcat->brand_id;
 
-                                                                                                            @endphp
+                                                                                                            ?>
                                                                                                             <ul
                                                                                                                 class="u-header-collapse__nav-list">
                                                                                                                 <li><a class="u-header-collapse__submenu-nav-link"
-                                                                                                                        href="{{ url('brand_wise_subcategory/product/' . $subsubcat->subcategory->subcategory_slug . '/' . encrypt($subsubcat->subcategory_id) . '/' . base64_encode($subsubcat->brand_id)) }}">
-                                                                                                                        {{ $subsubcat->brand->brand_name }}</a>
+                                                                                                                        href="<?php echo e(url('brand_wise_subcategory/product/' . $subsubcat->subcategory->subcategory_slug . '/' . encrypt($subsubcat->subcategory_id) . '/' . base64_encode($subsubcat->brand_id))); ?>">
+                                                                                                                        <?php echo e($subsubcat->brand->brand_name); ?></a>
                                                                                                                 </li>
                                                                                                             </ul>
-                                                                                                        @endif
-                                                                                                    @endif
-                                                                                                    {{-- if there have no subsubcategory and have any brand then print it --}}
-                                                                                                @endif
-                                                                                            @endforeach
+                                                                                                        <?php endif; ?>
+                                                                                                    <?php endif; ?>
+                                                                                                    
+                                                                                                <?php endif; ?>
+                                                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
 
@@ -485,24 +444,24 @@
                                                                                     </li>
                                                                                     <!-- End Cameras, Audio & Video -->
                                                                                 </ul>
-                                                                            @endif
-                                                                            {{-- end check duplicate subcategory_name --}}
-                                                                        @else
-                                                                            {{-- if there have no subcategory and have any brand then print it  --}}
-                                                                            @if ($subcat->brand_id != '')
+                                                                            <?php endif; ?>
+                                                                            
+                                                                        <?php else: ?>
+                                                                            
+                                                                            <?php if($subcat->brand_id != ''): ?>
                                                                                 <ul
                                                                                     class="u-header-collapse__nav-list">
                                                                                     <li><a class="u-header-collapse__submenu-nav-link"
-                                                                                            href="{{ url('brand_wise_category/product/' . $subcat->category_slug . '/' . encrypt($subcat->id) . '/' . base64_encode($subcat->brand_id)) }}">
+                                                                                            href="<?php echo e(url('brand_wise_category/product/' . $subcat->category_slug . '/' . encrypt($subcat->id) . '/' . base64_encode($subcat->brand_id))); ?>">
 
-                                                                                            {{ $subcat->brand_name }}</a>
+                                                                                            <?php echo e($subcat->brand_name); ?></a>
                                                                                     </li>
                                                                                 </ul>
-                                                                            @endif
-                                                                            {{-- end if there have no subcategory and have any brand then print it --}}
-                                                                        @endif
-                                                                    @endforeach
-                                                                    {{-- end if there has sub category or there has no subcategories --}}
+                                                                            <?php endif; ?>
+                                                                            
+                                                                        <?php endif; ?>
+                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                    
 
 
                                                                 </div>
@@ -522,8 +481,8 @@
                                                             <!-- End Cameras, Audio & Video -->
                                                         </ul>
                                                         <!-- End List -->
-                                                    @endforeach
-                                                @endif
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                         <!-- End Content -->
@@ -549,7 +508,7 @@
                                         <!-- SVG Background Shape -->
                                         <div class="position-absolute right-0 bottom-0 left-0 z-index-n1">
                                             <img class="js-svg-injector"
-                                                src="{{ asset('frontendassets/svg/components/wave-bottom-with-dots.svg') }}"
+                                                src="<?php echo e(asset('frontendassets/svg/components/wave-bottom-with-dots.svg')); ?>"
                                                 alt="Image Description" data-parent="#SVGwaveWithDots">
                                         </div>
                                         <!-- End SVG Background Shape -->
@@ -564,7 +523,7 @@
                     <!-- Search Bar -->
 
                     <div class="col d-none d-xl-block">
-                        <form class="js-focus-state" method="GET" action="{{route('product.search.all')}}">
+                        <form class="js-focus-state" method="GET" action="<?php echo e(route('product.search.all')); ?>">
                             <label class="sr-only" for="searchproduct">Search</label>
                             <div class="input-group">
                                 <input type="text"
@@ -573,18 +532,7 @@
                                     aria-label="Search for Products" aria-describedby="searchProduct1" required>
                                 <div class="input-group-append lsd">
                                     <!-- Select -->
-                                    {{-- <select
-                                        class="js-select selectpicker dropdown-select custom-search-categories-select"
-                                        data-style="btn height-40 text-gray-60 font-weight-normal border-top border-bottom border-left-0 rounded-0 border-primary border-width-1 pl-0 pr-5 py-2">
-
-                                        <option value="" selected>All Categories</option>
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->category_name }}
-                                            </option>
-                                        @endforeach
-
-
-                                    </select> --}}
+                                    
                                     <!-- End Select -->
                                     <button class="btn btn-primary height-40 py-2 px-3 rounded-right-pill"
                                         type="button" id="searchProduct1">
@@ -605,26 +553,26 @@
                             <ul class="d-flex list-unstyled mb-0 align-items-center">
 
                                 <li class="col pr-xl-0 px-2 px-sm-3 d-none d-xl-block">
-                                    <a type="button" href="{{ route('view.package') }}"
+                                    <a type="button" href="<?php echo e(route('view.package')); ?>"
                                         class="btn btn-sm contact_icon text-white ">
                                         Quotation Builder
                                     </a>
                                 </li>
                                 <li class="col pr-xl-0 px-2 px-sm-3 d-none d-xl-block">
-                                    <a type="button" href="{{ route('storage.calculator') }}"
+                                    <a type="button" href="<?php echo e(route('storage.calculator')); ?>"
                                         class="btn btn-sm contact_icon text-white ">
                                         Storage Calculator
                                     </a>
                                 </li>
 
 
-                                <li class="col pr-xl-0 px-2 px-sm-3 d-block d-xl-none" href="{{ route('view.package') }}" data-toggle="tooltip"
+                                <li class="col pr-xl-0 px-2 px-sm-3 d-block d-xl-none" href="<?php echo e(route('view.package')); ?>" data-toggle="tooltip"
                                 data-placement="top" title="Generate Invoice">
                                     <a  class="text-gray-90">
                                         <span class="ec ec-printer"></span>
                                 </li>
                                 <li class="col pr-xl-0 px-2 px-sm-3 d-block d-xl-none">
-                                    <a  class="text-gray-90" href="{{ route('storage.calculator') }}" data-toggle="tooltip"
+                                    <a  class="text-gray-90" href="<?php echo e(route('storage.calculator')); ?>" data-toggle="tooltip"
                                             data-placement="top" title="Calculate storage for camera">
                                             <span class="ec ec-tvs"></span>
 
@@ -664,68 +612,22 @@
 
 
                                 <!-- End Search -->
-                                {{-- <li class="col d-none d-xl-block"><a href="../shop/compare.html" class="text-gray-90"
-                                        data-toggle="tooltip" data-placement="top" title="Compare"><i
-                                            class="font-size-22 ec ec-compare"></i></a></li>
-                                <li class="col d-xl-block"><a href="{{ route('wishlist') }}" class="text-gray-90"
-                                        data-toggle="tooltip" data-placement="top" title="Favorites"><i
-                                            class="font-size-22 ec ec-favorites"></i></a></li> --}}
+                                
                                 <li class="col d-xl-none px-2 px-sm-3">
-                                    @if (Auth::guard('web')->check())
-                                        <a href="{{ route('dashboard') }}" class="text-gray-90"
+                                    <?php if(Auth::guard('web')->check()): ?>
+                                        <a href="<?php echo e(route('dashboard')); ?>" class="text-gray-90"
                                             data-toggle="tooltip" data-placement="top" title="Dashboard">
                                             <i class="font-size-22 ec ec-user"></i>
                                         </a>
-                                    @else
-                                        <a href="{{ route('login') }}" class="text-gray-90" data-toggle="tooltip"
+                                    <?php else: ?>
+                                        <a href="<?php echo e(route('login')); ?>" class="text-gray-90" data-toggle="tooltip"
                                             data-placement="top" title="Login/Register">
                                             <i class="font-size-22 ec ec-user"></i>
                                         </a>
-                                    @endif
+                                    <?php endif; ?>
 
                                 </li>
-                                {{-- <li class="col pr-xl-0 px-2 px-sm-3 d-xl-none">
-                                    <a href="{{ route('mycart') }}" class="text-gray-90 position-relative d-flex "
-                                        data-toggle="tooltip" data-placement="top" title="Cart">
-                                        <i class="font-size-22 ec ec-shopping-bag"></i>
-                                        <span
-                                            class="totalCartQty bg-lg-down-black width-22 height-22 bg-primary position-absolute d-flex align-items-center justify-content-center rounded-circle left-12 top-8 font-weight-bold font-size-12">0</span>
-                                        <span
-                                            class="totalCartQty d-none d-xl-block font-weight-bold font-size-16 text-gray-90 ml-3">0</span>
-                                    </a>
-                                </li>
-                                <li class="col pr-xl-0 px-2 px-sm-3 d-none d-xl-block">
-                                    <div id="basicDropdownHoverInvoker" class="text-gray-90 position-relative d-flex "
-                                        data-toggle="tooltip" data-placement="top" title="Cart"
-                                        aria-controls="basicDropdownHover" aria-haspopup="true" aria-expanded="false"
-                                        data-unfold-event="click" data-unfold-target="#basicDropdownHover"
-                                        data-unfold-type="css-animation" data-unfold-duration="300"
-                                        data-unfold-delay="300" data-unfold-hide-on-scroll="true"
-                                        data-unfold-animation-in="slideInUp" data-unfold-animation-out="fadeOut">
-                                        <i class="font-size-22 ec ec-shopping-bag"></i>
-
-                                        <span
-                                            class="totalCartQty bg-lg-down-black text-white width-22 height-22 bg-primary position-absolute d-flex align-items-center justify-content-center rounded-circle left-12 top-8 font-weight-bold font-size-12">0</span>
-                                        <span
-                                            class="totalCartAmt d-none d-xl-block font-weight-bold font-size-16 text-gray-90 ml-3">0</span>
-                                    </div>
-                                    <div id="basicDropdownHover"
-                                        class="cart-dropdown dropdown-menu dropdown-unfold border-top border-top-primary mt-3 border-width-2 border-left-0 border-right-0 border-bottom-0 left-auto right-0"
-                                        aria-labelledby="basicDropdownHoverInvoker">
-                                        <ul id="miniCart" class="list-unstyled px-3 pt-3">
-
-                                        </ul>
-                                        <div id="cartAction" class="d-none flex-center-between px-4 pt-2">
-                                            <a href="{{ route('mycart') }}"
-                                                class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5">View
-                                                cart</a>
-                                            <a href="{{ route('checkout') }}"
-                                                class="btn btn-primary ml-md-2 px-5 px-md-4 px-lg-5">Checkout</a>
-                                        </div>
-
-
-                                    </div>
-                                </li> --}}
+                                
                             </ul>
                         </div>
                     </div>
@@ -767,9 +669,9 @@
                                                 class="collapse navbar-collapse u-header__navbar-collapse">
                                                 <ul class="navbar-nav u-header__navbar-nav">
 
-                                                    @if (count($categories) > 0)
-                                                        @foreach ($categories as $category)
-                                                            @php
+                                                    <?php if(count($categories) > 0): ?>
+                                                        <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                            <?php
                                                                 $subcategories = App\Models\Category::select(
                                                                     'categories.id',
                                                                     'categories.category_name',
@@ -843,7 +745,7 @@
                                                                             !empty($item['subcategory_id'])),
                                                                 );
 
-                                                            @endphp
+                                                            ?>
 
 
 
@@ -854,24 +756,25 @@
 
 
                                                                 <a id="basicMegaMenu2"
-                                                                    class="nav-link u-header__nav-link {{ $hasBrandOrSubcategory ? 'u-header__nav-link-toggle' : '' }}"
-                                                                    href="{{ url('category/product/' . $category->category_slug . '/' . encrypt($category->id)) }}"
+                                                                    class="nav-link u-header__nav-link <?php echo e($hasBrandOrSubcategory ? 'u-header__nav-link-toggle' : ''); ?>"
+                                                                    href="<?php echo e(url('category/product/' . $category->category_slug . '/' . encrypt($category->id))); ?>"
                                                                     aria-haspopup="true" aria-expanded="false">
-                                                                    {{ $category->category_name }}
+                                                                    <?php echo e($category->category_name); ?>
+
                                                                 </a>
 
 
-                                                                {{-- if there are any sub category and brand then show it  --}}
-                                                                @if ($hasBrandOrSubcategory)
+                                                                
+                                                                <?php if($hasBrandOrSubcategory): ?>
                                                                     <div class="hs-mega-menu vmm-tfw u-header__sub-menu"
                                                                         aria-labelledby="basicMegaMenu2">
                                                                         <ul class="navbar-nav u-header__navbar-nav">
 
-                                                                            @foreach ($subcategories as $subcat)
-                                                                                @if ($subcat->subcategory_id != null)
-                                                                                    {{-- check duplicate subcategory_name --}}
-                                                                                    @if (!in_array($subcat->subcategory_id, $subcategoriesArray))
-                                                                                        @php
+                                                                            <?php $__currentLoopData = $subcategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                <?php if($subcat->subcategory_id != null): ?>
+                                                                                    
+                                                                                    <?php if(!in_array($subcat->subcategory_id, $subcategoriesArray)): ?>
+                                                                                        <?php
                                                                                             $subsubcategories = App\Models\Product::where(
                                                                                                 'subcategory_id',
                                                                                                 $subcat->subcategory_id,
@@ -906,17 +809,18 @@
                                                                                                 $subcat->subcategory_id;
                                                                                             $brandArray = [];
 
-                                                                                        @endphp
+                                                                                        ?>
                                                                                         <li class="nav-item hs-has-mega-menu u-header__nav-item"
                                                                                             data-event="hover"
                                                                                             data-position="left">
 
                                                                                             <a id="basicMegaMenu3"
-                                                                                                class="nav-link u-header__nav-link {{ $hasBrandOrSubSubcategory ? 'u-header__nav-link-toggle' : '' }} bg-white"
-                                                                                                href="{{ url('subcategory/product/' . $subcat->subcategory_slug . '/' . encrypt($subcat->subcategory_id)) }}"
+                                                                                                class="nav-link u-header__nav-link <?php echo e($hasBrandOrSubSubcategory ? 'u-header__nav-link-toggle' : ''); ?> bg-white"
+                                                                                                href="<?php echo e(url('subcategory/product/' . $subcat->subcategory_slug . '/' . encrypt($subcat->subcategory_id))); ?>"
                                                                                                 aria-haspopup="true"
                                                                                                 aria-expanded="false">
-                                                                                                {{ $subcat->subcategory_name }}
+                                                                                                <?php echo e($subcat->subcategory_name); ?>
+
 
                                                                                             </a>
 
@@ -929,31 +833,32 @@
                                                                                                 aria-labelledby="basicMegaMenu3">
                                                                                                 <ul
                                                                                                     class="u-header__sub-menu-nav-group">
-                                                                                                    @foreach ($subsubcategories as $subsubcat)
-                                                                                                        @if ($subsubcat->subsubcategory_id != null)
-                                                                                                            @if (!in_array($subsubcat->subsubcategory_id, $subsubcategoriesArray))
-                                                                                                                @php
+                                                                                                    <?php $__currentLoopData = $subsubcategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subsubcat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                                        <?php if($subsubcat->subsubcategory_id != null): ?>
+                                                                                                            <?php if(!in_array($subsubcat->subsubcategory_id, $subsubcategoriesArray)): ?>
+                                                                                                                <?php
 
                                                                                                                     $subsubcategoriesArray[] =
                                                                                                                         $subsubcat->subsubcategory_id;
-                                                                                                                @endphp
+                                                                                                                ?>
 
                                                                                                                 <li class="nav-item hs-has-mega-menu u-header__nav-item"
                                                                                                                     data-event="hover"
                                                                                                                     data-position="left">
 
                                                                                                                     <a id="basicMegaMenu4"
-                                                                                                                        class="nav-link u-header__nav-link {{ $subsubcat->brand_id != '' ? 'u-header__nav-link-toggle' : '' }}  bg-white"
-                                                                                                                        href="{{ url('subsubcategory/product/' . $subsubcat->subsubcategory->subsubcategory_slug . '/' . encrypt($subsubcat->subsubcategory_id)) }}"
+                                                                                                                        class="nav-link u-header__nav-link <?php echo e($subsubcat->brand_id != '' ? 'u-header__nav-link-toggle' : ''); ?>  bg-white"
+                                                                                                                        href="<?php echo e(url('subsubcategory/product/' . $subsubcat->subsubcategory->subsubcategory_slug . '/' . encrypt($subsubcat->subsubcategory_id))); ?>"
                                                                                                                         aria-haspopup="true"
                                                                                                                         aria-expanded="false">
-                                                                                                                        {{ $subsubcat->subsubcategory->subsubcategory_name }}
+                                                                                                                        <?php echo e($subsubcat->subsubcategory->subsubcategory_name); ?>
+
 
                                                                                                                     </a>
 
 
 
-                                                                                                                    @if ($subsubcat->brand_id != null)
+                                                                                                                    <?php if($subsubcat->brand_id != null): ?>
                                                                                                                         <div class="hs-mega-menu vmm-tfw u-header__sub-menu"
                                                                                                                             style="height: 500px"
                                                                                                                             aria-labelledby="basicMegaMenu4">
@@ -966,10 +871,11 @@
 
                                                                                                                                     <a id="basicMegaMenu5"
                                                                                                                                         class="nav-link u-header__nav-link  bg-white"
-                                                                                                                                        href="{{ url('brand_wise_subsubcategory/product/' . $subsubcat->subsubcategory->subsubcategory_slug . '/' . encrypt($subsubcat->subsubcategory_id) . '/' . base64_encode($subsubcat->brand_id)) }}"
+                                                                                                                                        href="<?php echo e(url('brand_wise_subsubcategory/product/' . $subsubcat->subsubcategory->subsubcategory_slug . '/' . encrypt($subsubcat->subsubcategory_id) . '/' . base64_encode($subsubcat->brand_id))); ?>"
                                                                                                                                         aria-haspopup="true"
                                                                                                                                         aria-expanded="false">
-                                                                                                                                        {{ $subsubcat->brand->brand_name }}
+                                                                                                                                        <?php echo e($subsubcat->brand->brand_name); ?>
+
                                                                                                                                     </a>
 
                                                                                                                                 </li>
@@ -978,36 +884,37 @@
 
 
                                                                                                                         </div>
-                                                                                                                    @endif
-                                                                                                            @endif
+                                                                                                                    <?php endif; ?>
+                                                                                                            <?php endif; ?>
 
 
 
                                                                                         </li>
-                                                                                    @else
-                                                                                        @if ($subsubcat->brand_id != '')
-                                                                                            @if (!in_array($subsubcat->brand_id, $brandArray))
-                                                                                                @php
+                                                                                    <?php else: ?>
+                                                                                        <?php if($subsubcat->brand_id != ''): ?>
+                                                                                            <?php if(!in_array($subsubcat->brand_id, $brandArray)): ?>
+                                                                                                <?php
 
                                                                                                     $brandArray[] =
                                                                                                         $subsubcat->brand_id;
-                                                                                                @endphp
+                                                                                                ?>
                                                                                                 <li class="nav-item hs-has-mega-menu u-header__nav-item"
                                                                                                     data-event="hover"
                                                                                                     data-position="left">
 
                                                                                                     <a class="nav-link u-header__nav-link bg-white"
-                                                                                                        href="{{ url('brand_wise_subcategory/product/' . $subsubcat->subcategory->subcategory_slug . '/' . encrypt($subsubcat->subcategory_id) . '/' . base64_encode($subsubcat->brand_id)) }}"
+                                                                                                        href="<?php echo e(url('brand_wise_subcategory/product/' . $subsubcat->subcategory->subcategory_slug . '/' . encrypt($subsubcat->subcategory_id) . '/' . base64_encode($subsubcat->brand_id))); ?>"
                                                                                                         aria-haspopup="true"
                                                                                                         aria-expanded="false">
-                                                                                                        {{ $subsubcat->brand->brand_name }}
+                                                                                                        <?php echo e($subsubcat->brand->brand_name); ?>
+
                                                                                                     </a>
 
                                                                                                 </li>
-                                                                                            @endif
-                                                                                        @endif
-                                                                                    @endif
-                                                                                @endforeach
+                                                                                            <?php endif; ?>
+                                                                                        <?php endif; ?>
+                                                                                    <?php endif; ?>
+                                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                         </ul>
                                                                     </div>
 
@@ -1021,27 +928,28 @@
 
 
                                                             </li>
-                                                        @endif
-                                                        {{-- end check duplicate subcategory_name --}}
-                                                    @else
-                                                        {{-- if there have no subsubcategory and have any brand then print it  --}}
-                                                        @if ($subcat->brand_id != '')
+                                                        <?php endif; ?>
+                                                        
+                                                    <?php else: ?>
+                                                        
+                                                        <?php if($subcat->brand_id != ''): ?>
                                                             <li class="nav-item hs-has-mega-menu u-header__nav-item"
                                                                 data-event="hover" data-position="left">
 
                                                                 <a id="basicMegaMenu3"
                                                                     class="nav-link u-header__nav-link bg-white"
-                                                                    href="{{ url('brand_wise_category/product/' . $subcat->category_slug . '/' . encrypt($subcat->id) . '/' . base64_encode($subcat->brand_id)) }}"
+                                                                    href="<?php echo e(url('brand_wise_category/product/' . $subcat->category_slug . '/' . encrypt($subcat->id) . '/' . base64_encode($subcat->brand_id))); ?>"
                                                                     aria-haspopup="true" aria-expanded="false">
 
-                                                                    {{ $subcat->brand_name }}
+                                                                    <?php echo e($subcat->brand_name); ?>
+
                                                                 </a>
 
                                                             </li>
-                                                        @endif
-                                                        {{-- if there have no subsubcategory and have any brand then print it --}}
-                                                    @endif
-                                                    @endforeach
+                                                        <?php endif; ?>
+                                                        
+                                                    <?php endif; ?>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
 
@@ -1049,7 +957,7 @@
 
 
                                             </div>
-                                            @endif
+                                            <?php endif; ?>
 
 
 
@@ -1060,8 +968,8 @@
 
                                             </li>
                                             <!-- End Nav Item MegaMenu-->
-                                            @endforeach
-                                            @endif
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            <?php endif; ?>
                                             </ul>
                                     </div>
                                     </nav>
@@ -1084,7 +992,7 @@
                             <!-- Home -->
                             <li class="nav-item hs-has-mega-menu u-header__nav-item" data-event="click"
                                 data-animation-in="slideInUp" data-animation-out="fadeOut" data-position="left">
-                                {{-- <a id="homeMegaMenu" class="nav-link u-header__nav-link u-header__nav-link-toggle text-sale" href="javascript:;" aria-haspopup="true" aria-expanded="false">Super Deals</a> --}}
+                                
 
                                 <!-- Home - Mega Menu -->
                                 <div class="hs-mega-menu w-100 u-header__sub-menu" aria-labelledby="homeMegaMenu">
@@ -1255,29 +1163,19 @@
                             <!-- End Home -->
 
                             <!-- Featured Brands -->
-                            {{-- <li class="nav-item u-header__nav-item">
-                                    <a class="nav-link u-header__nav-link" href="#" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">Featured Brands</a>
-                                </li> --}}
+                            
                             <!-- End Featured Brands -->
 
                             <!-- Trending Styles -->
-                            {{-- <li class="nav-item u-header__nav-item">
-                                    <a class="nav-link u-header__nav-link" href="#" aria-haspopup="true" aria-expanded="false" aria-labelledby="blogSubMenu">Trending Styles</a>
-                                </li> --}}
+                            
                             <!-- End Trending Styles -->
 
                             <!-- Gift Cards -->
-                            {{-- <li class="nav-item u-header__nav-item">
-                                    <a class="nav-link u-header__nav-link" href="#" aria-haspopup="true" aria-expanded="false">Gift Cards</a>
-                                </li> --}}
+                            
                             <!-- End Gift Cards -->
 
                             <!-- Button -->
-                            {{-- <li class="nav-item u-header__nav-last-item">
-                                    <a class="text-gray-90" href="#" target="_blank">
-                                        Free Shipping on Orders $50+
-                                    </a>
-                                </li> --}}
+                            
                             <!-- End Button -->
                         </ul>
                     </div>
@@ -1291,3 +1189,4 @@
     <!-- End Vertical-and-secondary-menu -->
     </div>
 </header>
+<?php /**PATH /opt/lampp/htdocs/_unisolbd/resources/views/frontend/body/header.blade.php ENDPATH**/ ?>

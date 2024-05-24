@@ -1,16 +1,15 @@
-@extends('frontend.main_master')
-@section('title')
+<?php $__env->startSection('title'); ?>
     Sub Category Product
-@endsection
-@section('content')
-    <script src="{{ asset('frontendassets/custom-js/pagination.js') }}"></script>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+    <script src="<?php echo e(asset('frontendassets/custom-js/pagination.js')); ?>"></script>
     <!-- Include jQuery -->
 
     <!-- Include twbsPagination -->
 
 
     <script>
-        var currencySymbol = "{!! $currency->symbol !!}";
+        var currencySymbol = "<?php echo $currency->symbol; ?>";
     </script>
 
 
@@ -24,11 +23,11 @@
                 <div class="my-md-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                            <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="{{ url('/') }}"><i fa <i
+                            <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="<?php echo e(url('/')); ?>"><i fa <i
                                         class="fa fa-home" aria-hidden="true"></i></i></a>
                             </li>
                             <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">
-                                <a href="{{ url('/product/search?search=' . $searchTerm) }}">{{ $searchTerm }}</a>
+                                <a href="<?php echo e(url('/product/search?search=' . $searchTerm)); ?>"><?php echo e($searchTerm); ?></a>
 
                             </li>
                         </ol>
@@ -61,7 +60,7 @@
                         <!-- End Account Sidebar Toggle Button -->
                     </div>
                     <div class="px-3 d-none d-xl-block">
-                        <h6>Search - {{ $searchTerm }}</h6>
+                        <h6>Search - <?php echo e($searchTerm); ?></h6>
                     </div>
                     <div class="d-flex">
                         <form method="get">
@@ -106,16 +105,7 @@
                 <!-- End Tab Content -->
                 <!-- End Shop Body -->
                 <!-- Shop Pagination -->
-                {{-- <nav class="d-md-flex justify-content-between align-items-center border-top pt-3"
-                    aria-label="Page navigation example">
-                    <div class="text-center text-md-left mb-3 mb-md-0">Showing 1–25 of 56 results</div>
-                    <ul class="pagination mb-0 pagination-shop justify-content-center justify-content-md-start"
-                        id="pagination-links">
-                        <li class="page-item"><a class="page-link current" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    </ul>
-                </nav> --}}
+                
 
                 <nav class="d-md-flex justify-content-between align-items-center border-top pt-3"
                     aria-label="Page navigation example">
@@ -139,7 +129,7 @@
     <script>
         jQuery.noConflict();
         jQuery(document).ready(function($) {
-            var slicedProducts = {!! json_encode($allSearchResults) !!};
+            var slicedProducts = <?php echo json_encode($allSearchResults); ?>;
             console.log("slicedProducts ", slicedProducts);
             var currentPage = 1;
             var productsPerPage = parseInt($('#productPerPage').val());
@@ -179,7 +169,7 @@
 
             function applyFiltersAndSort() {
 
-                var slicedProducts = {!! json_encode($allSearchResults) !!};
+                var slicedProducts = <?php echo json_encode($allSearchResults); ?>;
                 // Apply brand filter
                 var filteredProducts = selectedBrandIds.length > 0 ?
                     slicedProducts.filter(product => selectedBrandIds.includes(product.brand_id)) :
@@ -254,7 +244,7 @@
                             </ul>
 
                             <div class="text-gray-20 mb-2 font-size-12">SKU: ${product.product_code}</div>
-                            @auth
+                            <?php if(auth()->guard()->check()): ?>
                             <div class="flex-center-between mb-2">
                                 <div class="prodcut-price">
                                     <del class="font-size-12 tex-gray-6">${product.discount_price != null ? `${formatPrice(product.selling_price)}${currencySymbol}` : ""}</del>
@@ -266,13 +256,13 @@
                                         class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
                                 </div>
                             </div>
-                            @else
+                            <?php else: ?>
                             <div class="prodcut-add-cart">
-                                                    <a href="{{ route('login') }}"
+                                                    <a href="<?php echo e(route('login')); ?>"
                                                         class="btn btn-primary transition-3d-hover btn-block"><i
                                                             class="ec ec-login"></i>Login to see price</a>
                                                 </div>
-                                            @endauth
+                                            <?php endif; ?>
                         </div>
                         <div class="product-item__footer">
                             <div class="border-top pt-2 flex-center-between flex-wrap">
@@ -326,4 +316,6 @@
             return price.toLocaleString('en');
         }
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('frontend.main_master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /opt/lampp/htdocs/_unisolbd/resources/views/frontend/product/all_search_result.blade.php ENDPATH**/ ?>
