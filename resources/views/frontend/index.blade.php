@@ -84,7 +84,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <a href="{{ url('/product/details/' . $item->product_slug . '/' . encrypt($item->id)) }}"
-                                class="d-block text-center"><img class="img-fluid"
+                                class="d-block text-center"><img style="height: 100px" class="img-fluid"
                                     src="{{ asset($item->product_thambnail) }}"
                                     alt="Image Description"></a>
                         </div>
