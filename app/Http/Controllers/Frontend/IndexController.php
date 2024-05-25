@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Currency;
 use App\Models\MultiImg;
 use App\Models\Product;
+use App\Models\Solution;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,8 +26,8 @@ class IndexController extends Controller
         // Filter the cached products to get featured products
         $featured = Product::with('category', 'subcategory', 'subsubcategory')->where('featured', 1)->inRandomOrder()->limit(30)->get();
         $new_arrival = Product::with('category', 'subcategory', 'subsubcategory')->latest()->limit(10)->get();
-
-        return view('frontend.index', compact('categories', 'featured', 'currency','new_arrival'));
+$solutions = Solution::where('status',1)->get();
+        return view('frontend.index', compact('categories', 'featured', 'currency','new_arrival','solutions'));
     }
 
     public function storageCalc()

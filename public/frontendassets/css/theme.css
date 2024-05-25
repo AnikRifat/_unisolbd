@@ -37612,7 +37612,7 @@ blockquote:not(.blockquote) p {
     font-weight: 800;
 }
 .portfolio-wrapper:hover .portfolio-overlay {
-    background-color: rgba(204, 222, 2, 0.85);
+    background-color: #5868a252;
 }
 .portfolio-wrapper:hover .portfolio-overlay:before {
     opacity: 1;

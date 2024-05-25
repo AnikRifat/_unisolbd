@@ -17,7 +17,7 @@
                                     <thead>
                                         <tr>
                                             <th>Name</th>
-                                            <th>Rules</th>
+                                            <th>discount</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -28,18 +28,42 @@
                                             <tr>
                                                 <td>{{ $group->name }}</td>
                                                 <td>
-                                                    <ul>
                                                         @foreach(json_decode($group->rules, true) as $key => $value)
-                                                            <li>{{ $key }}: {{ $value }}</li>
+                                                        {{ $value }}%
                                                         @endforeach
-                                                    </ul>
                                                 </td>
-                                                <td>{{ $group->status }}</td>
+                                                <td>
+                                                    @if ($group->status == 1)
+                                                        <span class="badge bade-fills badge-success">Active</span>
+                                                    @else
+                                                        <span class="badge bade-fills badge-danger">Inactive</span>
+                                                    @endif
+                                                </td>
                                                 <td class="d-flex justify-content-center">
                                                     <a href="{{ route('customer-groups.assign', $group->id) }}"
                                                         class="btn btn-sm btn-info mr-1">assign</a>
                                                     <a href="{{ route('customer-groups.edit', $group->id) }}"
                                                         class="btn btn-sm btn-info mr-1"><i class="fa-solid fa-edit"></i></a>
+
+                                                        @if ($group->status == 1)
+                                                        <form method="POST"
+                                                            action="{{ route('inactive.customer-group', $group->id) }}">
+                                                            @csrf
+
+
+                                                                    <button class="btn btn-sm btn-danger"
+                                                                    href="javascript:void(0)"><i
+                                                                        class="fa fa-arrow-up"></i></button>
+                                                        </form>
+                                                    @else
+                                                        <form method="POST"
+                                                            action="{{ route('active.customer-group', $group->id) }}">
+                                                            @csrf
+                                                            <button class="btn btn-sm btn-success"
+                                                            href="javascript:void(0)"><i
+                                                                class="fa fa-arrow-down"></i></button>
+                                                        </form>
+                                                    @endif
                                                     <form action="{{ route('customer-groups.destroy', $group->id) }}"
                                                         method="POST">
                                                         @csrf
@@ -70,23 +94,21 @@
                                     <input type="text" name="name" class="form-control form-control-sm">
                                 </div>
                                 <div class="form-group" id="rules-container">
-                                    <label class="info-title">Rules<span class="text-danger">*</span></label>
+                                    <label class="info-title">Discount<span class="text-danger">*</span></label>
+                                    <input type="text" name="rules[value][]" class="form-control form-control-sm" placeholder="Value">
+                                    <input type="number" name="rules[key][]" class="form-control form-control-sm" placeholder="Key" value="discount" hidden>
+
                                     <div class="row">
                                         <div class="col">
-                                            <input type="text" name="rules[key][]" class="form-control form-control-sm" placeholder="Key">
                                         </div>
                                         <div class="col">
-                                            <input type="text" name="rules[value][]" class="form-control form-control-sm" placeholder="Value">
                                         </div>
-                                        <div class="col-auto">
+                                        {{-- <div class="col-auto">
                                             <button type="button" class="btn btn-success btn-add-rule">+</button>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="info-title">Status<span class="text-danger">*</span></label>
-                                    <input type="number" name="status" class="form-control form-control-sm">
-                                </div>
+
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-sm btn-success">Save</button>
                                     <button type="reset" class="btn btn-sm btn-primary">Clear</button>

@@ -13,7 +13,6 @@ class CustomerGroupController extends Controller
     public function index()
     {
         $customerGroups = CustomerGroup::all();
-// dd($customerGroups);
         return view('backend.customer_groups.index', compact('customerGroups'));
     }
 
@@ -27,7 +26,6 @@ class CustomerGroupController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'rules' => 'required|array',
-            'status' => 'required|integer',
         ]);
         // Process the rules into an associative array
         $keys = $request->input('rules.key');
@@ -61,7 +59,6 @@ class CustomerGroupController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'rules' => 'required|array',
-            'status' => 'required|integer',
         ]);
         // Process the rules into an associative array
         $keys = $request->input('rules.key');
@@ -124,5 +121,27 @@ class CustomerGroupController extends Controller
         DB::table('assign_customer_to_groups')->where('customer_id', $user->id)->delete();
 
         return redirect()->route('customer-groups.assign', $group->id)->with('success', 'Customers assigned successfully.');
+    }
+
+
+
+    public function ActiveCustomerGroup($id)
+    {
+        CustomerGroup::where('id', '=', $id)->update(['status' => 1]);
+
+        return redirect()->back()->with('success', 'CustomerGroup activated successfully.');
+    }
+
+    /**
+     * Deactivate the specified CustomerGroup.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function InactiveCustomerGroup($id)
+    {
+        CustomerGroup::where('id', '=', $id)->update(['status' => 0]);
+
+        return redirect()->back()->with('success', 'CustomerGroup deactivated successfully.');
     }
 }

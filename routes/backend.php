@@ -55,9 +55,8 @@ route::middleware(['auth:admin'])->group(function () {
 
         //solution
         Route::resource('solution', SolutionController::class);
-        Route::post('/update/{id?}', [solutionController::class, 'update'])->name('solution.update');
-        Route::post('/solution/active/{id}', [solutionController::class, 'ActiveSolution'])->name('active.solution');
-        Route::post('/solution/inactive/{id}', [solutionController::class, 'InactiveSolution'])->name('inactive.solution');
+        Route::post('/solution/active/{id}', [solutionController::class, 'ActiveSolution'])->name('solution.active');
+        Route::post('/solution/inactive/{id}', [solutionController::class, 'InactiveSolution'])->name('solution.inactive');
 
     //slider
     Route::resource('slider', SliderController::class);
@@ -296,11 +295,10 @@ route::middleware(['auth:admin'])->group(function () {
     route::prefix('stock')->group(function () {
         route::get('/product', [ProductController::class, 'ProductStock'])->name('product.stock');
     });
-    route::get('/testc', [CustomerGroupController::class, 'index']);
 
     //all admin user role rout
     route::prefix('user-group')->group(function () {
-        route::get('/all', [testController::class, 'index'])->name('customer-groups.index');
+        route::get('/all', [CustomerGroupController::class, 'index'])->name('customer-groups.index');
         route::get('/add', [CustomerGroupController::class, 'create'])->name('customer-groups.create');
         route::get('/show/{id}', [CustomerGroupController::class, 'show'])->name('customer-groups.show');
         route::get('/assign-customer/{id}', [CustomerGroupController::class, 'assignCustomer'])->name('customer-groups.assign');
@@ -310,6 +308,8 @@ route::middleware(['auth:admin'])->group(function () {
         route::get('/edit/{id}', [CustomerGroupController::class, 'edit'])->name('customer-groups.edit');
         route::put('/update/{customerGroup}', [CustomerGroupController::class, 'update'])->name('customer-groups.update');
         route::get('/delete/{id}', [CustomerGroupController::class, 'delete'])->name('customer-groups.destroy');
+        Route::post('/customerGroup/active/{id?}', [CustomerGroupController::class, 'ActiveCustomerGroup'])->name('active.customer-group');
+        Route::post('/customerGroup/inactive/{id}', [CustomerGroupController::class, 'InactiveCustomerGroup'])->name('inactive.customer-group');
     });
 
     //all admin user role route

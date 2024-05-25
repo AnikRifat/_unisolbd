@@ -59,7 +59,7 @@ class SolutionController extends Controller
         ];
 
         if ($request->file('image')) {
-            $data['image'] = uploadAndResizeImage($request->file('image'), 'upload/solutions', 800, 600);
+            $data['image'] = uploadAndResizeImage($request->file('image'), 'upload/solutions', 1260, 500);
         }
 
         Solution::create($data);
@@ -76,7 +76,7 @@ class SolutionController extends Controller
     public function edit($id)
     {
         $solution = Solution::findOrFail($id);
-        return view('backend.solution.edit', compact('solution'));
+        return view('backend.solution.create', compact('solution'));
     }
 
     /**
@@ -111,7 +111,7 @@ class SolutionController extends Controller
 
         if ($request->file('image')) {
             @unlink(public_path($solution->image));
-            $data['image'] = uploadAndResizeImage($request->file('image'), 'upload/solutions', 800, 600);
+            $data['image'] = uploadAndResizeImage($request->file('image'), 'upload/solutions', 1260, 500);
         }
 
 

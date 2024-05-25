@@ -26,28 +26,28 @@
                 </div>
 
                 <div class="form-group">
-                  <label class="info-title">Rules<span class="text-danger">*</span></label>
+                  <label class="info-title">Discount<span class="text-danger">*</span></label>
                   <div id="rules-container">
                       @foreach(json_decode($group->rules, true) as $key => $value)
                       <div class="input-group mb-2">
-                          <input type="text" name="rules[key][]" class="form-control form-control-sm" value="{{ $key }}" placeholder="Key">
-                          <input type="text" name="rules[value][]" class="form-control form-control-sm" value="{{ $value }}" placeholder="Value">
-                          <div class="input-group-append">
+                        <input type="text" name="rules[value][]" class="form-control form-control-sm" placeholder="Value" value="{{ $value }}">
+                        <input type="number" name="rules[key][]" class="form-control form-control-sm" placeholder="Key" value="discount" hidden>
+                          {{-- <div class="input-group-append">
                               <button type="button" class="btn btn-danger btn-remove-rule">-</button>
-                          </div>
+                          </div> --}}
                       </div>
                       @endforeach
                   </div>
-                  <button type="button" class="btn btn-success btn-add-rule">Add Rule</button>
+                  {{-- <button type="button" class="btn btn-success btn-add-rule">Add Rule</button> --}}
                 </div>
-
+{{--
                 <div class="form-group">
                   <label class="info-title">Status<span class="text-danger">*</span></label>
                   <input type="number" name="status" value="{{ old('status', $group->status) }}" class="form-control">
                   @error('status')
                   <span class="text-danger">{{ $message }}</span>
                   @enderror
-                </div>
+                </div> --}}
 
                 <div class="form-group">
                   <button type="submit" class="btn btn-rounded btn-primary">Update</button>
