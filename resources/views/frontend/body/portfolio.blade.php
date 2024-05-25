@@ -2,9 +2,9 @@
     <div class="row no-gutters">
         <div class="filtering col-sm-12 text-center">
 
-            <span data-filter="*" class="active">All</span>
-            @foreach ($solutions as $solution)
-            <span data-filter=".{{ $solution->name }}" class="">{{ $solution->name }}</span>
+            {{-- <span data-filter="*" >All</span> --}}
+            @foreach ($solutions as $key=> $solution)
+            <span data-filter=".{{ $solution->name }}" class="{{ $key == 1?'active':'' }}">{{ $solution->name }}</span>
 
             @endforeach
         </div>

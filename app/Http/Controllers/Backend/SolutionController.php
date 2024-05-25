@@ -18,6 +18,7 @@ class SolutionController extends Controller
     public function index()
     {
         $solutions = Solution::latest()->get();
+
         return view('backend.solution.solution', compact('solutions'));
     }
 
@@ -34,7 +35,6 @@ class SolutionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -76,13 +76,13 @@ class SolutionController extends Controller
     public function edit($id)
     {
         $solution = Solution::findOrFail($id);
+
         return view('backend.solution.create', compact('solution'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -113,7 +113,6 @@ class SolutionController extends Controller
             @unlink(public_path($solution->image));
             $data['image'] = uploadAndResizeImage($request->file('image'), 'upload/solutions', 1260, 500);
         }
-
 
         $solution->update($data);
 

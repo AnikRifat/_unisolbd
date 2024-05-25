@@ -241,7 +241,7 @@ $activeModule = session('activeModule');
                 </li>
 
 
-                <li>
+                <li class="d-none">
                     <a href="#" data-toggle="dropdown" title="Setting" class="waves-effect waves-light">
                         <i class="ti-layout-grid2-alt"></i>
                     </a>

@@ -70,7 +70,8 @@ Route::middleware([
             ->where('customer_id', auth()->user()->id)
             ->orderBy('id', 'DESC')
             ->get();
-// dd($quotations);
+
+        // dd($quotations);
         return view('dashboard', compact('user', 'quotations'));
     })->name('dashboard');
 });
@@ -134,7 +135,6 @@ route::get('/frontend/district/ajax/{id}', [ShippingAreaController::class, 'getD
 route::get('/frontend/state/ajax/{id}', [ShippingAreaController::class, 'getStateById'])->name('get-state-fronted');
 
 Route::get('/frontend/{type}/{id}', [ReportController::class, 'QuotationAndSaleInvoiceReport'])->name('user.invoice.report');
-
 
 require __DIR__.'/backend.php';
 require __DIR__.'/frontend.php';

@@ -7,7 +7,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Searchable;
 use Stripe\Discount;
 
@@ -113,13 +112,14 @@ class Product extends Model
             if ($customerGroup && isset(json_decode($customerGroup->rules, true)['discount'])) {
                 $discount = json_decode($customerGroup->rules, true)['discount'];
                 $discountedPrice = $this->selling_price - ($this->selling_price * ($discount / 100));
+
                 return $discountedPrice;
             }
         }
+
         // Return the original selling price if no discount is available
         return $this->selling_price;
     }
-
 
     public function scopeApplyPriceModifier($query)
     {
@@ -128,6 +128,7 @@ class Product extends Model
         if ($customerGroup && isset(json_decode($customerGroup->rules, true)['discount'])) {
             // Apply the discount to the selling price
             $discount = json_decode($customerGroup->rules, true)['discount'];
+
             return $query->select('*')->selectRaw('selling_price * (1- ? / 100) as discount_price', [$discount]);
         }
 
@@ -135,10 +136,8 @@ class Product extends Model
         return $query;
     }
 
-
     protected static function booted()
     {
         static::addGlobalScope(new ApplyPriceModifierScope);
     }
-
 }

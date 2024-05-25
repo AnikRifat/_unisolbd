@@ -26,8 +26,9 @@ class IndexController extends Controller
         // Filter the cached products to get featured products
         $featured = Product::with('category', 'subcategory', 'subsubcategory')->where('featured', 1)->inRandomOrder()->limit(30)->get();
         $new_arrival = Product::with('category', 'subcategory', 'subsubcategory')->latest()->limit(10)->get();
-$solutions = Solution::where('status',1)->get();
-        return view('frontend.index', compact('categories', 'featured', 'currency','new_arrival','solutions'));
+        $solutions = Solution::where('status', 1)->get();
+
+        return view('frontend.index', compact('categories', 'featured', 'currency', 'new_arrival', 'solutions'));
     }
 
     public function storageCalc()
@@ -378,10 +379,10 @@ $solutions = Solution::where('status',1)->get();
 
     public function AllSearchResult(Request $request)
     {
-        $searchTerm = request()->query('search')??$request['search'];
+        $searchTerm = request()->query('search') ?? $request['search'];
 
         $allSearchResults = Product::where('product_name', 'LIKE', "%$searchTerm%")->get();
-// dd($products);
+        // dd($products);
         // $allSearchResults = Product::search($searchTerm)->get();
         //dd($allSearchResults);
 

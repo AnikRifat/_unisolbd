@@ -13,6 +13,7 @@ class CustomerGroupController extends Controller
     public function index()
     {
         $customerGroups = CustomerGroup::all();
+
         return view('backend.customer_groups.index', compact('customerGroups'));
     }
 
@@ -122,8 +123,6 @@ class CustomerGroupController extends Controller
 
         return redirect()->route('customer-groups.assign', $group->id)->with('success', 'Customers assigned successfully.');
     }
-
-
 
     public function ActiveCustomerGroup($id)
     {

@@ -35,7 +35,6 @@ use App\Http\Controllers\Backend\UnitController;
 use App\Http\Controllers\Backend\UserDetailsController;
 use App\Http\Controllers\Backend\UserManagementController;
 use App\Http\Controllers\Backend\VendorController;
-use App\Http\Controllers\testController;
 use Illuminate\Support\Facades\Route;
 
 route::middleware(['auth:admin'])->group(function () {
@@ -52,11 +51,10 @@ route::middleware(['auth:admin'])->group(function () {
     Route::post('/brand/active/{id?}', [BrandController::class, 'ActiveBrand'])->name('active.brand');
     Route::post('/brand/inactive/{id}', [BrandController::class, 'InactiveBrand'])->name('inactive.brand');
 
-
-        //solution
-        Route::resource('solution', SolutionController::class);
-        Route::post('/solution/active/{id}', [solutionController::class, 'ActiveSolution'])->name('solution.active');
-        Route::post('/solution/inactive/{id}', [solutionController::class, 'InactiveSolution'])->name('solution.inactive');
+    //solution
+    Route::resource('solution', SolutionController::class);
+    Route::post('/solution/active/{id}', [solutionController::class, 'ActiveSolution'])->name('solution.active');
+    Route::post('/solution/inactive/{id}', [solutionController::class, 'InactiveSolution'])->name('solution.inactive');
 
     //slider
     Route::resource('slider', SliderController::class);
