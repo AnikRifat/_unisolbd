@@ -44,7 +44,9 @@
                         href="{{ route('customer-groups.index') }}"><i class="ti-more"></i>User Group</a>
                 </li>
 
-
+                <li class="{{ $route == 'solution.index' ? 'active' : '' }}"><a
+                    href="{{ route('solution.index') }}"><i class="ti-more"></i>solution</a>
+            </li>
             </ul>
         </li>
     </ul>

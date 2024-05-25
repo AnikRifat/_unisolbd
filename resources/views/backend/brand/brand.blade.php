@@ -51,7 +51,7 @@
                                                         <form method="POST"
                                                             action="{{ route('inactive.brand', $item->id) }}">
                                                             @csrf
-                                                            
+
 
                                                                     <button class="btn btn-sm btn-danger"
                                                                     href="javascript:void(0)"><i

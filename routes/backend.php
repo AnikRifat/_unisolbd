@@ -26,6 +26,7 @@ use App\Http\Controllers\Backend\ShippingAreaController;
 use App\Http\Controllers\Backend\SiteSettingController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SocialMediaSettingController;
+use App\Http\Controllers\Backend\SolutionController;
 use App\Http\Controllers\Backend\SpecificationController;
 use App\Http\Controllers\Backend\SpecificationDetailController;
 use App\Http\Controllers\Backend\SubcategoryController;
@@ -48,8 +49,15 @@ route::middleware(['auth:admin'])->group(function () {
 
     //brand
     Route::resource('brand', BrandController::class);
-    Route::post('/brand/active/{id}', [BrandController::class, 'ActiveBrand'])->name('active.brand');
+    Route::post('/brand/active/{id?}', [BrandController::class, 'ActiveBrand'])->name('active.brand');
     Route::post('/brand/inactive/{id}', [BrandController::class, 'InactiveBrand'])->name('inactive.brand');
+
+
+        //solution
+        Route::resource('solution', SolutionController::class);
+        Route::post('/update/{id?}', [solutionController::class, 'update'])->name('solution.update');
+        Route::post('/solution/active/{id}', [solutionController::class, 'ActiveSolution'])->name('active.solution');
+        Route::post('/solution/inactive/{id}', [solutionController::class, 'InactiveSolution'])->name('inactive.solution');
 
     //slider
     Route::resource('slider', SliderController::class);
