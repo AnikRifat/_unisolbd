@@ -24,8 +24,8 @@ class IndexController extends Controller
         $categories = Category::Where('status', 1)->orderBy('category_name', 'ASC')->get();
         $currency = Currency::where('status', 1)->orderBy('id', 'DESC')->first();
         // Filter the cached products to get featured products
-        $featured = Product::with('category', 'subcategory', 'subsubcategory')->where('featured', 1)->inRandomOrder()->limit(30)->get();
-        $new_arrival = Product::with('category', 'subcategory', 'subsubcategory')->latest()->limit(10)->get();
+        $featured = Product::with('category', 'subcategory', 'subsubcategory')->where('status',1)->where('featured', 1)->inRandomOrder()->limit(30)->get();
+        $new_arrival = Product::with('category', 'subcategory', 'subsubcategory')->where('status',1)->latest()->limit(10)->get();
         $solutions = Solution::where('status', 1)->get();
 
         return view('frontend.index', compact('categories', 'featured', 'currency', 'new_arrival', 'solutions'));
