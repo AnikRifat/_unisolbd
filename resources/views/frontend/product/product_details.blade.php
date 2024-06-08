@@ -115,7 +115,7 @@
                                     @endif
 
                                 </div>
-                                <form method="POST" action="{{ route('buy', ['id' => base64_encode($product->id)]) }}">
+                                <form method="POST" action="{{ route('buy', ['id' => base64_encode($product->id)]) }}" class="d-none">
                                     @csrf
                                     <div class="mb-3">
                                         <h6 class="font-size-14">Quantity</h6>
@@ -145,7 +145,7 @@
                                     <div class="mb-2 pb-0dot5">
                                         <a href="javascript:void(0)" onclick="addToCart(this)"
                                             data-product-id="{{ base64_encode($product->id) }}" class="btn btn-block btn-primary-dark"><i
-                                                class="ec ec-add-to-cart mr-2 font-size-20"></i> Add to Cart</a>
+                                                class="ec ec-add-to-cart mr-2 font-size-20" ></i> Add to Cart</a>
                                     </div>
                                     <div class="mb-3">
                                         <button type="submit" class="btn btn-block btn-dark">Buy Now</button>
@@ -274,7 +274,7 @@
                                                     @endif
 
                                                 </div>
-                                                <div class="prodcut-add-cart">
+                                                <div class="prodcut-add-cart d-none">
                                                     <a href="javascript:void(0)" onclick="addToCart(this)"
                                                         data-product-id="{{ base64_encode($product->id) }}"
                                                         class="btn-add-cart btn-primary transition-3d-hover"><i
