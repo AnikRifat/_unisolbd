@@ -55,7 +55,7 @@
                                                     @endif
                                                 </td>
                                                 <td class="d-flex justify-content-center ">
-                                                  <a href="{{ route('product.edit',$item->id) }}"  data-toggle="tooltip" 
+                                                  <a href="{{ route('product.edit',$item->id) }}"  data-toggle="tooltip"
                                                       title="Edit Product"
                                                       class="btn btn-sm btn-info btnEdit mr-10"><i
                                                           class="fa-solid fa-pen-to-square"></i></a>
@@ -80,6 +80,13 @@
                                                                   class="fa fa-arrow-down"></i></button>
                                                       </form>
                                                   @endif
+                                                  <form method="POST" class="ml-2"
+                                                  action="{{ route('destroy.product', $item->id) }}">
+                                                  @csrf
+                                                  <button class="btn btn-sm btn-danger"
+                                                  href="javascript:void(0)"><i
+                                                      class="fa fa-trash"></i></button>
+                                              </form>
                                               </td>
 
                                             </tr>
@@ -103,7 +110,7 @@
 
 
 
- 
+
 
 
 @endsection
