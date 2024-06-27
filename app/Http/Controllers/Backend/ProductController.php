@@ -392,7 +392,16 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $product = Product::findOrFail($id);
+        foreach ($product->products as $product) {
+            $product->delete();
+        }
+        $img = $product->product_thambnail;
+        @unlink($img);
+        Product::findOrFail($id)->delete();
+
+        return redirect()->back()->with(notification('Product Delete Successfully', 'success'));
     }
 
     public function ActiveProduct($id)
