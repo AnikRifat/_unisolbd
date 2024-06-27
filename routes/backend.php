@@ -189,6 +189,7 @@ route::middleware(['auth:admin'])->group(function () {
         Route::resource('product', ProductController::class);
         Route::post('/active/{id}', [ProductController::class, 'ActiveProduct'])->name('active.product');
         Route::post('/inactive/{id}', [ProductController::class, 'InactiveProduct'])->name('inactive.product');
+        Route::post('/destroy/{id}', [ProductController::class, 'destroy'])->name('destroy.product');
 
         //barcode
         Route::resource('barcode', ProductBarcodeController::class);
