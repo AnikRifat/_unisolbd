@@ -33950,7 +33950,7 @@ blockquote:not(.blockquote) p {
 }
 
 @media (min-width: 1200px) {
-  .product-item:hover .product-item__inner:not(.remove-prodcut-hover) {
+  .product-item .product-item__inner {
     /* position: absolute; */
     width: 100%;
     /* height: auto; */
@@ -33959,7 +33959,7 @@ blockquote:not(.blockquote) p {
     background-color: #fff;
     z-index: 1;
   }
-  .product-item:hover .product-item__footer {
+  .product-item .product-item__footer {
     display: block;
   }
 }
@@ -37771,3 +37771,8 @@ blockquote:not(.blockquote) p {
         left: 10px;
     }
 }
+
+.prodcut-add-cart {
+    display: none;
+}
+

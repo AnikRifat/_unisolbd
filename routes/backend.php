@@ -50,6 +50,7 @@ route::middleware(['auth:admin'])->group(function () {
     Route::resource('brand', BrandController::class);
     Route::post('/brand/active/{id?}', [BrandController::class, 'ActiveBrand'])->name('active.brand');
     Route::post('/brand/inactive/{id}', [BrandController::class, 'InactiveBrand'])->name('inactive.brand');
+    Route::post('/brand/destroy/{id}', [BrandController::class, 'destroy'])->name('destroy.brand');
 
     //solution
     Route::resource('solution', SolutionController::class);
@@ -132,16 +133,21 @@ route::middleware(['auth:admin'])->group(function () {
         Route::resource('category', CategoryController::class);
         Route::post('/category/active/{id}', [CategoryController::class, 'ActiveCategory'])->name('active.category');
         Route::post('/category/inactive/{id}', [CategoryController::class, 'InactiveCategory'])->name('inactive.category');
+        Route::post('/category/destroy/{id}', [CategoryController::class, 'destroy'])->name('destroy.category');
 
         //subcategory
         Route::resource('subcategory', SubCategoryController::class);
         Route::post('/subcategory/active/{id}', [SubcategoryController::class, 'ActiveSubcategory'])->name('active.subcategory');
         Route::post('/subcategory/inactive/{id}', [SubCategoryController::class, 'InactiveSubcategory'])->name('inactive.subcategory');
+        Route::post('/subcategory/destroy/{id}', [SubCategoryController::class, 'destroy'])->name('destroy.subcategory');
+
 
         //sub-subcategory
         Route::resource('subsubcategory', SubsubcategoryController::class);
         Route::post('/subsubcategory/active/{id}', [SubsubcategoryController::class, 'ActiveSubsubcategory'])->name('active.subsubcategory');
         Route::post('/subsubcategory/inactive/{id}', [SubsubcategoryController::class, 'InactiveSubsubcategory'])->name('inactive.subsubcategory');
+        Route::post('/subsubcategory/destroy/{id}', [SubsubcategoryController::class, 'destroy'])->name('destroy.subsubcategory');
+
     });
 
     //quotation
@@ -183,6 +189,7 @@ route::middleware(['auth:admin'])->group(function () {
         Route::resource('product', ProductController::class);
         Route::post('/active/{id}', [ProductController::class, 'ActiveProduct'])->name('active.product');
         Route::post('/inactive/{id}', [ProductController::class, 'InactiveProduct'])->name('inactive.product');
+        Route::post('/destroy/{id}', [ProductController::class, 'destroy'])->name('destroy.product');
 
         //barcode
         Route::resource('barcode', ProductBarcodeController::class);

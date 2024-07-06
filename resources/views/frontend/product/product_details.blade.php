@@ -115,7 +115,7 @@
                                     @endif
 
                                 </div>
-                                <form method="POST" action="{{ route('buy', ['id' => base64_encode($product->id)]) }}">
+                                <form method="POST" action="{{ route('buy', ['id' => base64_encode($product->id)]) }}" class="d-none">
                                     @csrf
                                     <div class="mb-3">
                                         <h6 class="font-size-14">Quantity</h6>

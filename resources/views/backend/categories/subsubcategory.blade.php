@@ -68,7 +68,12 @@
                                                             <i class="fa fa-arrow-up"></i>
                                                         </a>
                                                     @endif
+                                                    <a href="#" onclick="btnDestroy({{ $item->id }})"
+                                                        class="btn btn-danger btn-sm" title="">
+                                                        <i class="fa fa-arrow-down"></i>
+                                                    </a>
                                                 </td>
+
                                             </tr>
                                         @endforeach
 
@@ -147,7 +152,7 @@
 
 
     <script>
-      
+
         var id;
 
 
@@ -174,7 +179,7 @@
                 }
             });
         });
-        
+
 
         function btnEdit(e) {
             var data = $(e).data('edit'); // Get the Base64-encoded JSON data
@@ -324,7 +329,26 @@
             });
         }
 
-   
+
+        function btnInactive(id) {
+            console.log(id);
+            var updateUrl = "{{ route('destroy.subsubcategory', ':id') }}";
+            updateUrl = updateUrl.replace(':id', id);
+            $.ajax({
+                type: "POST",
+                url: updateUrl,
+                dataType: "json",
+                success: function(response) {
+                    console.log(response);
+                    showToastr(response.type, response.message);
+                    getData();
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        }
+
     </script>
 
 

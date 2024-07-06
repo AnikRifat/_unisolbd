@@ -34,7 +34,7 @@ class CustomerGroupController extends Controller
 
         $rules = [];
         foreach ($keys as $index => $key) {
-            $rules[$key] = $values[$index];
+            $rules['discount'] = $values[$index];
         }
         $data['rules'] = json_encode($rules);
         CustomerGroup::create($data);
@@ -67,7 +67,7 @@ class CustomerGroupController extends Controller
 
         $rules = [];
         foreach ($keys as $index => $key) {
-            $rules[$key] = $values[$index];
+            $rules['discount'] = $values[$index];
         }
         $data['rules'] = json_encode($rules);
         // dd($data);

@@ -459,7 +459,7 @@
                                                 <fieldset>
                                                     <input {{ old('on_sale') ? 'checked' : '' }} type="checkbox" id="checkbox_2" name="on_sale"
                                                         value="1">
-                                                    <label for="checkbox_2">On Sale</label>
+                                                    <label for="checkbox_2">New Arriaval</label>
                                                 </fieldset>
                                                 <fieldset>
                                                     <input {{ old('featured') ? 'checked' : '' }} type="checkbox" id="checkbox_3" name="featured"
@@ -469,7 +469,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-6 d-none">
                                         <div class="form-group">
                                             <div class="controls">
                                                 <fieldset>

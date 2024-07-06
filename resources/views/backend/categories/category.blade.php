@@ -92,7 +92,7 @@ $hasPermission = hasPermission($activeRoute, $permissionId, $hierarchicalData);
                                                 <span class="badge bade-fills badge-danger">Inactive</span>
                                             @endif
                                         </td>
-                                            
+
                                             <td class="d-flex justify-content-center ">
                                                 <a data-edit="{{ base64_encode($item) }}"
                                                     class="btn btn-sm btn-info btnEdit mr-10"
@@ -102,10 +102,10 @@ $hasPermission = hasPermission($activeRoute, $permissionId, $hierarchicalData);
                                                     <form method="POST"
                                                         action="{{ route('inactive.category', $item->id) }}">
                                                         @csrf
-                                                        <button class="btn btn-sm btn-danger"
+                                                        <button class="btn btn-sm btn-warning"
                                                             href="javascript:void(0)"><i
                                                                 class="fa fa-arrow-up"></i></button>
-                                                       
+
                                                     </form>
                                                 @else
                                                     <form method="POST"
@@ -116,6 +116,13 @@ $hasPermission = hasPermission($activeRoute, $permissionId, $hierarchicalData);
                                                             class="fa fa-arrow-down"></i></button>
                                                     </form>
                                                 @endif
+                                                <form method="POST" class="ml-2"
+                                                        action="{{ route('destroy.category', $item->id) }}">
+                                                        @csrf
+                                                        <button class="btn btn-sm btn-danger"
+                                                        href="javascript:void(0)"><i
+                                                            class="fa fa-trash"></i></button>
+                                                    </form>
                                             </td>
 
                                         </tr>
@@ -142,8 +149,8 @@ $hasPermission = hasPermission($activeRoute, $permissionId, $hierarchicalData);
                         <div class="box-body">
                             <div class="table-responsive">
                                 <form id="categoryForm" method="POST" action="{{ route('category.store') }}" enctype="multipart/form-data">
-                                      @csrf 
-                                      @method('post') 
+                                      @csrf
+                                      @method('post')
                                 <div class="form-group">
                                     <label class="info-title">Name<span class="text-danger">*</span></label>
                                     <input type="text" id="category_name" name="category_name"
@@ -195,7 +202,7 @@ $hasPermission = hasPermission($activeRoute, $permissionId, $hierarchicalData);
                 $('.errorMessage').remove();
 
                 $("input[name='category_name']").val(editData.category_name);
-                
+
                 var imgElement = $('<img>').attr({
                     'src': "/" + editData.category_icon,
                     'alt': '',
@@ -232,7 +239,7 @@ $hasPermission = hasPermission($activeRoute, $permissionId, $hierarchicalData);
 
             $("input[name='category_icon']").val('');
             $("input[name='category_name']").val('');
-        
+
             if ($('#btnSave').length === 0) {
                 $('#btnClear').before(
                     '<button type="submit" id="btnSave" class="btn btn-sm btn-success mr-1">Save</button>');
@@ -248,7 +255,7 @@ $hasPermission = hasPermission($activeRoute, $permissionId, $hierarchicalData);
     </script>
 
 
-   
+
     <script type="text/javascript">
         function mainThamUrl(input) {
             if (input.files && input.files[0]) {

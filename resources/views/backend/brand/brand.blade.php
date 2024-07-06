@@ -66,6 +66,14 @@
                                                                 class="fa fa-arrow-down"></i></button>
                                                         </form>
                                                     @endif
+                                                    <form method="POST" class="ml-2"
+                                                    action="{{ route('destroy.brand', $item->id) }}">
+                                                    @csrf
+                                                    <button class="btn btn-sm btn-danger"
+                                                    href="javascript:void(0)"><i
+                                                        class="fa fa-trash"></i></button>
+                                                </form>
+
                                                 </td>
 
                                             </tr>

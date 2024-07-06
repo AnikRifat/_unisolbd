@@ -13,7 +13,7 @@ use Stripe\Discount;
 class Product extends Model
 {
     use HasFactory;
-    use Searchable;
+    // use Searchable;
 
     protected $guarded = [];
 
