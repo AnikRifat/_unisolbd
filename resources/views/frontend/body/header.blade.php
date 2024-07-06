@@ -610,12 +610,12 @@
                                         Quotation Builder
                                     </a>
                                 </li>
-                                <li class="col pr-xl-0 px-2 px-sm-3 d-none d-xl-block">
+                                {{-- <li class="col pr-xl-0 px-2 px-sm-3 d-none d-xl-block">
                                     <a type="button" href="{{ route('storage.calculator') }}"
                                         class="btn btn-sm contact_icon text-white ">
                                         Storage Calculator
                                     </a>
-                                </li>
+                                </li> --}}
 
 
                                 <li class="col pr-xl-0 px-2 px-sm-3 d-block d-xl-none" href="{{ route('view.package') }}" data-toggle="tooltip"
