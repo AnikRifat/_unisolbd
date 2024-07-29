@@ -2,10 +2,10 @@
 
 @section('content')
 <style>
- .pcbuilder a {
-  width: 100%;
-  text-align: center;
-}
+    .pcbuilder a {
+        width: 100%;
+        text-align: center;
+    }
 </style>
 <main id="content" role="main">
     <!-- breadcrumb -->
@@ -37,17 +37,7 @@
             <div class="bg-gray-1 flex-center-between borders-radius-9 py-1">
                 <div class="d-xl-none">
                     <!-- Account Sidebar Toggle Button -->
-                    <a id="sidebarNavToggler1" class="btn btn-sm py-1 font-weight-normal" href="javascript:;" role="button"
-                        aria-controls="sidebarContent1"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                        data-unfold-event="click"
-                        data-unfold-hide-on-scroll="false"
-                        data-unfold-target="#sidebarContent1"
-                        data-unfold-type="css-animation"
-                        data-unfold-animation-in="fadeInLeft"
-                        data-unfold-animation-out="fadeOutLeft"
-                        data-unfold-duration="500">
+                    <a id="sidebarNavToggler1" class="btn btn-sm py-1 font-weight-normal" href="javascript:;" role="button" aria-controls="sidebarContent1" aria-haspopup="true" aria-expanded="false" data-unfold-event="click" data-unfold-hide-on-scroll="false" data-unfold-target="#sidebarContent1" data-unfold-type="css-animation" data-unfold-animation-in="fadeInLeft" data-unfold-animation-out="fadeOutLeft" data-unfold-duration="500">
                         <i class="fas fa-sliders-h"></i> <span class="ml-1">Filters</span>
                     </a>
                     <!-- End Account Sidebar Toggle Button -->
@@ -87,8 +77,7 @@
                 <div class="d-flex">
                     <form method="get">
                         <!-- Select -->
-                        <select class="js-select selectpicker dropdown-select max-width-200 max-width-160-sm right-dropdown-0 px-2 px-xl-0"
-                            data-style="btn-sm bg-white font-weight-normal py-2 border text-gray-20 bg-lg-down-transparent border-lg-down-0">
+                        <select class="js-select selectpicker dropdown-select max-width-200 max-width-160-sm right-dropdown-0 px-2 px-xl-0" data-style="btn-sm bg-white font-weight-normal py-2 border text-gray-20 bg-lg-down-transparent border-lg-down-0">
                             <option value="one" selected>Default sorting</option>
                             <option value="two">Sort by popularity</option>
                             <option value="three">Sort by average rating</option>
@@ -100,8 +89,7 @@
                     </form>
                     <form method="POST" class="ml-2 d-none d-xl-block">
                         <!-- Select -->
-                        <select class="js-select selectpicker dropdown-select max-width-120"
-                            data-style="btn-sm bg-white font-weight-normal py-2 border text-gray-20 bg-lg-down-transparent border-lg-down-0">
+                        <select class="js-select selectpicker dropdown-select max-width-120" data-style="btn-sm bg-white font-weight-normal py-2 border text-gray-20 bg-lg-down-transparent border-lg-down-0">
                             <option value="one" selected>Show 20</option>
                             <option value="two">Show 40</option>
                             <option value="three">Show All</option>
@@ -128,64 +116,46 @@
                             <div class="product-item__outer h-100">
                                 <div class="product-item__inner px-xl-4 p-3">
                                     <div class="product-item__body pb-xl-2">
-
-
                                         <h5 class="mb-1 product-item__title"><a href="{{ url('/product/details/' .$product->product_slug. '/' .encrypt($product->id)) }}" class="text-blue font-weight-bold">{{ $product->product_name }}</a></h5>
                                         <div class="mb-2">
                                             <a href="{{ url('/product/details/' .$product->product_slug. '/' .encrypt($product->id)) }}" class="d-block text-center"><img class="img-fluid" src="{{ asset($product->product_thambnail) }}" alt="Image Description"></a>
                                         </div>
                                         @auth
                                         <div class="flex-center-between mb-1">
-                                            <div
-                                                class="prodcut-price d-flex align-items-center flex-wrap position-relative">
-
-
+                                            <div class="prodcut-price d-flex align-items-center flex-wrap position-relative">
                                                 @if ($product->discount_price != null)
-                                                    <ins class="font-size-20 text-red text-decoration-none mr-2">
-                                                        {{ number_format($product->discount_price, 0, '.', ',') }}{{ $currency->symbol }}</ins>
-                                                    <del
-                                                        class="font-size-12 tex-gray-6 position-absolute bottom-100">{{ number_format($product->selling_price, 0, '.', ',') }}{{ $currency->symbol }}</del>
+                                                <ins class="font-size-20 text-red text-decoration-none mr-2">
+                                                    {{ number_format($product->discount_price, 0, '.', ',') }}{{ $currency->symbol }}</ins>
+                                                <del class="font-size-12 tex-gray-6 position-absolute bottom-100">{{ number_format($product->selling_price, 0, '.', ',') }}{{ $currency->symbol }}</del>
                                                 @else
-                                                    <ins class="font-size-20 text-red text-decoration-none mr-2">
-                                                        {{ number_format($product->selling_price, 0, '.', ',') }}{{ $currency->symbol }}</ins>
+                                                <ins class="font-size-20 text-red text-decoration-none mr-2">
+                                                    {{ number_format($product->selling_price, 0, '.', ',') }}{{ $currency->symbol }}</ins>
                                                 @endif
-
                                             </div>
                                             <div class="prodcut-add-cart">
-                                                <a href="javascript:void(0)" onclick="addToCart(this)"
-                                                    data-product-id="{{ base64_encode($product->id) }}"
-                                                    class="btn-add-cart btn-primary transition-3d-hover"><i
-                                                        class="ec ec-add-to-cart"></i></a>
+                                                <a href="javascript:void(0)" onclick="addToCart(this)" data-product-id="{{ base64_encode($product->id) }}" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
                                             </div>
                                         </div>
-                                    @else
+                                        @else
                                         <div class="prodcut-add-cart">
-                                            <a href="javascript:void(0)"
-                                                class="btn btn-primary transition-3d-hover btn-block"><i
-                                                    class="ec ec-login"></i>Login to see price</a>
+                                            <a href="javascript:void(0)" class="btn btn-primary transition-3d-hover btn-block"><i class="ec ec-login"></i>Login to see price</a>
                                         </div>
-                                    @endauth
+                                        @endauth
                                     </div>
                                     <div>
                                         <div class="pcbuilder border-top pt-3 d-flex justify-content-center align-items-center">
                                             <a href="{{ route("addToProductPackage", ['product_id' => encrypt($product->id),'package_id' => encrypt($package->id),'key' => encrypt($key)]) }}" class="btn-primary transition-3d-hover p-2 d-block">Add To {{ $package->name }}</a>
-
-
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </li>
                         @endforeach
-
-
-
                     </ul>
                 </div>
-
-
-        <!-- End Brand Carousel -->
+                <!-- End Brand Carousel -->
+            </div>
+        </div>
     </div>
 </main>
 
