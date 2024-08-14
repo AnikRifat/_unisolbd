@@ -131,7 +131,7 @@
                                         <input type="text" name="rules[key][]" class="form-control form-control-sm" placeholder="Key">
                                     </div>
                                     <div class="col">
-                                        <input type="text" name="rules[value][]" class="form-control form-control-sm" placeholder="Value">
+                                        <input type="number" name="rules[value][]" class="form-control form-control-sm" placeholder="Value">
                                     </div>
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-danger btn-remove-rule">-</button>
