@@ -92,7 +92,7 @@ class CustomerGroupController extends Controller
         $customerGroup = CustomerGroup::find($id);
 
         // Get all users who are not already assigned to the customer group
-        $users = User::whereDoesntHave('customerGroups', function ($query) use ($id) {
+        $users = User::where('status',3)->whereDoesntHave('customerGroups', function ($query) use ($id) {
             $query->where('customer_group_id', $id);
         })->get();
 

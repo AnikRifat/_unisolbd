@@ -176,4 +176,23 @@ class UserController extends Controller
         // Redirect the user to the appropriate page
         return redirect()->back()->with('success', 'User details updated successfully.');
     }
+    public function activeUser(User $user)
+    {
+
+        $user->status = 1;
+        $user->save();
+
+        // Redirect the user to the appropriate page
+        return redirect()->back()->with('success', 'User Activated successfully.');
+    }
+    public function inActiveUser(User $user)
+    {
+        $user->status = 0;
+        $user->save();
+
+        // Redirect the user to the appropriate page
+        return redirect()->back()->with('success', 'User Activated successfully.');
+
+    }
+
 }

@@ -79,6 +79,11 @@ route::middleware(['auth:admin'])->group(function () {
 
     //user
     Route::resource('user', UserDetailsController::class);
+    Route::get('/unverified-user', [UserDetailsController::class, 'unverifiedUsers'])->name('users.unverified');
+    Route::post('/active-user/{id}', [UserDetailsController::class, 'ActiveUser'])->name('user.active');
+    Route::post('/inactive-user/{id}', [UserDetailsController::class, 'InactiveUser'])->name('user.inactive');
+
+
 
     //site setting
     Route::resource('site-setting', SiteSettingController::class);
