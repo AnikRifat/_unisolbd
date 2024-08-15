@@ -111,7 +111,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-lg-4">
+                            <div class="col-md-6 col-lg-4  d-none">
                                 <div class="form-group">
                                     <label>Subcategory</label>
                                     <div class="controls">
@@ -125,7 +125,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6 col-lg-4">
+                            <div class="col-md-6 col-lg-4  d-none">
                                 <div class="form-group">
                                     <label>Sub-subcategory</label>
                                     <div class="controls">
@@ -461,6 +461,14 @@
                                                         value="1">
                                                     <label for="checkbox_2">New Arriaval</label>
                                                 </fieldset>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <div class="controls">
+
                                                 <fieldset>
                                                     <input {{ old('featured') ? 'checked' : '' }} type="checkbox" id="checkbox_3" name="featured"
                                                         value="1">
