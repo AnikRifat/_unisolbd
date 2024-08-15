@@ -37776,3 +37776,6 @@ blockquote:not(.blockquote) p {
 /*    display: none;*/
 /*}*/
 
+.prodcut-add-cart {
+    display: none;
+}
