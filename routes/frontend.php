@@ -5,6 +5,7 @@ use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\PackageController;
 use App\Http\Controllers\Frontend\PagesController;
 use App\Http\Controllers\Frontend\PurchaseController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Controllers\User\CartPageController;
 use App\Http\Controllers\User\WishlistController;
@@ -78,3 +79,7 @@ Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
 //SSLCOMMERZ END
 
 //landing page route
+Route::post('/login', [LoginController::class, 'store'])
+        ->middleware(array_filter([
+            'guest', null,
+        ]));
