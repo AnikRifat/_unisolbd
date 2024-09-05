@@ -45,6 +45,7 @@ class AttemptToAuthenticate
     public function handle($request, $next)
     {
         if (Fortify::$authenticateUsingCallback) {
+
             return $this->handleUsingCustomCallback($request, $next);
         }
 
@@ -75,6 +76,11 @@ class AttemptToAuthenticate
 
             return $this->throwFailedAuthenticationException($request);
         }
+        if($user->status != 1){
+            return $this->throwUnAuthorizedAuthenticationException($request);
+
+        }
+
 
         $this->guard->login($user, $request->boolean('remember'));
 
@@ -98,6 +104,14 @@ class AttemptToAuthenticate
         ]);
     }
 
+    protected function throwUnAuthorizedAuthenticationException($request)
+    {
+        $this->limiter->increment($request);
+
+        throw ValidationException::withMessages([
+            Fortify::username() => ['user Verifiaction Failed'],
+        ]);
+    }
     /**
      * Fire the failed authentication attempt event with the given arguments.
      *
