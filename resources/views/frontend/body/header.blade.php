@@ -130,6 +130,15 @@
                                         data-unfold-target="#sidebarContent" data-unfold-type="css-animation"
                                         data-unfold-animation-in="fadeInRight" data-unfold-animation-out="fadeOutRight"
                                         data-unfold-duration="500"><i class="ec ec-user mr-1"></i>My Profile</a>
+
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button id="logout" href="javascript:void(0)" class="btn nav-link">
+                                                <i class="fa fa-arrow-circle-down text-center mr-1"></i>
+                                                Logout
+                                            </button>
+                                        </form>
+
                                 @else
                                     {{-- <a href="{{ route('login') }}" role="button" class="u-header-topbar__nav-link"
                                         aria-controls="sidebarContent" aria-haspopup="true" aria-expanded="false"

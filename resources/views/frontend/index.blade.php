@@ -51,7 +51,7 @@
                     <ul class="row list-unstyled products-group no-gutters mb-6">
                         @foreach ($featured as $product)
                             <li class="col-6 col-md-2gdot4 product-item">
-                                <div class="product-item__outer h-100">
+                                <div class="product-item__outer h-100 m-2">
                                     <div class="product-item__inner px-xl-4 p-3">
                                         <div class="product-item__body pb-xl-2">
 
@@ -100,7 +100,7 @@
                                                     <div class="prodcut-add-cart">
                                                         <a href="javascript:void(0)" onclick="addToCart(this)"
                                                             data-product-id="{{ base64_encode($product->id) }}"
-                                                            class="btn-add-cart btn-primary transition-3d-hover"><i
+                                                            class="btn-add-cart btn-primary transition-3d-hover d-none"><i
                                                                 class="ec ec-add-to-cart"></i></a>
                                                     </div>
                                                 </div>
