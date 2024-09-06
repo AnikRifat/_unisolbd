@@ -79,7 +79,7 @@ Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
 //SSLCOMMERZ END
 
 //landing page route
-Route::post('/login', [LoginController::class, 'store'])
-        ->middleware(array_filter([
-            'guest', null,
-        ]));
+//Route::post('/login', [LoginController::class, 'store'])
+  //      ->middleware(array_filter([
+    //        'guest', null,
+      //  ]));
