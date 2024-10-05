@@ -222,7 +222,7 @@ User Login/Register Page
     @if (session('errors'))
             Swal.fire({
                 title: 'Error!',
-                text: "{{ session('errors') }}",
+                text: "{{ session('errors')->first() }}",
                 icon: 'error',
                 confirmButtonText: 'Okay'
             });
