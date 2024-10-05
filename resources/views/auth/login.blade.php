@@ -3,6 +3,7 @@
 User Login/Register Page
 @endsection
 @section('content')
+
 <style>
     form.form-horizontal.account-register.clearfix {
         border: 2px solid rgb(221, 221, 221);
@@ -209,8 +210,23 @@ User Login/Register Page
 	</div>
 </main>
 <!-- ========== END MAIN CONTENT ========== -->
+<!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
 <script>
+
+    // SweetAlert for error messages
+    @if (session('errors'))
+            Swal.fire({
+                title: 'Error!',
+                text: "{{ session('errors') }}",
+                icon: 'error',
+                confirmButtonText: 'Okay'
+            });
+        @endif
 	$(document).ready(function () {
 		$('#toggle-password').click(function () {
         togglePasswordVisibility('#password', '#toggle-password');
