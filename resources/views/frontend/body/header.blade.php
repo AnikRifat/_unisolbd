@@ -130,6 +130,15 @@
                                         data-unfold-target="#sidebarContent" data-unfold-type="css-animation"
                                         data-unfold-animation-in="fadeInRight" data-unfold-animation-out="fadeOutRight"
                                         data-unfold-duration="500"><i class="ec ec-user mr-1"></i>My Profile</a>
+
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button id="logout" href="javascript:void(0)" class="btn nav-link">
+                                                <i class="fa fa-arrow-circle-down text-center mr-1"></i>
+                                                Logout
+                                            </button>
+                                        </form>
+
                                 @else
                                     {{-- <a href="{{ route('login') }}" role="button" class="u-header-topbar__nav-link"
                                         aria-controls="sidebarContent" aria-haspopup="true" aria-expanded="false"
@@ -610,12 +619,12 @@
                                         Quotation Builder
                                     </a>
                                 </li>
-                                <li class="col pr-xl-0 px-2 px-sm-3 d-none d-xl-block">
+                                {{-- <li class="col pr-xl-0 px-2 px-sm-3 d-none d-xl-block">
                                     <a type="button" href="{{ route('storage.calculator') }}"
                                         class="btn btn-sm contact_icon text-white ">
                                         Storage Calculator
                                     </a>
-                                </li>
+                                </li> --}}
 
 
                                 <li class="col pr-xl-0 px-2 px-sm-3 d-block d-xl-none" href="{{ route('view.package') }}" data-toggle="tooltip"

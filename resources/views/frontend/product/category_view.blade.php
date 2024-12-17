@@ -398,7 +398,7 @@
 
             function generateProductHtml(product) {
                 return `<li class="col-12 col-sm-6 col-md-3 col-wd-2gdot4 product-item remove-divider-md-lg remove-divider-xl">
-                <div class="product-item__outer h-100">
+                <div class="product-item__outer h-100 m-2">
                     <div class="product-item__inner px-xl-4 p-3">
                         <div class="product-item__body pb-xl-2">
 
@@ -429,7 +429,7 @@
                                 </div>
                                 <div class="d-none d-xl-block prodcut-add-cart">
                                     <a onclick="addToCart(this)" data-product-id="${btoa(product.id)}" href="javascript:void(0)"
-                                        class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
+                                        class="btn-add-cart btn-primary transition-3d-hover d-none"><i class="ec ec-add-to-cart"></i></a>
                                 </div>
                             </div>
                             @else

@@ -119,7 +119,11 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
+
         $brand = Brand::findOrFail($id);
+        foreach ($brand->products as $product) {
+            $product->delete();
+        }
         $img = $brand->brand_image;
         @unlink($img);
         Brand::findOrFail($id)->delete();
@@ -140,4 +144,6 @@ class BrandController extends Controller
 
         return redirect()->back()->with(notification('Brand Inactive Successfully', 'success'));
     }
+
+
 }

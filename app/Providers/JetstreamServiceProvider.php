@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Fortify;
 use Laravel\Jetstream\Jetstream;
 
@@ -38,6 +39,12 @@ class JetstreamServiceProvider extends ServiceProvider
             $user = User::where('phone', $request->loginname)->first();
 
             if ($user && Hash::check($request->password, $user->password)) {
+                if ($user->status == 3) {
+                    // Throw validation exception for non-approved users
+                    throw ValidationException::withMessages([
+                        'errors' => 'You are not approved, please contact the Vendor.',
+                    ]);
+                }
                 return $user;
             }
 

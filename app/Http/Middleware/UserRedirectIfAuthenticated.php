@@ -16,6 +16,7 @@ class UserRedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next)
     {
+
         if (Auth::check() && Auth::user()) {
             return $next($request);
         } else {

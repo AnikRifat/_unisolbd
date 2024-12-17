@@ -36,7 +36,6 @@ Route::middleware('admin:admin')->group(function () {
 Route::middleware([
     'auth:sanctum,admin',
     config('jetstream.auth_session'),
-    'verified',
 ])->group(function () {
     Route::get('/admin/dashboard', function () {
 
@@ -61,7 +60,6 @@ Route::post('/user/update/password', [IndexController::class, 'UserUpdatePasswor
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
-    'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
         $id = Auth::user()->id;

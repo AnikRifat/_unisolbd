@@ -25,10 +25,10 @@
                                     <a href="{{ url('category/product/' . $category->category_slug . '/' . encrypt($category->id)) }}"
                                         class="d-block text-center bg-on-hover width-122 mx-auto">
                                         <div
-                                            class="d-flex justify-content-center align-items-center bg font-size-40 pt-4 rounded-circle-top width-122 height-75">
+                                            class="d-flex justify-content-center align-items-center bg font-size-40  width-122 height-75">
                                             <img src="{{ $category->category_icon }}" alt="">
                                         </div>
-                                        <div class="bg-white px-2 pt-2 width-122">
+                                        <div class="bg-white px-2 p-2 width-122 height-60">
                                             <h6 class="font-weight-semi-bold font-size-14 text-gray-90 mb-0 text-lh-1dot2">
                                                 {{ $category->category_name }}</h6>
                                         </div>
@@ -51,7 +51,7 @@
                     <ul class="row list-unstyled products-group no-gutters mb-6">
                         @foreach ($featured as $product)
                             <li class="col-6 col-md-2gdot4 product-item">
-                                <div class="product-item__outer h-100">
+                                <div class="product-item__outer h-100 m-2">
                                     <div class="product-item__inner px-xl-4 p-3">
                                         <div class="product-item__body pb-xl-2">
 
@@ -100,7 +100,7 @@
                                                     <div class="prodcut-add-cart">
                                                         <a href="javascript:void(0)" onclick="addToCart(this)"
                                                             data-product-id="{{ base64_encode($product->id) }}"
-                                                            class="btn-add-cart btn-primary transition-3d-hover"><i
+                                                            class="btn-add-cart btn-primary transition-3d-hover d-none"><i
                                                                 class="ec ec-add-to-cart"></i></a>
                                                     </div>
                                                 </div>

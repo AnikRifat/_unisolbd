@@ -17,9 +17,18 @@ class UserDetailsController extends Controller
      */
     public function index()
     {
-        $users = User::get();
+        $users = User::with('userDetails')->where('status',1)->get();
+
 
         return view('backend.user.view_user', compact('users'));
+    }
+
+
+    public function unverifiedUsers()
+    {
+        $users = User::with('userDetails')->where('status',3)->get();
+
+        return view('backend.user.unverified_user', compact('users'));
     }
 
     /**
@@ -86,7 +95,9 @@ class UserDetailsController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        return view('backend.user.user_details', compact('user'));
     }
 
     /**
@@ -133,7 +144,6 @@ class UserDetailsController extends Controller
             $userData['nid_back'] = uploadAndResizeImage($request->file('nid_back'), 'upload/user/nid_back', 300, 300); // Fixed the function parameters
         }
 
-        dd($userData);
         User::findOrFail($id)->update($userData);
 
         return redirect()->route('user.index')->with(notification('User Update Successfully', 'success'));
@@ -148,5 +158,19 @@ class UserDetailsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function ActiveUser($id)
+    {
+        User::where('id', '=', $id)->update(['status' => 1]);
+
+        return redirect()->route('user.index')->with(notification('User Active Successfully', 'success'));
+    }
+
+    public function InactiveUser($id)
+    {
+        User::where('id', '=', $id)->update(['status' => 0]);
+
+        return redirect()->route('user.index')->with(notification('User Inactive Successfully', 'success'));
     }
 }

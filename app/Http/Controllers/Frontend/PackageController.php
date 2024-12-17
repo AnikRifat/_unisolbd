@@ -25,7 +25,11 @@ class PackageController extends Controller
 {
     public function ViewPackage()
     {
+
         $packages = Package::where('status', 1)->orderBy('id', 'DESC')->get();
+        if ($packages->count() == 1) {
+            return $this->ViewPackageDetails(urlencode(encrypt($packages->first()->id)));
+        }
 
         return view('frontend.quotationbuilder.view_package', compact('packages'));
     }
@@ -271,7 +275,6 @@ class PackageController extends Controller
         }
 
         return redirect()->back()->with(notification('some problem occurs', 'error'));
-
     }
 
     // public function StorePackage(Request $request, $id)

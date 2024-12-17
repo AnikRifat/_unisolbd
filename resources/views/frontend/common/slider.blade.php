@@ -33,7 +33,7 @@ $sliders=App\Models\Slider::where('status',1)->where('type',1)->orderBy('id','DE
                                     </h6>
                                 </div>
                             </div> --}}
-                            <div class="col-md-4 d-flex align-items-center  ml-auto ml-md-0 mb-4 mb-md-0"
+                            <div class="col-md-12 d-flex align-items-center  ml-auto ml-md-0 mb-4 mb-md-0"
                                 data-scs-animation-in="zoomIn"
                                 data-scs-animation-delay="400">
                                 <img class="img-fluid" src="{{ asset($slider->slider_img) }}" alt="Image Description">
@@ -105,12 +105,12 @@ $sliders=App\Models\Slider::where('status',1)->where('type',1)->orderBy('id','DE
                 @foreach ($sliders as $slider)
                 <div class="js-slide">
                     <a class="js-slick-thumb-progress" href="javascript:;">
-                   
+
                     </a>
                 </div>
                 @endforeach
-               
-                
+
+
             </div>
         </div>
     </div>

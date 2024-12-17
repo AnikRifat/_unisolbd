@@ -34,7 +34,7 @@ class CustomerGroupController extends Controller
 
         $rules = [];
         foreach ($keys as $index => $key) {
-            $rules[$key] = $values[$index];
+            $rules['discount'] = $values[$index];
         }
         $data['rules'] = json_encode($rules);
         CustomerGroup::create($data);
@@ -67,7 +67,7 @@ class CustomerGroupController extends Controller
 
         $rules = [];
         foreach ($keys as $index => $key) {
-            $rules[$key] = $values[$index];
+            $rules['discount'] = $values[$index];
         }
         $data['rules'] = json_encode($rules);
         // dd($data);
@@ -92,7 +92,7 @@ class CustomerGroupController extends Controller
         $customerGroup = CustomerGroup::find($id);
 
         // Get all users who are not already assigned to the customer group
-        $users = User::whereDoesntHave('customerGroups', function ($query) use ($id) {
+        $users = User::where('status',3)->whereDoesntHave('customerGroups', function ($query) use ($id) {
             $query->where('customer_group_id', $id);
         })->get();
 

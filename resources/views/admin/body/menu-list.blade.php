@@ -14,6 +14,8 @@
     <ul class="treeview-menu">
         <li class="{{ $route == 'user-management.index' ? 'active' : '' }}"><a
                 href="{{ route('user-management.index') }}"><i class="ti-more"></i>All Users</a></li>
+                <li class="{{ $route == 'users.unverified' ? 'active' : '' }}"><a
+                    href="{{ route('users.unverified') }}"><i class="ti-more"></i>unverified Users</a></li>
 
         <li class="{{ $route == 'customer-groups.index' ? 'active' : '' }}"><a
                 href="{{ route('customer-groups.index') }}"><i class="ti-more"></i>User Group</a>
@@ -38,7 +40,13 @@
         <span>Slider</span>
     </a>
 </li>
-<li class="treeview {{ request()->is('productcatalog*') ? 'active' : '' }}">
+<li class="{{ request()->is('productcatalog*') ? 'active' : '' }}">
+    <a href="{{ url('/') }}/productcatalog/category">
+        <i data-feather="list"></i>
+        <span>Categories</span>
+    </a>
+</li>
+<li class="treeview d-none {{ request()->is('productcatalog*') ? 'active' : '' }}">
     <a href="#">
         <i data-feather="list"></i>
         <span>Categories</span>

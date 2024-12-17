@@ -53,12 +53,12 @@
          {{ Session::get($packageDetails->first()->package->name)['SSD']}}
       </h1>
       @endif --}}
-            <div class="row justify-content-center align-items-center">
+            <div class="row justify-content-center align-items-center ">
                 @if (count($packageDetails) > 0)
                     <div class="col-lg-10 mb-10">
                         <div class="d-flex d-flex justify-content-between align-items-center">
-                            <div class="d-lg-block d-none d-flex justify-content-center align-items-center">
-                                <button type="button" data-toggle="modal" data-target="#calcModal" class="font-size-16 bg-dark rounded rounded-lg  p-2 text-center text-white">
+                            <div class="d-lg-block  d-flex justify-content-center align-items-center">
+                                <button type="button" data-toggle="modal" data-target="#calcModal" class=" d-none font-size-16 bg-dark rounded rounded-lg  p-2 text-center text-white">
 Calculate Storage
                                 </button>
 
